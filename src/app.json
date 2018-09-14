@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/book/main",
+    "pages/publish/main",
+    "pages/authority/main",
+    "pages/landlord/main",
+    "pages/zoomChoose/main",
+    "pages/roleChoose/main",
+    "pages/tenant/main",
+    "pages/contact/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "e租",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "backgroundColor": "#fafafa",
+    "borderStyle": "white",
+    "selectedColor": "#b4282d",
+    "color": "#666",
+    "list": [{
+        "pagePath": "pages/index/main",
+        "iconPath": "static/images/ic_menu_home_nor.png",
+        "selectedIconPath": "static/images/ic_menu_home_pressed.png",
+        "text": "返回主菜单"
+      },
+      {
+        "pagePath": "pages/book/main",
+        "iconPath": "static/images/ic_menu_book_nor.png",
+        "selectedIconPath": "static/images/ic_menu_book_pressed.png",
+        "text": "我的预定"
+      },
+      {
+        "pagePath": "pages/publish/main",
+        "iconPath": "static/images/ic_menu_publish_nor.png",
+        "selectedIconPath": "static/images/ic_menu_publish_pressed.png",
+        "text": "我要发布房源"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}
