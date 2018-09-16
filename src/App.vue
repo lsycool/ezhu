@@ -27,6 +27,7 @@ export default {
           if (res.authSetting['scope.userInfo']) {
             wx.getUserInfo({
               success: function (res) {
+                globalStore.commit('setUserInfo', res.userInfo)
                 console.log(res.userInfo)
                 console.log('用户已经授权过')
                 // 用户已经授权过，并且有角色则跳转对应页面
@@ -41,6 +42,7 @@ export default {
                 } else {
                   wx.redirectTo({
                     url: '/pages/roleChoose/main'
+                    // url: '/pages/authority/main'
                   })
                 }
               }

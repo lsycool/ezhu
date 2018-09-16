@@ -18,7 +18,14 @@ export function formatTime (date) {
   return `${t1} ${t2}`
 }
 
+function getZoomNameById (zooms, id) {
+  return zooms.find(function (zoom) {
+    return zoom.id === id
+  }).name
+}
+
 export default {
   formatNumber,
-  formatTime
+  formatTime,
+  getZoomNameById
 }

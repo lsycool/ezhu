@@ -1,26 +1,25 @@
 <template>
   <view class="container">
-    <view class="title1">
+    <view class="title1" style="text-align:center; font-size:40rpx;">
       <text class="name">{{title1}}</text>
     </view>
-    <view class="button1">
+    <view class="button1" style="padding:0 30rpx;">
       <button open-type="getUserInfo" @getuserinfo="bindGetUserInfo" @click="getUserInfo1" class="goLoginBtn" type="primary">{{buttonTitle}}</button>
     </view>
-    <view class="title2">
+    <view class="title2" style="text-align:center; font-size:40rpx; margin-top:50rpx">
       <text class="name">{{title2}}</text>
     </view>    
   </view>
 </template>
 
 <script>
-
+import globalStore from '@/stores/global-store'
 export default {
   data () {
     return {
       title1: 'e租平台不仅能为您够提供房源\n还能帮您找到合适队友',
       title2: '允许获取您的昵称、微信头像和\n微信号等信息',
-      buttonTitle: '确认授权',
-      userInfo: {}
+      buttonTitle: '确认授权'
     }
   },
 
@@ -31,9 +30,17 @@ export default {
         success: () => {
           wx.getUserInfo({
             success: (res) => {
-              this.userInfo = res.userInfo
+              globalStore.commit('setUserInfo', res.userInfo)
+              console.log(globalStore.state.userInfo)
+              // 跳转选择身份页面
+              wx.redirectTo({
+                url: '../roleChoose/main'
+              })
             }
           })
+        },
+        error: () => {
+          console.log('login failed.')
         }
       })
     },
@@ -64,9 +71,13 @@ export default {
 
 <style scoped>
 .container{
-    background: #f4f4f4;
     height: auto;
     overflow: hidden;
     width: 100%;
+    margin-top: 200rpx;
+}
+
+.button1{
+  margin-top: 200rpx;
 }
 </style>

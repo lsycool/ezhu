@@ -56,7 +56,8 @@ export default {
     width: 100%;
 }
 .rentHouse, .publishHouse{
-    height: 200rpx;
-    line-height: 200rpx;
+    height: 300rpx;
+    width: 300rpx;
+    line-height: 300rpx;
 }
 </style>

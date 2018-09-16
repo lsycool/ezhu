@@ -1,21 +1,21 @@
 <template>
   <div class="container">
-    <view class="head">
-      <view class="zoom">
-        <text class="zoomName">{{zoomName}}</text>
-        <button class="reChoose" @click="reChoose" type="primary">切换</button>
+    <view class="head" style="display: block;">
+      <view class="zoom" style="display: inline-block; width: 60%;">
+        <text class="zoomName" style="padding-left:20rpx;">{{zoomName}}</text>
+        <text class="reChoose" style="margin-left: 20rpx; font-weight:bold; color:#336699" @click="reChoose" type="primary">切换</text>
       </view>
-      <view class="userInfo">
-        <text class="userName">{{userName}}</text>
-        <img class="avatar" :src="userInfo.avatar"/>
+      <view class="userInfo" style="display: inline-block; text-align:right; width:40%">
+        <text class="userName">{{userInfo.nickName}}</text>
+        <img class="avatar" :src="userInfo.avatarUrl"/>
       </view>
     </view>
-    <view class="filter">
-      <view class="rentType">
-        <button class="reChoose" @click="reChoose" type="primary">整租</button>
-        <button class="reChoose" @click="reChoose" type="primary">合租</button>
+    <view class="filter" style="margin-top:50rpx; margin-left:20rpx">
+      <view class="rentType" style="display: flex; flex-direction:row;">
+        <text :class="{clicked:isZhenZu}" style="font-weight:bold;" @click="zhenZu">整租</text>
+        <text :class="{clicked:!isZhenZu}" style="margin-left: 60rpx; font-weight:bold;" @click="heZu">合租</text>
       </view>
-      <view class="priseAndType">
+      <view class="priseAndType" style="display: flex; flex-direction:row; margin-top:50rpx;">
         <view class="priseRange">
           <text>价格</text><combox></combox><text>到</text><combox></combox>
         </view>
@@ -38,84 +38,58 @@
 </template>
 
 <script>
-import card from '@/components/card'
+import globalStore from '@/stores/global-store'
+import util from '@/utils/index'
 
 export default {
   data () {
     return {
+      zooms: [],
       zoomName: '',
       buttonTitle1: '切换',
-      userInfo: {}
+      userInfo: {},
+      isZhenZu: true
     }
   },
-
-  components: {
-    card
+  mounted () {
+    this.zooms = globalStore.state.zooms
+    this.zoomName = util.getZoomNameById(globalStore.state.zooms, globalStore.state.currentZoom)
+    this.userInfo = globalStore.state.userInfo
+    console.log(this.userInfo)
+    wx.showTabBar({
+      animation: true
+    })
   },
-
   methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      wx.navigateTo({ url })
+    zhenZu () {
+      this.isZhenZu = true
     },
-    getUserInfo () {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-            }
-          })
-        }
-      })
-    },
-    clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
+    heZu () {
+      this.isZhenZu = false
     }
-  },
-
-  created () {
-    // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
   }
 }
 </script>
 
 <style scoped>
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.container{
+    height: auto;
+    overflow: hidden;
+    width: 100%;
+    margin-top:50rpx;
 }
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.clicked {
+  color:#336699
 }
-
-.userinfo-nickname {
-  color: #aaa;
+.userName {
+  font-size:30rpx;
+  line-height:30rpx;
 }
-
-.usermotto {
-  margin-top: 150px;
-}
-
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-
-.counter {
-  display: inline-block;
-  margin: 10px auto;
-  padding: 5px 10px;
-  color: blue;
-  border: 1px solid blue;
+.avatar {
+  vertical-align:middle;
+  width:40rpx; 
+  height:40rpx; 
+  margin-right:20rpx; 
+  border-radius:20rpx;
 }
 </style>
