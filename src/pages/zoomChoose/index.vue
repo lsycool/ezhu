@@ -3,7 +3,7 @@
     <view class="title1" style="width:80%; padding-left:15px;">
       <text class="name">{{title1}}</text>
     </view>
-    <comboxList :zooms="zooms" :getSelectIndex="optionTap"></comboxList>
+    <comboxList :zooms="zooms" @getSelectIndex="optionTap"></comboxList>
   </view>
 </template>
 
@@ -22,7 +22,7 @@ export default {
     comboxList
   },
   methods: {
-    optionTap (index) {
+    optionTap: function (index) {
       console.log('index:' + index)
       globalStore.commit('setCurrentZoom', this.zooms[index].id)
       globalStore.commit('setZooms', this.zooms)

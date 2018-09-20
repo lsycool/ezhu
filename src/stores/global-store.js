@@ -8,7 +8,8 @@ export default new Vuex.Store({
     role: '', // 租客还是房东
     userInfo: {},
     zooms: [], // 所有的小区列表
-    currentZoom: 0 // 当前选择的小区的id
+    currentZoom: 0, // 当前选择的小区的id
+    showPopBox: false
   },
   mutations: {
     setRole: (state, role) => {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     setCurrentZoom: (state, zoom) => {
       state.currentZoom = zoom
+    },
+    setShowPopBox: (state, isShow) => {
+      state.showPopBox = isShow
     }
   }
 })

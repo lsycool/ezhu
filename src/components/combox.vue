@@ -1,11 +1,11 @@
 <template>
-  <view class='select_box' :style='{height: selectBoxHeight + "rpx"}'>
+  <view class='select_box' :style='styleObject'>
     <view class='select' @click.stop='selectTap'>
-        <text class='select_text'>{{zooms[index].name}}</text>
-        <image class="select_img " :class='{select_img_rotate:show}' src='../../static/images/down.png'></image>         
+        <text class='select_text' :style='{"font-size": (fontSize + "px")}'>{{zooms[index].name}}</text>
+        <image class="select_img " :class='{select_img_rotate:show}' :style="imageStyle" src='../../static/images/down.png'></image>         
     </view>
     <view class='option_box' :style='{height: optionBoxHeight + "rpx"}'>
-        <text class='option' :style='{border:(index==zooms.length-1?  0 : "1px solid #efefef")}' v-for='(item, index) of zooms' :key='item.id' :data-index='index' @click.stop='optionTap'>
+        <text class='option' :style='{border:(index==zooms.length-1?  0 : "1px solid #efefef"), "font-size": (fontSize + "px")}' v-for='(item, index) of zooms' :key='item.id' :data-index='index' @click.stop='optionTap'>
           {{item.name}}
         </text>
     </view>
@@ -13,11 +13,14 @@
 </template>
 
 <script>
+// import util from '@/utils/index'
+// import globalStore from '@/stores/global-store'
+
 export default {
   data: function () {
     return {
-      show: false, // 控制下拉列表的显示隐藏，false隐藏、true显示
-      index: 0
+      index: 0,
+      show: false
     }
   },
   props: {
@@ -26,11 +29,31 @@ export default {
       default () {
         return {}
       }
+    },
+    styleObject: {
+      type: String,
+      default () {
+        return 'height: ' + 250 + 'px'
+      }
+    },
+    fontSize: {
+      type: String,
+      default () {
+        return ''
+      }
+    },
+    imageStyle: {
+      type: String,
+      default () {
+        return ''
+      }
     }
+  },
+  mounted () {
   },
   computed: {
     optionBoxHeight: function () {
-      return this.show ? (this.zooms.length > 5 ? 500 : this.zooms.length * 100) : 0
+      return this.show ? (this.zooms.length > 5 ? 500 : this.zooms.length * 85) : 0
     },
     selectBoxHeight: function () {
       let height = 0
@@ -38,11 +61,15 @@ export default {
       query.select('.select').boundingClientRect(function (rect) {
         height += rect.height // 节点的高度
       }).exec()
-      height += (this.optionBoxHeight + 200)
+      height += (this.optionBoxHeight + 100)
       return height
     }
   },
   methods: {
+    hidePopBox () {
+      this.show = false
+      console.log('hide popBox')
+    },
     // 点击下拉显示框
     selectTap () {
       this.show = !this.show
@@ -61,8 +88,10 @@ export default {
 .select_box{
   background: #fff;
   width: 80%;
-  margin: 30rpx auto;
+  margin: 30rpx 30rpx;
   position: relative;
+  vertical-align:middle;
+  display:inline-block;
 }
 .select{
   box-sizing: border-box;
@@ -76,7 +105,7 @@ export default {
 }
 .select_text{
   font-size: 30rpx;
-  flex: 1;
+  width:100%;
 }
 .select_img{
   width: 40rpx;
@@ -98,12 +127,15 @@ export default {
   border-top: 0;
   background: #fff;
   transition: height 0.3s;
+  z-index:999;
 }
 .option{
-  display: block;
-  line-height: 40rpx;
+  display: flex;
+  height: 40px;
+  line-height: 0;
   font-size: 30rpx;
   border-bottom: 1px solid #efefef;
-  padding: 10rpx;
+  padding:0 10px;
+  align-items:center;
 }
 </style>
