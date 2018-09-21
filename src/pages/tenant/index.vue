@@ -17,7 +17,7 @@
         <text :class="{clicked:isZhenZu}" style="font-weight:bold;" @click="zhenZu">整租</text>
         <text :class="{clicked:!isZhenZu}" style="margin-left: 60rpx; font-weight:bold;" @click="heZu">合租</text>
       </view>
-      <view class="priseAndType" style="display: inline-block; margin-top:50rpx; z-index:999;">
+      <view class="priseAndType" style="display: inline-block; margin-top:15px; z-index:999;">
         <view class="priseRange" style="vertical-align:middle; display:inline-block;">
           <text class="infoTitle">价格</text>
           <comboxList ref="comb1" :zooms="priseRange" :fontSize="12" :isShow="showPopBox" :imageStyle="imageStyle" :styleObject="comboxStyle" @getSelectIndex="optionTapBottom"></comboxList>
@@ -31,13 +31,16 @@
       </view>
     </view>
     <view class="houseDetail">
-      <view>
-        <img class="avatar" :src="userInfo.avatar"/>
-        <view>
-          <text class="prise"></text><text class="profile"></text>
-          <view><text class="amount"></text><button>去拼团</button></view>
+      <scroll-view scroll-y="true" style="height: 450px; padding:10px;">
+        <view v-for='(item, index) of houseList' :key='item.id' :data-index='index' style="font-size:10px; width:33%; display: inline-block;">
+            <img style="width: 90px; height: 50px; display:block;" src="../../../static/images/slide.png"/>
+            <text class="prise">{{item.prise}}</text><text class="profile">{{item.abstract}}</text>
+            <view style="display:inline-block; width:90px;">
+              <text class="amount">{{item.amount}}</text>
+              <button class="confirm">去拼团</button>
+            </view>
         </view>
-      </view>
+      </scroll-view>
     </view>
     
   </div>
@@ -59,9 +62,24 @@ export default {
       isZhenZu: true,
       priseBottom: 0,
       priseTop: 10000,
-      priseRange: [{id: 0, name: '500￥'}, {id: 1, name: '1000￥'}, {id: 2, name: '3000￥'}, {id: 3, name: '5000￥'}],
+      priseRange: [{id: 0, name: '500￥', imageUrl: ''}, {id: 1, name: '1000￥'}, {id: 2, name: '3000￥'}, {id: 3, name: '5000￥'}],
       comboxStyle: util.styles({width: '60px', height: '40px', margin: '0 20rpx', display: 'inline-block', 'vertical-align': 'middle'}),
-      imageStyle: util.styles({display: 'none'})
+      imageStyle: util.styles({display: 'none'}),
+      houseList: [{id: 0, prise: 1000, abstract: 'good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: 'good house', amount: '10'}]
     }
   },
   components: {
@@ -135,5 +153,26 @@ export default {
 }
 .infoTitle {
   font-size:15px;
+}
+.prise {
+  display:block;
+}
+.profile {
+  display:block;
+}
+.amount {
+  display: inline-block;
+  width: 60%;
+}
+.confirm {
+  width:30px;
+  height:10px;
+  font-size:8px;
+  line-height:8px;
+  padding:0;
+  display: inline-block;
+  color:white;
+  background-color:red;
+  border-radius:10px;
 }
 </style>
