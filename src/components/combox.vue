@@ -68,7 +68,6 @@ export default {
   methods: {
     hidePopBox () {
       this.show = false
-      console.log('hide popBox')
     },
     // 点击下拉显示框
     selectTap () {

@@ -12,7 +12,7 @@
         <img class="avatar" :src="userInfo.avatarUrl"/>
       </view>
     </view>
-    <view class="filter" style="margin-top:50rpx; margin-left:20rpx">
+    <view class="filter" style="margin-top:20px; margin-left:20rpx">
       <view class="rentType" style="display: flex; flex-direction:row;">
         <text :class="{clicked:isZhenZu}" style="font-weight:bold;" @click="zhenZu">整租</text>
         <text :class="{clicked:!isZhenZu}" style="margin-left: 60rpx; font-weight:bold;" @click="heZu">合租</text>
@@ -31,13 +31,13 @@
       </view>
     </view>
     <view class="houseDetail">
-      <scroll-view scroll-y="true" style="height: 450px; padding:10px;">
+      <scroll-view scroll-y="true" :style="{height: scrollHeight + 'px', padding:'10px'}">
         <view v-for='(item, index) of houseList' :key='item.id' :data-index='index' style="font-size:10px; width:33%; display: inline-block;">
             <img style="width: 90px; height: 50px; display:block;" src="../../../static/images/slide.png"/>
             <text class="prise">{{item.prise}}</text><text class="profile">{{item.abstract}}</text>
             <view style="display:inline-block; width:90px;">
               <text class="amount">{{item.amount}}</text>
-              <button class="confirm">去拼团</button>
+              <button @click.stop="preOrder" class="confirm">去拼团</button>
             </view>
         </view>
       </scroll-view>
@@ -66,6 +66,8 @@ export default {
       comboxStyle: util.styles({width: '60px', height: '40px', margin: '0 20rpx', display: 'inline-block', 'vertical-align': 'middle'}),
       imageStyle: util.styles({display: 'none'}),
       houseList: [{id: 0, prise: 1000, abstract: 'good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: 'good house good house good house good house good house good house', amount: '10'},
+        {id: 0, prise: 1000, abstract: '这是一个大大大大哒哒哒哒哒哒哒哒哒哒的好房子', amount: '10'},
         {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
         {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
         {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
@@ -77,21 +79,20 @@ export default {
         {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
         {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
         {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
-        {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
-        {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
-        {id: 0, prise: 1000, abstract: 'good house', amount: '10'}]
+        {id: 0, prise: 1000, abstract: 'good house', amount: '10'}],
+      scrollHeight: 0
     }
   },
   components: {
     comboxList
   },
+  computed: {
+  },
   mounted () {
     this.zooms = globalStore.state.zooms
     this.zoomName = util.getZoomNameById(globalStore.state.zooms, globalStore.state.currentZoom)
     this.userInfo = globalStore.state.userInfo
-    wx.showTabBar({
-      animation: true
-    })
+    this.getScollHeight()
   },
   methods: {
     reChoose (e) {
@@ -118,6 +119,15 @@ export default {
         this.$refs.comb2.hidePopBox()
         this.$refs.comb3.hidePopBox()
       })
+    },
+    getScollHeight () {
+      util.getWindowRect('.houseDetail').then((res) => {
+        var windowHeight = wx.getSystemInfoSync().windowHeight
+        this.scrollHeight = windowHeight - res.top + 20
+      })
+    },
+    preOrder () {
+      
     }
   }
 }
@@ -128,7 +138,7 @@ export default {
     height: auto;
     overflow: hidden;
     width: 100%;
-    margin-top:50rpx;
+    margin-top:40rpx;
 }
 .clicked {
   color:#336699
@@ -136,6 +146,7 @@ export default {
 .userName {
   font-size:30rpx;
   line-height:30rpx;
+  margin-right:5px;
 }
 .avatar {
   vertical-align:middle;
@@ -156,9 +167,17 @@ export default {
 }
 .prise {
   display:block;
+  width: 90px;
 }
 .profile {
-  display:block;
+  display: -webkit-box;
+  width: 90px;
+  height:30px;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 .amount {
   display: inline-block;
@@ -167,8 +186,8 @@ export default {
 .confirm {
   width:30px;
   height:10px;
-  font-size:8px;
-  line-height:8px;
+  font-size:6px;
+  line-height:6px;
   padding:0;
   display: inline-block;
   color:white;

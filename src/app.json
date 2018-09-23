@@ -23,7 +23,7 @@
     "selectedColor": "#b4282d",
     "color": "#666",
     "list": [{
-        "pagePath": "pages/index/main",
+        "pagePath": "pages/tenant/main",
         "iconPath": "static/images/ic_menu_home_nor.png",
         "selectedIconPath": "static/images/ic_menu_home_pressed.png",
         "text": "返回主菜单"

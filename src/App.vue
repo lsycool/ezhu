@@ -4,7 +4,7 @@ import globalStore from '@/stores/global-store'
 export default {
   mpType: 'app',
 
-  onLaunch () {
+  create () {
     wx.hideTabBar({
       animation: false
     })
@@ -40,9 +40,8 @@ export default {
                     url: '/pages/tenant/main'
                   })
                 } else {
-                  wx.redirectTo({
+                  wx.reLaunch({
                     url: '/pages/roleChoose/main'
-                    // url: '/pages/authority/main'
                   })
                 }
               }

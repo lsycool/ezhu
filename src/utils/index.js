@@ -54,11 +54,21 @@ function px2rpx (str) {
   } else return str
 }
 
+// 封装微信接口
+function getWindowRect (cls) {
+  return new Promise(function (resolve, reject) {
+    wx.createSelectorQuery().select(cls).boundingClientRect(function (rect) {
+      resolve(rect)
+    }).exec()
+  })
+}
+
 export default {
   formatNumber,
   formatTime,
   getZoomNameById,
   classes,
   styles,
-  px2rpx
+  px2rpx,
+  getWindowRect
 }

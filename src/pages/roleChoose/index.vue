@@ -4,8 +4,8 @@
       <text class="name">{{title1}}</text>
     </view>
     <view class="button1" style="flex-direction:row; display: flex; margin-top:60rpx;">
-      <button  @getuserinfo="goLogin" class="rentHouse" @click="rentHouse" type="primary">{{buttonTitle1}}</button>
-      <button  @getuserinfo="goLogin" class="publishHouse" @click="publishHouse" type="primary">{{buttonTitle2}}</button>
+      <button  class="rentHouse" @click="rentHouse" type="primary">{{buttonTitle1}}</button>
+      <button  class="publishHouse" @click="publishHouse" type="primary">{{buttonTitle2}}</button>
     </view> 
   </view>
 </template>
@@ -22,18 +22,6 @@ export default {
   },
 
   methods: {
-    getUserInfo () {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-            }
-          })
-        }
-      })
-    },
     rentHouse () {
       wx.navigateTo({
         url: '../zoomChoose/main'
