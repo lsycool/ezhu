@@ -6,3 +6,5 @@ Vue.config.productionTip = false
 const app = new Vue(App)
 
 app.$mount()
+
+Vue.prototype.globalData = getApp().globalData

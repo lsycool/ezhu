@@ -1,3 +1,6 @@
+import globalStore from '@/stores/global-store'
+import wxFunc from './wxFunc'
+
 function formatNumber (n) {
   const str = n.toString()
   return str[1] ? str : `0${str}`
@@ -63,6 +66,47 @@ function getWindowRect (cls) {
   })
 }
 
+// 第一种状态的底部
+function editTabBar () {
+  var _curPageArr = wxFunc.getCurrentPages()
+  var _curPage = _curPageArr[_curPageArr.length - 1]
+  var _pagePath = _curPage.__route__
+  if (_pagePath.indexOf('/') !== 0) {
+    _pagePath = '/' + _pagePath
+  }
+  var tabBar = globalStore.state.tabBarList.tabBar
+  for (var i = 0; i < tabBar.list.length; i++) {
+    tabBar.list[i].active = false
+    if (tabBar.list[i].pagePath === _pagePath) {
+      tabBar.list[i].active = true // 根据页面地址设置当前页面状态
+    }
+  }
+  _curPage.setData({
+    tabBar: tabBar
+  })
+  console.log(_curPage)
+}
+
+// 第二种状态的底部
+function editTabBar1 () {
+  var _curPageArr = wxFunc.getCurrentPages()
+  var _curPage = _curPageArr[_curPageArr.length - 1]
+  var _pagePath = _curPage.__route__
+  if (_pagePath.indexOf('/') !== 0) {
+    _pagePath = '/' + _pagePath
+  }
+  var tabBar = globalStore.state.tabBarList.tabBar2
+  for (var i = 0; i < tabBar.list.length; i++) {
+    tabBar.list[i].active = false
+    if (tabBar.list[i].pagePath === _pagePath) {
+      tabBar.list[i].active = true // 根据页面地址设置当前页面状态
+    }
+  }
+  _curPage.setData({
+    tabBar: tabBar
+  })
+}
+
 export default {
   formatNumber,
   formatTime,
@@ -70,5 +114,7 @@ export default {
   classes,
   styles,
   px2rpx,
-  getWindowRect
+  getWindowRect,
+  editTabBar,
+  editTabBar1
 }

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-
+import wxFunc from '@/utils/wxFunc'
 export default {
   data () {
     return {
@@ -20,7 +20,11 @@ export default {
       buttonTitle2: '我要发布房源'
     }
   },
-
+  mounted () {
+    console.log(wxFunc.getCurrentPages())
+    console.log(getApp())
+    console.log(this.globalData)
+  },
   methods: {
     rentHouse () {
       wx.navigateTo({

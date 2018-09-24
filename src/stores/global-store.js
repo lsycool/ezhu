@@ -9,7 +9,90 @@ export default new Vuex.Store({
     userInfo: {},
     zooms: [], // 所有的小区列表
     currentZoom: 0, // 当前选择的小区的id
-    showPopBox: false
+    showPopBox: false,
+    tabBarList: {
+      // 第一种底部导航栏显示
+      tabBar: {
+        'color': '#9E9E9E',
+        'selectedColor': '#f00',
+        'backgroundColor': '#fff',
+        'borderStyle': '#ccc',
+        'list': [{
+          'pagePath': '/pages/tenant/main',
+          'text': '主菜单',
+          'iconPath': 'static/images/down.png',
+          'selectedIconPath': 'static/images/down.png',
+          'clas': 'menu-item',
+          'selectedColor': '#4EDF80',
+          active: true
+        },
+        {
+          'pagePath': '/pages/contact/main',
+          'text': '简历',
+          'iconPath': 'static/images/down.png',
+          'selectedIconPath': 'static/images/down.png',
+          'selectedColor': '#4EDF80',
+          'clas': 'menu-item',
+          active: false
+        },
+        {
+          'pagePath': 'pages/test/test',
+          'text': '我的',
+          'iconPath': 'static/images/down.png',
+          'selectedIconPath': 'static/images/down.png',
+          'selectedColor': '#4EDF80',
+          'clas': 'menu-item',
+          active: false
+        }
+        ],
+        'position': 'bottom'
+      },
+      // 第二种底部导航栏显示
+      tabBar1: {
+        'color': '#9E9E9E',
+        'selectedColor': '#f00',
+        'backgroundColor': '#fff',
+        'borderStyle': '#ccc',
+        'list': [{
+          'pagePath': '/pages/index/index',
+          'text': '首页',
+          'iconPath': '/images/my.png',
+          'selectedIconPath': '/images/my.png',
+          'clas': 'menu-item1',
+          'selectedColor': '#4EDF80',
+          active: false
+        },
+        {
+          'pagePath': '/pages/logs/logs',
+          'text': '消息',
+          'iconPath': '/images/my.png',
+          'selectedIconPath': '/images/my.png',
+          'selectedColor': '#4EDF80',
+          'clas': 'menu-item1',
+          active: true
+        },
+        {
+          'pagePath': '/pages/cont/index',
+          'text': '简历',
+          'iconPath': '/images/my.png',
+          'selectedIconPath': '/images/my.png',
+          'selectedColor': '#4EDF80',
+          'clas': 'menu-item1',
+          active: false
+        },
+        {
+          'pagePath': '/pages/detail/index',
+          'text': '我的',
+          'iconPath': '/images/my.png',
+          'selectedIconPath': '/images/my.png',
+          'selectedColor': '#4EDF80',
+          'clas': 'menu-item1',
+          active: false
+        }
+        ],
+        'position': 'bottom'
+      }
+    }
   },
   mutations: {
     setRole: (state, role) => {

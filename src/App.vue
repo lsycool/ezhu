@@ -5,9 +5,6 @@ export default {
   mpType: 'app',
 
   create () {
-    wx.hideTabBar({
-      animation: false
-    })
     // 调用API从本地缓存中获取数据
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -18,6 +15,9 @@ export default {
   mounted () {
     // 一进来看看用户是否授权过
     this.getSetting()
+    wx.hideTabBar({
+      animation: false
+    })
   },
   methods: {
     getSetting () {
@@ -40,7 +40,7 @@ export default {
                     url: '/pages/tenant/main'
                   })
                 } else {
-                  wx.reLaunch({
+                  wx.navigateTo({
                     url: '/pages/roleChoose/main'
                   })
                 }

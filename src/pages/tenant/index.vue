@@ -42,7 +42,7 @@
         </view>
       </scroll-view>
     </view>
-    
+    <tabBar :tabBar='tabBarSelect'></tabBar>
   </div>
 </template>
 
@@ -50,6 +50,7 @@
 import globalStore from '@/stores/global-store'
 import util from '@/utils/index'
 import comboxList from '@/components/combox'
+import tabBar from '@/components/tabbar'
 
 export default {
   data () {
@@ -80,13 +81,18 @@ export default {
         {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
         {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
         {id: 0, prise: 1000, abstract: 'good house', amount: '10'}],
-      scrollHeight: 0
+      scrollHeight: 0,
+      tabBarSelect: globalStore.state.tabBarList.tabBar
     }
   },
   components: {
-    comboxList
+    comboxList,
+    tabBar
   },
   computed: {
+  },
+  onLoad () {
+    util.editTabBar() // 添加tabBar数据
   },
   mounted () {
     this.zooms = globalStore.state.zooms
@@ -99,7 +105,6 @@ export default {
       let index = e.mp.detail.value
       this.zoomIndex = index
       this.zoomName = this.zooms[index].name
-      console.log(this.zoomName + ':' + index)
     },
     zhenZu () {
       this.isZhenZu = true
@@ -127,7 +132,9 @@ export default {
       })
     },
     preOrder () {
-      
+      wx.switchTab({
+        url: '../publish/main'
+      })
     }
   }
 }
@@ -187,7 +194,7 @@ export default {
   width:30px;
   height:10px;
   font-size:6px;
-  line-height:6px;
+  line-height:10px;
   padding:0;
   display: inline-block;
   color:white;
