@@ -15,6 +15,8 @@ export default {
   mounted () {
     // 一进来看看用户是否授权过
     this.getSetting()
+  },
+  onShow () {
     wx.hideTabBar({
       animation: false
     })

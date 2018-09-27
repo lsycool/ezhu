@@ -13,9 +13,34 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "e租",
+    "navigationBarTitleText": "诚信租",
     "navigationBarTextStyle": "black",
     "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "backgroundColor": "#fafafa",
+    "borderStyle": "white",
+    "selectedColor": "#b4282d",
+    "color": "#666",
+    "list": [{
+        "pagePath": "pages/index/main",
+        "iconPath": "static/images/ic_menu_home_pressed.png",
+        "selectedIconPath": "static/images/ic_menu_home_pressed.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/contact/main",
+        "iconPath": "static/images/ic_menu_book_pressed.png",
+        "selectedIconPath": "/static/images/ic_menu_book_pressed.png",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/publish/main",
+        "iconPath": "static/images/ic_menu_publish_pressed.png",
+        "selectedIconPath": "static/images/ic_menu_publish_pressed.png",
+        "text": "预告"
+      }
+    ]
   },
   "networkTimeout": {
     "request": 10000,

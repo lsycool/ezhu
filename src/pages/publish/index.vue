@@ -24,6 +24,7 @@
 
 <script>
 import card from '@/components/card'
+import wxFunc from '@/utils/wxFunc'
 
 export default {
   data () {
@@ -35,6 +36,10 @@ export default {
 
   components: {
     card
+  },
+
+  mounted () {
+    console.log(wxFunc.getCurrentPages())
   },
 
   methods: {

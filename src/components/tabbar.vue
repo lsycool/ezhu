@@ -1,69 +1,161 @@
-<template name="tabBar">    
-  <view class="tab-bar" :style="tabBarStyle">    
-  <block v-for='(item, index) of tabBar.list' :key='item.pagePath' :data-index='index'>    
-    <navigator :url='item.pagePath' open-type="redirect" :class="item.clas" :style="{color: item.active? (item.selectedColor? item.selectedColor : tabBar.selectedColor) : ''}">    
-      <image :src="item.selectedIconPath" v-if="item.active" class="img"></image>    
-      <image :src="item.iconPath" v-if="!item.active" class="img"></image>  
-      <text>{{item.text}}</text>    
-    </navigator>    
-    </block>  
-    <view class="clear"></view>    
-  </view>    
-</template>  
+<template>
+  <view class="tabBar-wrap">
+    <view class="tabBar-box">
+      <view class="tabBar-nav" v-if="navList.length > 0">
+        <view class="item" v-for="(item, index) in navList"
+            @click="selectNavItem(index, item.pagePath)"
+            :key="item.pagePath" :data-index='index'>
+          <view class="item-images">
+            <image :src="selectNavIndex === index ? item.selectedIconPath : item.iconPath" alt="iconPath"></image>
+          </view>
+          <text :class="selectNavIndex === index ? 'item-text item-text-active' : 'item-text' ">
+            {{item.text}}
+          </text>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
 
 <script>
 export default {
-  data: function () {
-    return {
-    }
+  props: ['selectNavIndex', 'navList'],
+  // data: function () {
+  //   return {
+  //     navList: [
+  //       {
+  //         pagePath: '/pages/index/main',
+  //         iconPath: '/static/images/ic_menu_book_pressed.png',
+  //         selectedIconPath: '/static/images/ic_menu_book_pressed.png',
+  //         text: '首页'
+  //       },
+  //       {
+  //         pagePath: '/pages/contact/main',
+  //         iconPath: '/static/images/ic_menu_book_pressed.png',
+  //         selectedIconPath: '/static/images/ic_menu_book_pressed.png',
+  //         text: '我的预定'
+  //       },
+  //       {
+  //         pagePath: '/pages/publish/main',
+  //         iconPath: '/static/images/ic_menu_book_pressed.png',
+  //         selectedIconPath: '/static/images/ic_menu_book_pressed.png',
+  //         text: '我要发布房源'
+  //       }
+  //     ]
+  //   }
+  // },
+  onShow () {
+    wx.hideTabBar({
+      animation: false
+    })
   },
-  props: {
-    tabBar: {}
+  mounted () {
+    // console.log('navList:')
+    // console.log(this.navList)
   },
-  computed: {
-    tabBarStyle: function () {
-      return {
-        color: this.tabBar.color,
-        background: this.tarBar.backgroundColor,
-        top: this.tabBar.position === 'top' ? 0 : null,
-        bottom: this.tabBar.position === 'top' ? null : 0,
-        'border-bottom': this.tabBar.position === 'top' ? 'solid 1px' + this.tabBar.borderStyle : null,
-        'border-top': 'solid 1px' + this.tabBar.borderStyle
+  methods: {
+    /**
+     * 点击导航栏
+     * @param index
+     */
+    selectNavItem (index, pagePath) {
+      console.log(index)
+      if (index === this.selectNavIndex) {
+        return false
       }
+      this.bindViewTap(pagePath)
+    },
+
+    /**
+     * 路由跳转
+     */
+    bindNavigateTo (url) {
+      wx.navigateTo({
+        url
+      })
+    },
+
+    /**
+     * tabBar路由跳转
+     */
+    bindViewTap (url) {
+      // 回到顶部
+      wx.switchTab({
+        url
+      })
     }
   }
 }
 </script>
 
-<style scoped>
-.menu-item{  
-  width: 32%;  
-  float: left;  
-  text-align: center;  
-  padding-top: 8px;  
-}  
-.menu-item1{  
-  width: 24%;  
-  float: left;  
-  text-align: center;  
-  padding-top: 8px;  
-}  
-.img{ 
-  width: 23px;  
-  height: 23px;  
-  display: block;  
-  margin:auto;  
-}  
-.clear{  
-  clear: both;  
-}  
-.tab-bar{  
-  position: fixed;  
-  width: 100%;  
-  padding: 0px 2%;  
-}  
- 
-.button{
-  margin: 130px;
-}
+<style lang="less" scoped>
+  .tabBar-box {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+    background-color: #f8f8f8;
+  }
+
+  .tabBar-nav {
+    width: 100%;
+    display: flex;
+
+    .item {
+      flex: 1;
+      text-align: center;
+    }
+    .item-text {
+      color: #666;
+      font-size: 10px;
+      transition: .24s linear;
+    }
+    .item-text-active {
+      color: #27a79a;
+    }
+
+    .item-images {
+      width: 25px;
+      height: 25px;
+      margin: 0 auto;
+      text-align: center;
+      transition: .24s linear;
+      display: inline-block;
+
+      & image {
+        display: inline;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .submit-box-btn {
+    position: relative;
+    z-index: 999;
+    width: 85%;
+    height: 90px;
+    line-height: 90px;
+    border-radius: 10px;
+    color: #404040;
+    font-size: 36px;
+    border: none;
+    background-color: #eee;
+    text-align: center;
+    border: 1px solid #eee;
+  }
+
+  .submit-box-btn-active {
+    color: #fff;
+    border: none;
+    border: 1px solid #ff6c00;
+    background-color: #ff6c00;
+  }
+
+  button {
+    border: none;
+    outline: none;
+  }
 </style>

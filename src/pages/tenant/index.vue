@@ -42,7 +42,7 @@
         </view>
       </scroll-view>
     </view>
-    <tabBar :tabBar='tabBarSelect'></tabBar>
+    <tabBarSelect :selectNavIndex='1' :navList='tabBarSelect'></tabBarSelect>
   </div>
 </template>
 
@@ -50,7 +50,7 @@
 import globalStore from '@/stores/global-store'
 import util from '@/utils/index'
 import comboxList from '@/components/combox'
-import tabBar from '@/components/tabbar'
+import tabBarSelect from '@/components/tabbar'
 
 export default {
   data () {
@@ -82,23 +82,31 @@ export default {
         {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
         {id: 0, prise: 1000, abstract: 'good house', amount: '10'}],
       scrollHeight: 0,
-      tabBarSelect: globalStore.state.tabBarList.tabBar
+      tabBarSelect: globalStore.state.tabBarList.navList
     }
   },
   components: {
     comboxList,
-    tabBar
+    tabBarSelect
   },
   computed: {
   },
   onLoad () {
-    util.editTabBar() // 添加tabBar数据
+    // util.editTabBar() // 添加tabBar数据
+  },
+  onShow () {
+    wx.hideTabBar({
+      animation: false
+    })
   },
   mounted () {
     this.zooms = globalStore.state.zooms
     this.zoomName = util.getZoomNameById(globalStore.state.zooms, globalStore.state.currentZoom)
     this.userInfo = globalStore.state.userInfo
     this.getScollHeight()
+    console.log(this.$root.$mp)
+    console.log(this.$root.$mp.query)
+    console.log(this.$root.$mp.appOptions)
   },
   methods: {
     reChoose (e) {
@@ -128,8 +136,11 @@ export default {
     getScollHeight () {
       util.getWindowRect('.houseDetail').then((res) => {
         var windowHeight = wx.getSystemInfoSync().windowHeight
-        this.scrollHeight = windowHeight - res.top + 20
+        this.scrollHeight = windowHeight - res.top - 40
       })
+    },
+    clickIndexNav () {
+
     },
     preOrder () {
       wx.switchTab({

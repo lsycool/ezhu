@@ -13,9 +13,6 @@
 </template>
 
 <script>
-// import util from '@/utils/index'
-// import globalStore from '@/stores/global-store'
-
 export default {
   data: function () {
     return {
@@ -50,6 +47,7 @@ export default {
     }
   },
   mounted () {
+    // console.log('combox.vue')
   },
   computed: {
     optionBoxHeight: function () {

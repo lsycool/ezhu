@@ -11,6 +11,26 @@ export default new Vuex.Store({
     currentZoom: 0, // 当前选择的小区的id
     showPopBox: false,
     tabBarList: {
+      navList: [
+        {
+          pagePath: '/pages/index/main',
+          iconPath: '/static/images/ic_menu_book_pressed.png',
+          selectedIconPath: '/static/images/ic_menu_book_pressed.png',
+          text: '首页'
+        },
+        {
+          pagePath: '/pages/contact/main',
+          iconPath: '/static/images/ic_menu_book_pressed.png',
+          selectedIconPath: '/static/images/ic_menu_book_pressed.png',
+          text: '我的预定'
+        },
+        {
+          pagePath: '/pages/publish/main',
+          iconPath: '/static/images/ic_menu_book_pressed.png',
+          selectedIconPath: '/static/images/ic_menu_book_pressed.png',
+          text: '我要发布房源'
+        }
+      ],
       // 第一种底部导航栏显示
       tabBar: {
         'color': '#9E9E9E',

@@ -6,12 +6,11 @@
 <script>
 
 export default {
-  data () {
-    return {
-      title1: '请选择您要租住的小区'
-    }
+  onShow () {
+    wx.hideTabBar({
+      animation: false
+    })
   },
-
   methods: {
   }
 }

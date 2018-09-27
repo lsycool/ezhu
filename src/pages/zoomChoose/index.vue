@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     optionTap: function (index) {
-      console.log('index:' + index)
+      // console.log('index:' + index)
       globalStore.commit('setCurrentZoom', this.zooms[index].id)
       globalStore.commit('setZooms', this.zooms)
       wx.navigateTo({
