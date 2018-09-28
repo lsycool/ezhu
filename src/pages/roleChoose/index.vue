@@ -28,12 +28,12 @@ export default {
   methods: {
     rentHouse () {
       wx.navigateTo({
-        url: '../zoomChoose/main'
+        url: '../zoomChoose/index'
       })
     },
     publishHouse () {
       wx.switchTab({
-        url: '../publish/main'
+        url: '../publish/index'
       })
     }
   }

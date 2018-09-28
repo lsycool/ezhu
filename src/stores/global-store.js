@@ -13,23 +13,42 @@ export default new Vuex.Store({
     tabBarList: {
       navList: [
         {
-          pagePath: '/pages/index/main',
-          iconPath: '/static/images/ic_menu_book_pressed.png',
-          selectedIconPath: '/static/images/ic_menu_book_pressed.png',
-          text: '首页'
+          pagePath: 'pages/tenant/index',
+          iconPath: '/static/images/ic_menu_home_nor.png',
+          selectedIconPath: '/static/images/ic_menu_home_pressed.png',
+          text: '主菜单'
         },
         {
-          pagePath: '/pages/contact/main',
-          iconPath: '/static/images/ic_menu_book_pressed.png',
+          pagePath: 'pages/myBooked/index',
+          iconPath: '/static/images/ic_menu_book_nor.png',
           selectedIconPath: '/static/images/ic_menu_book_pressed.png',
           text: '我的预定'
         },
         {
-          pagePath: '/pages/publish/main',
-          iconPath: '/static/images/ic_menu_book_pressed.png',
-          selectedIconPath: '/static/images/ic_menu_book_pressed.png',
+          pagePath: 'pages/landlord/index',
+          iconPath: '/static/images/ic_menu_publish_nor.png',
+          selectedIconPath: '/static/images/ic_menu_publish_pressed.png',
           text: '我要发布房源'
         }
+      ],
+      navList2: [{
+        pagePath: 'pages/landlord/index',
+        iconPath: '/static/images/ic_menu_home_nor.png',
+        selectedIconPath: '/static/images/ic_menu_home_pressed.png',
+        text: '主菜单'
+      },
+      {
+        pagePath: 'pages/myPublished/index',
+        iconPath: '/static/images/ic_menu_book_nor.png',
+        selectedIconPath: '/static/images/ic_menu_book_pressed.png',
+        text: '我发布的房源'
+      },
+      {
+        pagePath: 'pages/tenant/index',
+        iconPath: '/static/images/ic_menu_publish_pressed.png',
+        selectedIconPath: '/static/images/ic_menu_publish_pressed.png',
+        text: '我要租房'
+      }
       ],
       // 第一种底部导航栏显示
       tabBar: {
@@ -47,7 +66,7 @@ export default new Vuex.Store({
           active: true
         },
         {
-          'pagePath': '/pages/contact/main',
+          'pagePath': '/pages/contactInfo/main',
           'text': '简历',
           'iconPath': 'static/images/down.png',
           'selectedIconPath': 'static/images/down.png',

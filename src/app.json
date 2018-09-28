@@ -1,14 +1,20 @@
 {
   "pages": [
-    "pages/index/main",
-    "pages/book/main",
-    "pages/publish/main",
-    "pages/authority/main",
-    "pages/landlord/main",
-    "pages/zoomChoose/main",
-    "pages/roleChoose/main",
-    "pages/tenant/main",
-    "pages/contact/main"
+    "pages/index/index",
+    "pages/preOrder/index",
+    "pages/publish/index",
+    "pages/authority/index",
+    "pages/landlord/index",
+    "pages/zoomChoose/index",
+    "pages/roleChoose/index",
+    "pages/tenant/index",
+    "pages/contactInfo/index",
+    "pages/myPublished/index",
+    "pages/roomInfo/index",
+    "pages/zoomInfo/index",
+    "pages/houseInfo/index",
+    "pages/bookResult/index",
+    "pages/myBooked/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -23,19 +29,19 @@
     "selectedColor": "#b4282d",
     "color": "#666",
     "list": [{
-        "pagePath": "pages/index/main",
+        "pagePath": "pages/index/index",
         "iconPath": "static/images/ic_menu_home_pressed.png",
         "selectedIconPath": "static/images/ic_menu_home_pressed.png",
         "text": "首页"
       },
       {
-        "pagePath": "pages/contact/main",
+        "pagePath": "pages/contactInfo/index",
         "iconPath": "static/images/ic_menu_book_pressed.png",
         "selectedIconPath": "/static/images/ic_menu_book_pressed.png",
         "text": "订单"
       },
       {
-        "pagePath": "pages/publish/main",
+        "pagePath": "pages/publish/index",
         "iconPath": "static/images/ic_menu_publish_pressed.png",
         "selectedIconPath": "static/images/ic_menu_publish_pressed.png",
         "text": "预告"

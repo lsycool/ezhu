@@ -7,10 +7,10 @@
             :key="item.pagePath" :data-index='index'>
           <view class="item-images">
             <image :src="selectNavIndex === index ? item.selectedIconPath : item.iconPath" alt="iconPath"></image>
+            <text :class="selectNavIndex === index ? 'item-text item-text-active' : 'item-text' ">
+                {{item.text}}
+            </text>
           </view>
-          <text :class="selectNavIndex === index ? 'item-text item-text-active' : 'item-text' ">
-            {{item.text}}
-          </text>
         </view>
       </view>
     </view>
@@ -20,30 +20,6 @@
 <script>
 export default {
   props: ['selectNavIndex', 'navList'],
-  // data: function () {
-  //   return {
-  //     navList: [
-  //       {
-  //         pagePath: '/pages/index/main',
-  //         iconPath: '/static/images/ic_menu_book_pressed.png',
-  //         selectedIconPath: '/static/images/ic_menu_book_pressed.png',
-  //         text: '首页'
-  //       },
-  //       {
-  //         pagePath: '/pages/contact/main',
-  //         iconPath: '/static/images/ic_menu_book_pressed.png',
-  //         selectedIconPath: '/static/images/ic_menu_book_pressed.png',
-  //         text: '我的预定'
-  //       },
-  //       {
-  //         pagePath: '/pages/publish/main',
-  //         iconPath: '/static/images/ic_menu_book_pressed.png',
-  //         selectedIconPath: '/static/images/ic_menu_book_pressed.png',
-  //         text: '我要发布房源'
-  //       }
-  //     ]
-  //   }
-  // },
   onShow () {
     wx.hideTabBar({
       animation: false
@@ -104,7 +80,7 @@ export default {
     display: flex;
 
     .item {
-      flex: 1;
+      flex: 1;   //让所有弹性盒模型对象的子元素都有相同的长度，且忽略它们内部的内容
       text-align: center;
     }
     .item-text {
@@ -117,17 +93,16 @@ export default {
     }
 
     .item-images {
-      width: 25px;
-      height: 25px;
       margin: 0 auto;
       text-align: center;
       transition: .24s linear;
       display: inline-block;
 
       & image {
-        display: inline;
-        width: 100%;
-        height: 100%;
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        margin-bottom:-10px;
       }
     }
   }

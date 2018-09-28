@@ -144,7 +144,7 @@ export default {
     },
     preOrder () {
       wx.switchTab({
-        url: '../publish/main'
+        url: '../preOrder/index'
       })
     }
   }

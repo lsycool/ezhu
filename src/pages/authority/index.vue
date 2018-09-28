@@ -17,7 +17,7 @@ import globalStore from '@/stores/global-store'
 export default {
   data () {
     return {
-      title1: 'e租平台不仅能为您够提供房源\n还能帮您找到合适队友',
+      title1: '诚信租平台不仅能为您够提供房源\n还能帮您找到合适室友',
       title2: '允许获取您的昵称、微信头像和\n微信号等信息',
       buttonTitle: '确认授权'
     }

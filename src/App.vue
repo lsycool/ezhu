@@ -16,7 +16,7 @@ export default {
     // 一进来看看用户是否授权过
     this.getSetting()
   },
-  onShow () {
+  onLaunch () {
     wx.hideTabBar({
       animation: false
     })
@@ -35,15 +35,15 @@ export default {
                 // 用户已经授权过，并且有角色则跳转对应页面
                 if (role === 'landlord') {
                   wx.redirectTo({
-                    url: '/pages/landlord/main'
+                    url: '/pages/landlord/index'
                   })
                 } else if (role === 'tenant') {
                   wx.redirectTo({
-                    url: '/pages/tenant/main'
+                    url: '/pages/tenant/index'
                   })
                 } else {
                   wx.navigateTo({
-                    url: '/pages/roleChoose/main'
+                    url: '/pages/roleChoose/index'
                   })
                 }
               }
@@ -52,7 +52,7 @@ export default {
             console.log('用户还未授权过')
             // 跳转到授权页面
             wx.navigateTo({
-              url: '/pages/authority/main'
+              url: '/pages/authority/index'
             })
           }
         }
