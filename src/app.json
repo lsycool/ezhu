@@ -1,20 +1,20 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/preOrder/index",
-    "pages/publish/index",
-    "pages/authority/index",
-    "pages/landlord/index",
-    "pages/zoomChoose/index",
-    "pages/roleChoose/index",
-    "pages/tenant/index",
-    "pages/contactInfo/index",
-    "pages/myPublished/index",
-    "pages/roomInfo/index",
-    "pages/zoomInfo/index",
-    "pages/houseInfo/index",
-    "pages/bookResult/index",
-    "pages/myBooked/index"
+    "pages/index/main",
+    "pages/preOrder/main",
+    "pages/publish/main",
+    "pages/authority/main",
+    "pages/landlord/main",
+    "pages/zoomChoose/main",
+    "pages/roleChoose/main",
+    "pages/tenant/main",
+    "pages/contactInfo/main",
+    "pages/myPublished/main",
+    "pages/roomInfo/main",
+    "pages/zoomInfo/main",
+    "pages/houseInfo/main",
+    "pages/bookResult/main",
+    "pages/myBooked/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -29,22 +29,28 @@
     "selectedColor": "#b4282d",
     "color": "#666",
     "list": [{
-        "pagePath": "pages/index/index",
-        "iconPath": "static/images/ic_menu_home_pressed.png",
+        "pagePath": "pages/tenant/main",
+        "iconPath": "static/images/ic_menu_home_nor.png",
         "selectedIconPath": "static/images/ic_menu_home_pressed.png",
-        "text": "首页"
+        "text": "主菜单"
       },
       {
-        "pagePath": "pages/contactInfo/index",
-        "iconPath": "static/images/ic_menu_book_pressed.png",
+        "pagePath": "pages/myBooked/main",
+        "iconPath": "static/images/ic_menu_book_nor.png",
         "selectedIconPath": "/static/images/ic_menu_book_pressed.png",
-        "text": "订单"
+        "text": "我的预定"
       },
       {
-        "pagePath": "pages/publish/index",
-        "iconPath": "static/images/ic_menu_publish_pressed.png",
+        "pagePath": "pages/landlord/main",
+        "iconPath": "static/images/ic_menu_publish_nor.png",
         "selectedIconPath": "static/images/ic_menu_publish_pressed.png",
-        "text": "预告"
+        "text": "我要发布房源"
+      },
+      {
+        "pagePath": "pages/myPublished/main",
+        "iconPath": "static/images/ic_menu_book_nor.png",
+        "selectedIconPath": "static/images/ic_menu_book_pressed.png",
+        "text": "我发布的房源"
       }
     ]
   },

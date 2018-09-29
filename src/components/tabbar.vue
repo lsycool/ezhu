@@ -1,16 +1,14 @@
 <template>
-  <view class="tabBar-wrap">
-    <view class="tabBar-box">
-      <view class="tabBar-nav" v-if="navList.length > 0">
-        <view class="item" v-for="(item, index) in navList"
-            @click="selectNavItem(index, item.pagePath)"
-            :key="item.pagePath" :data-index='index'>
-          <view class="item-images">
-            <image :src="selectNavIndex === index ? item.selectedIconPath : item.iconPath" alt="iconPath"></image>
-            <text :class="selectNavIndex === index ? 'item-text item-text-active' : 'item-text' ">
-                {{item.text}}
-            </text>
-          </view>
+  <view class="tabBar-box">
+    <view class="tabBar-nav" v-if="navList.length > 0">
+      <view class="item" v-for="(item, index) in navList"
+          @click="selectNavItem(index, item.pagePath)"
+          :key="item.pagePath" :data-index='index'>
+        <view class="item-images">
+          <image :src="selectNavIndex === index ? item.selectedIconPath : item.iconPath" alt="iconPath"></image>
+          <text :class="selectNavIndex === index ? 'item-text item-text-active' : 'item-text' ">
+              {{item.text}}
+          </text>
         </view>
       </view>
     </view>
@@ -35,7 +33,7 @@ export default {
      * @param index
      */
     selectNavItem (index, pagePath) {
-      console.log(index)
+      // console.log(index)
       if (index === this.selectNavIndex) {
         return false
       }
@@ -55,9 +53,10 @@ export default {
      * tabBar路由跳转
      */
     bindViewTap (url) {
+      console.log(url)
       // 回到顶部
       wx.switchTab({
-        url
+        url: 'pages/landlord/main'
       })
     }
   }
@@ -69,7 +68,7 @@ export default {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 40px;
+    height: 45px;
     padding: 10px 0;
     border-top: 1px solid #eee;
     background-color: #f8f8f8;

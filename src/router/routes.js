@@ -9,7 +9,7 @@ module.exports = [
   },
   {
     // 授权
-    path: 'pages/authority/index',
+    path: '/pages/authority/index',
     name: 'authority',
     config: {
       enablePullDownRefresh: true
@@ -17,7 +17,7 @@ module.exports = [
   },
   {
     // 选择身份
-    path: 'pages/roleChoose/index',
+    path: '/pages/roleChoose/index',
     name: 'roleChoose',
     config: {
       enablePullDownRefresh: true
@@ -25,7 +25,7 @@ module.exports = [
   },
   {
     // 小区选择
-    path: 'pages/zoomChoose/index',
+    path: '/pages/zoomChoose/index',
     name: 'zoomChoose',
     config: {
       enablePullDownRefresh: true
@@ -33,7 +33,7 @@ module.exports = [
   },
   {
     // 房客下单页
-    path: 'pages/preOrder/index',
+    path: '/pages/preOrder/index',
     name: 'preOrder',
     config: {
       enablePullDownRefresh: true
@@ -41,7 +41,7 @@ module.exports = [
   },
   {
     // 联系方式页面
-    path: 'pages/contactInfo/index',
+    path: '/pages/contactInfo/index',
     name: 'contactInfo',
     config: {
       enablePullDownRefresh: true
@@ -49,7 +49,7 @@ module.exports = [
   },
   {
     // 预定结果页面
-    path: 'pages/bookResult/index',
+    path: '/pages/bookResult/index',
     name: 'bookResult',
     config: {
       enablePullDownRefresh: true
@@ -57,26 +57,26 @@ module.exports = [
   },
   {
     // 房源详细信息页面
-    path: 'pages/zoomInfo/index',
+    path: '/pages/zoomInfo/index',
     name: 'publish',
     config: {}
   },
   {
     // 房屋详细信息页面
-    path: 'pages/houseInfo/index',
+    path: '/pages/houseInfo/index',
     name: 'publish',
     config: {}
   },
   {
     // 房间信息页面
-    path: 'pages/roomInfo/index',
+    path: '/pages/roomInfo/index',
     name: 'publish',
     config: {}
   },
   // 下面是tabBar
   {
     // 房客浏览页面
-    path: 'pages/tenant/index',
+    path: '/pages/tenant/index',
     name: 'tenant',
     config: {
       enablePullDownRefresh: true
@@ -84,7 +84,7 @@ module.exports = [
   },
   {
     // 我的预定页面
-    path: 'pages/myBooked/index',
+    path: '/pages/myBooked/index',
     name: 'myBook',
     config: {
       enablePullDownRefresh: true
@@ -92,14 +92,14 @@ module.exports = [
   },
   {
     // 房东发布房源页面
-    path: 'pages/landlord/index',
+    path: '/pages/landlord/index',
     name: 'landlord',
     config: {
     }
   },
   {
     // 我发布的房源页面
-    path: 'pages/myPublished/index',
+    path: '/pages/myPublished/index',
     name: 'myPublished',
     config: {
     }

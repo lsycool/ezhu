@@ -1,5 +1,6 @@
 <script>
 import globalStore from '@/stores/global-store'
+import wx from '@/utils/wx'
 
 export default {
   mpType: 'app',
@@ -16,7 +17,7 @@ export default {
     // 一进来看看用户是否授权过
     this.getSetting()
   },
-  onLaunch () {
+  onShow () {
     wx.hideTabBar({
       animation: false
     })
@@ -35,15 +36,15 @@ export default {
                 // 用户已经授权过，并且有角色则跳转对应页面
                 if (role === 'landlord') {
                   wx.redirectTo({
-                    url: '/pages/landlord/index'
+                    url: '/pages/landlord/main'
                   })
                 } else if (role === 'tenant') {
                   wx.redirectTo({
-                    url: '/pages/tenant/index'
+                    url: '/pages/tenant/main'
                   })
                 } else {
                   wx.navigateTo({
-                    url: '/pages/roleChoose/index'
+                    url: '/pages/roleChoose/main'
                   })
                 }
               }
@@ -52,7 +53,7 @@ export default {
             console.log('用户还未授权过')
             // 跳转到授权页面
             wx.navigateTo({
-              url: '/pages/authority/index'
+              url: '/pages/authority/main'
             })
           }
         }

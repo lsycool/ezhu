@@ -42,7 +42,7 @@
         </view>
       </scroll-view>
     </view>
-    <tabBarSelect :selectNavIndex='1' :navList='tabBarSelect'></tabBarSelect>
+    <tabBarSelect :selectNavIndex='1' :navList='navList'></tabBarSelect>
   </div>
 </template>
 
@@ -82,7 +82,7 @@ export default {
         {id: 0, prise: 1000, abstract: 'good house', amount: '10'},
         {id: 0, prise: 1000, abstract: 'good house', amount: '10'}],
       scrollHeight: 0,
-      tabBarSelect: globalStore.state.tabBarList.navList
+      navList: globalStore.state.tabBarList.navList
     }
   },
   components: {
@@ -135,8 +135,10 @@ export default {
     },
     getScollHeight () {
       util.getWindowRect('.houseDetail').then((res) => {
+        return res.top
+      }).then((head) => {
         var windowHeight = wx.getSystemInfoSync().windowHeight
-        this.scrollHeight = windowHeight - res.top - 40
+        this.scrollHeight = windowHeight - head + 45
       })
     },
     clickIndexNav () {

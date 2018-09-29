@@ -26,8 +26,8 @@ export default {
       // console.log('index:' + index)
       globalStore.commit('setCurrentZoom', this.zooms[index].id)
       globalStore.commit('setZooms', this.zooms)
-      wx.navigateTo({
-        url: '/pages/tenant/index'
+      wx.switchTab({
+        url: '/pages/tenant/main'
       })
     }
   }
