@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import wx from '@/utils/wx'
 export default {
   props: ['selectNavIndex', 'navList'],
   onShow () {
@@ -56,7 +57,7 @@ export default {
       console.log(url)
       // 回到顶部
       wx.switchTab({
-        url: 'pages/landlord/main'
+        url
       })
     }
   }

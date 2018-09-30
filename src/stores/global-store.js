@@ -13,38 +13,38 @@ export default new Vuex.Store({
     tabBarList: {
       navList: [
         {
-          pagePath: 'pages/tenant/index',
+          pagePath: '/pages/tenant/main',
           iconPath: '/static/images/ic_menu_home_nor.png',
           selectedIconPath: '/static/images/ic_menu_home_pressed.png',
           text: '主菜单'
         },
         {
-          pagePath: 'pages/myBooked/index',
+          pagePath: '/pages/myBooked/main',
           iconPath: '/static/images/ic_menu_book_nor.png',
           selectedIconPath: '/static/images/ic_menu_book_pressed.png',
           text: '我的预定'
         },
         {
-          pagePath: 'pages/landlord/index',
+          pagePath: '/pages/landlord/main',
           iconPath: '/static/images/ic_menu_publish_nor.png',
           selectedIconPath: '/static/images/ic_menu_publish_pressed.png',
           text: '我要发布房源'
         }
       ],
       navList2: [{
-        pagePath: 'pages/landlord/index',
+        pagePath: '/pages/landlord/main',
         iconPath: '/static/images/ic_menu_home_nor.png',
         selectedIconPath: '/static/images/ic_menu_home_pressed.png',
         text: '主菜单'
       },
       {
-        pagePath: 'pages/myPublished/index',
+        pagePath: '/pages/myPublished/main',
         iconPath: '/static/images/ic_menu_book_nor.png',
         selectedIconPath: '/static/images/ic_menu_book_pressed.png',
         text: '我发布的房源'
       },
       {
-        pagePath: 'pages/tenant/index',
+        pagePath: '/pages/tenant/main',
         iconPath: '/static/images/ic_menu_publish_pressed.png',
         selectedIconPath: '/static/images/ic_menu_publish_pressed.png',
         text: '我要租房'
@@ -93,7 +93,7 @@ export default new Vuex.Store({
         'backgroundColor': '#fff',
         'borderStyle': '#ccc',
         'list': [{
-          'pagePath': '/pages/index/index',
+          'pagePath': '/pages/index/main',
           'text': '首页',
           'iconPath': '/images/my.png',
           'selectedIconPath': '/images/my.png',
