@@ -48,15 +48,15 @@ export default {
       scrollHeight: 300,
       navList: globalStore.state.tabBarList.navList,
       movies: [
-        {id: '1', url: '../../../static/images/swiper1.jpg'},
-        {id: '2', url: '../../../static/images/swiper2.jpg'},
-        {id: '3', url: '../../../static/images/swiper1.jpg'},
-        {id: '4', url: '../../../static/images/swiper2.jpg'}
+        {id: '1', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338328&di=ae3adf8bee6fbdef4d578690cb7b5ec7&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F17%2F13%2F83658PICb4r_1024.jpg'},
+        {id: '2', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338327&di=d5a936ca7dee54b9dd7382fa685b39e3&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F17%2F44%2F77%2F38f58PICUNG_1024.jpg'},
+        {id: '3', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=0206950cedda9935053ebed8a89f6914&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a39258eddb07a8012049ef53b617.jpg%401280w_1l_2o_100sh.jpg'},
+        {id: '4', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=ba2f03b7c68c01d4904371ecd3c4814d&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F60%2F26%2F74bOOOPICb4_1024.jpg'}
       ],
       roomsInfo: [
-        {id: '1', name: '卧室1', images: ['../../../static/images/swiper1.jpg', '../../../static/images/swiper2.jpg'], state: '预定'},
-        {id: '2', name: '卧室2', images: ['../../../static/images/swiper1.jpg'], state: '预定'},
-        {id: '3', name: '卧室3', images: ['../../../static/images/swiper1.jpg'], state: '已预定'}
+        {id: '1', name: '卧室1', images: ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=fcf0d2435889f303f320161514d95952&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F14%2F34%2F62%2F39S58PIC9jV_1024.jpg', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=ba2f03b7c68c01d4904371ecd3c4814d&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F60%2F26%2F74bOOOPICb4_1024.jpg'], state: '预定'},
+        {id: '2', name: '卧室2', images: ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=fcf0d2435889f303f320161514d95952&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F14%2F34%2F62%2F39S58PIC9jV_1024.jpg'], state: '预定'},
+        {id: '3', name: '卧室3', images: ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=fcf0d2435889f303f320161514d95952&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F14%2F34%2F62%2F39S58PIC9jV_1024.jpg'], state: '已预定'}
       ]
     }
   },
@@ -74,7 +74,9 @@ export default {
         return res.top
       }).then((head) => {
         var windowHeight = wx.getSystemInfoSync().windowHeight
-        this.scrollHeight = windowHeight - head
+        this.scrollHeight = windowHeight - head - 60
+        console.log(head)
+        console.log(windowHeight)
       })
     }
   },
@@ -97,7 +99,7 @@ export default {
     height: auto;
     overflow: hidden;
     width: 100%;
-    margin-top:40rpx;
+    margin-top:20rpx;
 }
 .userName {
   font-size:30rpx;

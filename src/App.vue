@@ -43,7 +43,7 @@ export default {
                     url: '/pages/tenant/main'
                   })
                 } else {
-                  wx.navigateTo({
+                  wx.reLaunch({
                     url: '/pages/roleChoose/main'
                   })
                 }
