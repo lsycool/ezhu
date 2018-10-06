@@ -1,5 +1,6 @@
 import globalStore from '@/stores/global-store'
 import wxFunc from './wxFunc'
+import getCurrentPages from '@/utils/wxFunc'
 
 function formatNumber (n) {
   const str = n.toString()
@@ -107,6 +108,12 @@ function editTabBar1 () {
   })
 }
 
+function getCurrentPageParam () {
+  var pages = getCurrentPages()
+  var currentPage = pages[pages.length - 1]
+  return currentPage.options
+}
+
 export default {
   formatNumber,
   formatTime,
@@ -116,5 +123,6 @@ export default {
   px2rpx,
   getWindowRect,
   editTabBar,
-  editTabBar1
+  editTabBar1,
+  getCurrentPageParam
 }

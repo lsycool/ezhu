@@ -1,5 +1,2 @@
 /* eslint-disable */
-export default {
-  wx,
-  getCurrentPages
-}
+export default getCurrentPages

@@ -20,6 +20,7 @@
     "mpvue-loader": "^1.1.2",
     "mpvue-webpack-target": "^1.0.0",
     "mpvue-template-compiler": "^1.0.11",
+    "flyio": "^0.5.9",
     "portfinder": "^1.0.13",
     "postcss-mpvue-wxss": "^1.0.0",
     "mpvue-wxparse": "^0.6.5",

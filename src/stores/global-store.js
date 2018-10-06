@@ -48,8 +48,19 @@ export default new Vuex.Store({
         iconPath: '/static/images/ic_menu_publish_pressed.png',
         selectedIconPath: '/static/images/ic_menu_publish_pressed.png',
         text: '我要租房'
-      }
-      ],
+      }],
+      navList3: [{
+        pagePath: '/pages/landlord/main',
+        iconPath: '/static/images/ic_menu_home_nor.png',
+        selectedIconPath: '/static/images/ic_menu_home_pressed.png',
+        text: '主菜单'
+      },
+      {
+        pagePath: '/pages/myBooked/main',
+        iconPath: '/static/images/ic_menu_book_nor.png',
+        selectedIconPath: '/static/images/ic_menu_book_pressed.png',
+        text: '我的预定'
+      }],
       // 第一种底部导航栏显示
       tabBar: {
         'color': '#9E9E9E',

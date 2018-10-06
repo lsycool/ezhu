@@ -13,7 +13,7 @@
       <swiper class="swiper" indicator-dots="true" autoplay="true" interval="5000" duration="1000">
         <block v-for="(item, index) in movies" :key="item.id" :data-index='index'>     
           <swiper-item>
-            <image :src="item.url" class="slide-image" mode="aspectFill"/>
+            <image :src="item.url" :data-src="item.url" class="slide-image" mode="aspectFill" @click="previewImage"/>
           </swiper-item>        
         </block>
       </swiper>
@@ -24,11 +24,11 @@
         <swiper class="room" indicator-dots="true" autoplay="true" interval="5000" duration="1000">
           <block v-for="(url, index2) in item.images" :key="index2" :data-index='index2'>     
             <swiper-item>
-              <image :src="url" class="slide-image" mode="aspectFit"/>
+              <image :src="url" :data-src="url" class="slide-image" mode="aspectFit" @click="previewImage"/>
             </swiper-item>        
           </block>
         </swiper>
-        <button @click.stop="order" class='confirm' :class="{ordered: item.state === '已预定'}">{{item.state}}</button>
+        <button @click.stop="order" :disabled="item.state === '已预定'" class='confirm' :class="{ordered: item.state === '已预定'}">{{item.state}}</button>
       </view>
     </scroll-view>
     <tabBarSelect :selectNavIndex='-1' :navList='navList'></tabBarSelect>
@@ -75,8 +75,21 @@ export default {
       }).then((head) => {
         var windowHeight = wx.getSystemInfoSync().windowHeight
         this.scrollHeight = windowHeight - head - 60
-        console.log(head)
-        console.log(windowHeight)
+        // console.log(head)
+        // console.log(windowHeight)
+      })
+    },
+    order () {
+      wx.navigateTo({
+        url: '../contactInfo/main'
+      })
+    },
+    previewImage (e) {
+      var current = e.target.dataset.src
+      console.log(e)
+      wx.previewImage({
+        current: current,
+        urls: [current]
       })
     }
   },

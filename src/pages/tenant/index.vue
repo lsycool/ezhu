@@ -24,7 +24,7 @@
           <text class="infoTitle">到</text>
           <comboxList ref="comb2" :zooms="priseRange" :fontSize="12" :imageStyle="imageStyle" :styleObject="comboxStyle" @getSelectIndex="optionTapTop"></comboxList>
         </view>
-        <view class="houseType" style="vertical-align:middle; display:inline-block; margin-left: 20px">
+        <view class="houseType" style="vertical-align:middle; display:inline-block; margin-left: 20px; visible:hidden;">
           <text class="infoTitle">户型</text>
           <comboxList ref="comb3" :zooms="priseRange" :fontSize="12" :imageStyle="imageStyle" :styleObject="comboxStyle" @getSelectIndex="optionTapBottom" ></comboxList>
         </view>
@@ -33,7 +33,7 @@
     <view class="houseDetail">
       <scroll-view scroll-y="true" :style="{height: scrollHeight + 'px', padding:'10px'}">
         <view v-for='(item, index) of houseList' :key='item.id' :data-index='index' style="font-size:10px; width:33%; display: inline-block;">
-            <img style="width: 90px; height: 50px; display:block;" src="../../../static/images/slide.png"/>
+            <img style="width: 90px; height: 50px; display:block;" src="../../../static/images/slide.png" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg" @click="previewImage"/>
             <text class="prise">{{item.prise}}</text><text class="profile">{{item.abstract}}</text>
             <view style="display:inline-block; width:90px;">
               <text class="amount">{{item.amount}}</text>
@@ -42,7 +42,7 @@
         </view>
       </scroll-view>
     </view>
-    <tabBarSelect :selectNavIndex='1' :navList='navList'></tabBarSelect>
+    <tabBarSelect :selectNavIndex='0' :navList='navList'></tabBarSelect>
   </div>
 </template>
 
@@ -147,6 +147,13 @@ export default {
     preOrder () {
       wx.navigateTo({
         url: '../preOrder/main'
+      })
+    },
+    previewImage (e) {
+      var current = e.target.dataset.src
+      wx.previewImage({
+        current: current,
+        urls: [current]
       })
     }
   }
