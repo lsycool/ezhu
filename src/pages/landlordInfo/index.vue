@@ -7,16 +7,14 @@
       </view>
       <view style="text-align:center; margin-top:10px; font-weight:bold;">
         <text>
-          发布房源信息
+          个人信息
         </text>
       </view>
     </view>
     <form @submit="formSubmit" @reset="formReset">
       <view class="section">
-        <input name="zoom" :value='name' style="border-bottom:1px solid gray; border-top:1px solid gray; padding:0 10px; font-size:14px; height:40px; line-height:40px;" placeholder="区域" />
-        <input name="area" :value='address' style="border-bottom:1px solid gray; padding:0 10px; font-size:14px; height:40px; line-height:40px;" placeholder="您房源所在小区" />
-        <input name="unitNo" :value='address' style="border-bottom:1px solid gray; padding:0 10px; font-size:14px; height:40px; line-height:40px;" placeholder="单元号" />
-        <input name="doorNo" :value='address' style="border-bottom:1px solid gray; padding:0 10px; font-size:14px; height:40px; line-height:40px;" placeholder="门牌号" />
+        <input name="name" :value='name' style="border-bottom:1px solid gray; border-top:1px solid gray; padding:0 10px; font-size:14px; height:40px; line-height:40px;" placeholder="怎么称呼您" />
+        <input name="address" :value='address' style="border-bottom:1px solid gray; padding:0 10px; font-size:14px; height:40px; line-height:40px;" placeholder="为了能够联系到您，请输入正确的联系方式" />
       </view>
       <view class="btn-area">
         <button class="button" formType="submit">下一步</button>
@@ -30,11 +28,14 @@
 <script>
 import globalStore from '@/stores/global-store'
 import tabBarSelect from '@/components/tabbar'
+import util from '@/utils/index'
 
 export default {
   data () {
     return {
       userInfo: {},
+      name: '',
+      address: '',
       navList: globalStore.state.tabBarList.navList2
     }
   },
@@ -45,11 +46,13 @@ export default {
 
   methods: {
     formSubmit (e) {
+      console.log('form发生了submit事件，携带数据为：', e.mp.detail.value)
       wx.navigateTo({
-        url: '../houseInfo/main'
+        url: '../zoomInfo/main'
       })
     },
     formReset () {
+      console.log('form发生了reset事件')
       wx.navigateBack({
         delta: 1
       })
@@ -58,6 +61,8 @@ export default {
 
   mounted () {
     this.userInfo = globalStore.state.userInfo
+    var options = util.getCurrentPageParam()
+    console.log(options)
   }
 }
 </script>

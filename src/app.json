@@ -14,7 +14,8 @@
     "pages/zoomInfo/main",
     "pages/houseInfo/main",
     "pages/bookResult/main",
-    "pages/myBooked/main"
+    "pages/myBooked/main",
+    "pages/landlordInfo/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -32,7 +33,7 @@
         "pagePath": "pages/tenant/main",
         "iconPath": "static/images/ic_menu_home_nor.png",
         "selectedIconPath": "static/images/ic_menu_home_pressed.png",
-        "text": "主菜单"
+        "text": "租房主菜单"
       },
       {
         "pagePath": "pages/myBooked/main",
@@ -45,6 +46,12 @@
         "iconPath": "static/images/ic_menu_publish_nor.png",
         "selectedIconPath": "static/images/ic_menu_publish_pressed.png",
         "text": "我要发布房源"
+      },
+      {
+        "pagePath": "pages/zoomChoose/main",
+        "iconPath": "static/images/ic_menu_book_nor.png",
+        "selectedIconPath": "static/images/ic_menu_book_pressed.png",
+        "text": "我要租房"
       },
       {
         "pagePath": "pages/myPublished/main",

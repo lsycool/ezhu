@@ -25,7 +25,7 @@ export default {
     optionTap: function (index) {
       // console.log('index:' + index)
       globalStore.commit('setCurrentZoom', this.zooms[index].id)
-      globalStore.commit('setZooms', this.zooms)
+      // globalStore.commit('setZooms', this.zooms)
       wx.switchTab({
         url: '/pages/tenant/main'
       })

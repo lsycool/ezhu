@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import wxFunc from '@/utils/wxFunc'
+// import wxFunc from '@/utils/wxFunc'
 export default {
   data () {
     return {
@@ -21,19 +21,19 @@ export default {
     }
   },
   mounted () {
-    console.log(wxFunc.getCurrentPages())
-    console.log(getApp())
-    console.log(this.globalData)
+    // console.log(wxFunc.getCurrentPages())
+    // console.log(getApp())
+    // console.log(this.globalData)
   },
   methods: {
     rentHouse () {
-      wx.navigateTo({
+      wx.switchTab({
         url: '../zoomChoose/main'
       })
     },
     publishHouse () {
       wx.switchTab({
-        url: '../publish/main'
+        url: '../landlord/main'
       })
     }
   }

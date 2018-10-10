@@ -10,12 +10,12 @@ export default {
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
     console.log('app created and cache logs by setStorageSync')
   },
   mounted () {
     // 一进来看看用户是否授权过
     this.getSetting()
+    this.initialData()
   },
   onShow () {
     wx.hideTabBar({
@@ -58,6 +58,11 @@ export default {
           }
         }
       })
+    },
+    initialData () {
+      let zooms = [{id: 0, name: '天申综合小区'}, {id: 1, name: '天申综合小区1'}, {id: 2, name: '天申综合小区2'}]
+      globalStore.commit('setZooms', zooms)
+      console.log(zooms)
     }
   }
 }

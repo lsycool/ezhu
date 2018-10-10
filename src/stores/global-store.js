@@ -44,8 +44,8 @@ export default new Vuex.Store({
         text: '我发布的房源'
       },
       {
-        pagePath: '/pages/tenant/main',
-        iconPath: '/static/images/ic_menu_publish_pressed.png',
+        pagePath: '/pages/zoomChoose/main',
+        iconPath: '/static/images/ic_menu_publish_nor.png',
         selectedIconPath: '/static/images/ic_menu_publish_pressed.png',
         text: '我要租房'
       }],

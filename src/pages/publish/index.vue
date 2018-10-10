@@ -1,5 +1,8 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
+  <div class="container">
+    <view>
+      
+    </view>
   </div>
 </template>
 
@@ -15,9 +18,6 @@ export default {
   },
 
   methods: {
-    clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
-    }
   },
 
   created () {

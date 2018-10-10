@@ -101,7 +101,7 @@ export default {
   },
   mounted () {
     this.zooms = globalStore.state.zooms
-    this.zoomName = util.getZoomNameById(globalStore.state.zooms, globalStore.state.currentZoom)
+    this.zoomName = util.getZoomNameById(this.zooms, globalStore.state.currentZoom)
     this.userInfo = globalStore.state.userInfo
     this.getScollHeight()
     console.log(this.$root.$mp)

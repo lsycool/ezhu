@@ -56,10 +56,8 @@
       <view>
         <view style="margin-bottom:5px;">2、你对房源满意吗？</view>
         <radio-group class="radio-group" @change="satisfyHouse">
-          <label>
-            <radio value="0" checked="true" style="margin-left:15px;"/>真实房源
-            <radio value="1" style="margin-left:15px;"/>虚假房源
-          </label>
+          <radio value="0" checked="true" style="margin-left:15px;"/>真实房源
+          <radio value="1" style="margin-left:15px;"/>虚假房源
         </radio-group>
       </view>
     </modal>
@@ -141,7 +139,7 @@ export default {
         return res.top
       }).then((head) => {
         var windowHeight = wx.getSystemInfoSync().windowHeight
-        this.scrollHeight = windowHeight - head - 40
+        this.scrollHeight = windowHeight - head - 60
       })
     },
     previewImage (e) {
