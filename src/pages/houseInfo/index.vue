@@ -16,24 +16,24 @@
         <view style="margin-bottom:10px;">
           <view style="margin-bottom:10px; margin-left:5px;">房间图片</view>
           <view style="width:95%; height:300px; border:1px solid gray; margin:0 auto;">
-            <view v-for='(item, index) of pictureList' :key='item.id' :data-index='index' style="width:30%; height:30%; margin: 0 3px; font-size:10px; display: inline-block;">
-              <image style="width: 100%; height:100%; display:block;" :src="item.url" data-src="" @click="previewImage"/>
-              <view style="width: 100%;" class="delete" @click='deleteImage' :data-index="index">
+            <view v-for='(item, index) of pictureList' :key='index' :data-index='index' style="width:30%; height:30%; margin: 2px 3px; font-size:10px; display: inline-block;">
+              <image style="width: 100%; height:100%; display:block;" :src="item" :data-src="item" @click="previewImage"/>
+              <view v-if="index != pictureList.length-1" style="width: 100%;" class="delete" @click='deleteImage' :data-index="index">
                 <image mode='aspectFill' style="display:block; margin:0 auto;" src="../../static/images/delete.png" />
               </view>
             </view>
-            <view style="width:30%; height:30%; margin: 0 3px; text-align:center; vertical-align:middle; display: inline-block;">
+            <!-- <view style="width:30%; height:30%; margin: 0 3px; text-align:center; vertical-align:middle; display: inline-block;">
               <view style="width:100%; height:100%;">
                 <image src="../../static/images/plus.png" mode='aspectFill' style="width:50%; height:50%;" class="button-upload" @click="chooseImage" />
               </view>
-            </view>
+            </view> -->
           </view>
           <view style="font-size:12px; margin-left:5px;">最多上传8张图片，仅支持JPG、PNG格式，图片大于350*350</view>
         </view>
         <view style="margin-bottom:10px; margin-left:5px; margin-right:5px;">
           <view>房屋简介</view>
           <view>
-            <input name="introduce" fixed=false style="border:1px solid gray; font-size:14px; line-height:14px; height:80px;" placeholder="请输入房屋简介，限制在50字以内"></input>
+            <textarea name="introduce" fixed=false style="border:1px solid gray; font-size:14px; line-height:14px; height:80px;" placeholder="请输入房屋简介，限制在50字以内"></textarea>
           </view>
         </view>
         <view style="margin-bottom:10px; margin-left:5px; width:100px;">
@@ -58,14 +58,8 @@ export default {
     return {
       navList: globalStore.state.tabBarList.navList2,
       scrollHeight: 300,
-      pictureList: [{id: '0', url: '../../static/images/house.jpg'},
-        {id: '1', url: '../../static/images/house.jpg'},
-        {id: '2', url: '../../static/images/house.jpg'},
-        {id: '3', url: '../../static/images/house.jpg'},
-        {id: '4', url: '../../static/images/house.jpg'},
-        {id: '5', url: '../../static/images/house.jpg'},
-        {id: '6', url: '../../static/images/house.jpg'},
-        {id: '7', url: '../../static/images/house.jpg'}]
+      currentIndex: 0,
+      pictureList: ['../../static/images/plus2.png']
     }
   },
 
@@ -84,33 +78,54 @@ export default {
         delta: 1
       })
     },
-    previewImage () {
-      wx.previewImage({
-        urls: this.images
-      })
+    previewImage (e) {
+      let current = e.target.dataset.src
+      console.log(current)
+      if (current !== '../../static/images/plus2.png') {
+        wx.previewImage({
+          current: current,
+          urls: [current]
+        })
+      } else {
+        this.chooseImage()
+      }
     },
     chooseImage () {
-      var that = this
-      wx.chooseImage({
-        sizeType: ['compressed'],
-        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-        success: function (res) { // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-          var tempFilePaths = res.tempFilePaths
-          console.log(tempFilePaths)
-          that.images.concat(tempFilePaths)
-        }
-      })
+      let that = this
+      if (that.pictureList.length < 9) {
+        // console.log(that.pictureList)
+        wx.chooseImage({
+          sizeType: ['compressed'],
+          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+          success: function (res) { // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+            let tempFilePaths = res.tempFilePaths
+            for (let p in tempFilePaths) {
+              if (that.pictureList.length < 9) {
+                that.pictureList.unshift(tempFilePaths[p])
+              }
+            }
+            // console.log(that.pictureList)
+          }
+        })
+      } else {
+        wx.showToast({
+          title: '最多只能上传8张图片',
+          icon: 'none',
+          duration: 10000
+        })
+        setTimeout(function () {
+          wx.hideToast()
+        }, 2000)
+      }
     },
     deleteImage (e) {
       var index = e.currentTarget.dataset.index
-      var images = this.images
-      images.splice(index, 1)
-      this.images = images
+      this.pictureList.splice(index, 1)
     }
   },
 
   mounted () {
-    console.log(this.scrollHeight)
+    // console.log(this.scrollHeight)
     this.scrollHeight = wx.getSystemInfoSync().windowHeight - 60
   }
 }
