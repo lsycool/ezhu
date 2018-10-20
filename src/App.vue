@@ -31,7 +31,7 @@ export default {
             wx.getUserInfo({
               success: function (res) {
                 globalStore.commit('setUserInfo', res.userInfo)
-                console.log(res.userInfo)
+                // console.log(res.userInfo)
                 console.log('用户已经授权过')
                 // 用户已经授权过，并且有角色则跳转对应页面
                 if (role === 'landlord') {
@@ -62,7 +62,7 @@ export default {
     initialData () {
       let zooms = [{id: 0, name: '天申综合小区'}, {id: 1, name: '天申综合小区1'}, {id: 2, name: '天申综合小区2'}]
       globalStore.commit('setZooms', zooms)
-      console.log(zooms)
+      // console.log(zooms)
     }
   }
 }

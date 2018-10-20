@@ -1,6 +1,6 @@
 <template>
   <view class='select_box' :style='styleObject'>
-    <view class='select' @click.stop='selectTap'>
+    <view class='select' :style='select' @click.stop='selectTap'>
         <text class='select_text' :style='{"font-size": (fontSize + "px")}'>{{zooms[index].name}}</text>
         <image class="select_img " :class='{select_img_rotate:show}' :style="imageStyle" src='../../static/images/down.png'></image>         
     </view>
@@ -22,6 +22,12 @@ export default {
   },
   props: {
     zooms: {
+      type: Array,
+      default () {
+        return {}
+      }
+    },
+    select: {
       type: Array,
       default () {
         return {}

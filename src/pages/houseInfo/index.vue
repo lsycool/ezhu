@@ -5,7 +5,7 @@
       <form @submit="formSubmit" @reset="formReset">
         <view style="margin-bottom:10px;">
           <view style="margin-left:5px;">房屋公共设施</view>
-          <checkbox-group bindchange="facilities" style="font-size:14px;">
+          <checkbox-group @change="facilities" style="font-size:14px;">
             <checkbox value="0" style="margin-left:2px;"/>洗衣机
             <checkbox value="0" style="margin-left:2px;"/>冰箱
             <checkbox value="0" style="margin-left:2px;"/>空调
@@ -15,29 +15,26 @@
         </view>
         <view style="margin-bottom:10px;">
           <view style="margin-bottom:10px; margin-left:5px;">房间图片</view>
-          <view style="width:95%; height:300px; border:1px solid gray; margin:0 auto;">
-            <view v-for='(item, index) of pictureList' :key='index' :data-index='index' style="width:30%; height:30%; margin: 2px 3px; font-size:10px; display: inline-block;">
-              <image style="width: 100%; height:100%; display:block;" :src="item" :data-src="item" @click="previewImage"/>
-              <view v-if="index != pictureList.length-1" style="width: 100%;" class="delete" @click='deleteImage' :data-index="index">
-                <image mode='aspectFill' style="display:block; margin:0 auto;" src="../../static/images/delete.png" />
+          <view style="width:95%; height:140px; border:1px solid gray; margin:0 auto;">
+            <view>
+              <view v-for='(item, index) of pictureList' v-if="index != 8" :key='index' :data-index='index' style="width:23%; margin: 2px 3px; font-size:10px; display: inline-block;">
+                <image mode='aspectFill' style="width: 60px; height: 60px; display:block; margin:0 auto;" :src="item" :data-src="item" @click="previewImage"/>
+                <view v-if="item != '../../static/images/plus2.png'" style="width: 60px;" class="delete" @click='deleteImage' :data-index="index">
+                  <image mode='aspectFill' style="display:block; margin:0 auto;" src="../../static/images/delete.png" />
+                </view>
               </view>
             </view>
-            <!-- <view style="width:30%; height:30%; margin: 0 3px; text-align:center; vertical-align:middle; display: inline-block;">
-              <view style="width:100%; height:100%;">
-                <image src="../../static/images/plus.png" mode='aspectFill' style="width:50%; height:50%;" class="button-upload" @click="chooseImage" />
-              </view>
-            </view> -->
           </view>
           <view style="font-size:12px; margin-left:5px;">最多上传8张图片，仅支持JPG、PNG格式，图片大于350*350</view>
         </view>
         <view style="margin-bottom:10px; margin-left:5px; margin-right:5px;">
           <view>房屋简介</view>
           <view>
-            <textarea name="introduce" fixed=false style="border:1px solid gray; font-size:14px; line-height:14px; height:80px;" placeholder="请输入房屋简介，限制在50字以内"></textarea>
+            <textarea name="introduce" fixed=false style="border:1px solid gray; font-size:14px; line-height:14px; padding:0 10px; height:80px;" placeholder="请输入房屋简介，限制在50字以内"></textarea>
           </view>
         </view>
-        <view style="margin-bottom:10px; margin-left:5px; width:100px;">
-          <text>期望租金</text><input placeholder='￥' style="border:1px solid gray;"></input>
+        <view v-if="rentType == 0" style="margin-bottom:10px; margin-left:5px; width:300px;">
+          <text style="margin-right:5px; vertical-align:middle;">期望租金</text><input placeholder='￥' style="border:1px solid gray; padding:0 10px; display:inline-block; vertical-align:middle; width:100px;"></input>
         </view>
         <view style="text-align:center; margin-top: 20px;">
           <button class="button" formType="submit" style="display:inline-block; width:100px;">下一步</button>
@@ -56,13 +53,15 @@ import tabBarSelect from '@/components/tabbar'
 export default {
   data () {
     return {
+      rentType: globalStore.state.rentType,
       navList: globalStore.state.tabBarList.navList2,
       scrollHeight: 300,
-      currentIndex: 0,
       pictureList: ['../../static/images/plus2.png']
     }
   },
-
+  // onShow () {
+  //   this.$forceUpdate()
+  // },
   components: {
     tabBarSelect
   },
@@ -79,6 +78,7 @@ export default {
       })
     },
     previewImage (e) {
+      console.log('1rentType:' + globalStore.state.rentType)
       let current = e.target.dataset.src
       console.log(current)
       if (current !== '../../static/images/plus2.png') {
@@ -93,7 +93,6 @@ export default {
     chooseImage () {
       let that = this
       if (that.pictureList.length < 9) {
-        // console.log(that.pictureList)
         wx.chooseImage({
           sizeType: ['compressed'],
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
@@ -104,7 +103,6 @@ export default {
                 that.pictureList.unshift(tempFilePaths[p])
               }
             }
-            // console.log(that.pictureList)
           }
         })
       } else {
@@ -125,21 +123,27 @@ export default {
   },
 
   mounted () {
-    // console.log(this.scrollHeight)
     this.scrollHeight = wx.getSystemInfoSync().windowHeight - 60
+    this.rentType = globalStore.state.rentType
+    // console.log('mounted:' + this.rentType)
   }
 }
 </script>
 
 <style scoped>
 .button {
+  width:80px;
+  height:30px;
+  font-size:12px;
   color:white;
   background-color:rgb(0, 102, 255);
   border-radius:10px;
 }
 /*删除按钮*/
 .delete {
-  margin-top:-20px;
+  margin-top:-18px;
+  margin-left: auto;
+  margin-right: auto;
   height: 20px;
   bottom: 0;
   width: 100%;

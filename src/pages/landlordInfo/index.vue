@@ -28,7 +28,6 @@
 <script>
 import globalStore from '@/stores/global-store'
 import tabBarSelect from '@/components/tabbar'
-import util from '@/utils/index'
 
 export default {
   data () {
@@ -61,8 +60,8 @@ export default {
 
   mounted () {
     this.userInfo = globalStore.state.userInfo
-    var options = util.getCurrentPageParam()
-    console.log(options)
+    // var options = util.getCurrentPageParam()
+    // console.log(options)
   }
 }
 </script>
@@ -76,7 +75,7 @@ export default {
 }
 .btn-area {
   display:flex;
-  margin:200px 80px;
+  margin:100px 80px;
 }
 .button {
   color:white;
