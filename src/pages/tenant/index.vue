@@ -14,8 +14,8 @@
     </view>
     <view class="filter" style="margin-top:20px; margin-left:20rpx">
       <view class="rentType" style="display: flex; flex-direction:row;">
-        <text :class="{clicked:isZhenZu}" style="font-weight:bold;" @click="zhenZu">整租</text>
-        <text :class="{clicked:!isZhenZu}" style="margin-left: 60rpx; font-weight:bold;" @click="heZu">合租</text>
+        <text :class="{clicked:rentType == 0}" style="font-weight:bold;" @click="zhenZu">整租</text>
+        <text :class="{clicked:rentType == 1}" style="margin-left: 60rpx; font-weight:bold;" @click="heZu">合租</text>
       </view>
       <view class="priseAndType" style="display: inline-block; margin-top:15px; z-index:999;">
         <view class="priseRange" style="vertical-align:middle; display:inline-block;">
@@ -26,18 +26,20 @@
         </view>
         <view class="houseType" style="vertical-align:middle; display:inline-block; margin-left: 20px; visible:hidden;">
           <text class="infoTitle">户型</text>
-          <comboxList ref="comb3" :zooms="priseRange" :fontSize="12" :imageStyle="imageStyle" :styleObject="comboxStyle" @getSelectIndex="optionTapBottom" ></comboxList>
+          <comboxList ref="comb3" :zooms="houseType" :fontSize="12" :imageStyle="imageStyle" :styleObject="houseTypeComboxStyle" @getSelectIndex="optionTapBottom" ></comboxList>
         </view>
       </view>
     </view>
     <view class="houseDetail">
       <scroll-view scroll-y="true" :style="{height: scrollHeight + 'px', padding:'10px'}">
-        <view v-for='(item, index) of houseList' :key='item.id' :data-index='index' style="font-size:10px; width:33%; display: inline-block;">
-            <img style="width: 90px; height: 50px; display:block;" src="../../../static/images/slide.png" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg" @click="previewImage"/>
-            <text class="prise">{{item.prise}}</text><text class="profile">{{item.abstract}}</text>
-            <view style="display:inline-block; width:90px;">
-              <text class="amount">{{item.amount}}</text>
-              <button @click.stop="preOrder" class="confirm">去拼团</button>
+        <view v-for='(item, index) of houseList' :key='item.id' :data-index='index' style="font-size:10px; width:95%; display: flex; margin-bottom:15px;">
+            <img style="height: 70px; margin-right: 5px; flex: 1;" src="../../../static/images/slide.png" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg" @click="previewImage"/>
+            <view style="flex:3;" @click="preOrder">
+              <text class="profile">{{item.abstract}}</text>
+              <view>
+                <text class="prise">{{item.prise + '元/月'}}</text>
+                <text v-if="rentType == 1" class="amount">{{item.amount + '人/合租'}}</text>
+              </view>
             </view>
         </view>
       </scroll-view>
@@ -60,11 +62,13 @@ export default {
       zoomIndex: 0,
       buttonTitle1: '切换',
       userInfo: {},
-      isZhenZu: true,
+      rentType: 1,
       priseBottom: 0,
       priseTop: 10000,
-      priseRange: [{id: 0, name: '500￥', imageUrl: ''}, {id: 1, name: '1000￥'}, {id: 2, name: '3000￥'}, {id: 3, name: '5000￥'}],
+      priseRange: [{id: 0, name: '500￥'}, {id: 1, name: '1000￥'}, {id: 2, name: '3000￥'}, {id: 3, name: '5000￥'}],
+      houseType: [{id: 0, name: '一室一厅'}, {id: 0, name: '两室一厅'}, {id: 0, name: '三室一厅'}, {id: 0, name: '三室两厅'}],
       comboxStyle: util.styles({width: '60px', height: '40px', margin: '0 20rpx', display: 'inline-block', 'vertical-align': 'middle'}),
+      houseTypeComboxStyle: util.styles({width: '80px', height: '40px', margin: '0 20rpx', display: 'inline-block', 'vertical-align': 'middle'}),
       imageStyle: util.styles({display: 'none'}),
       houseList: [{id: 0, prise: 1000, abstract: 'good house', amount: '10'},
         {id: 0, prise: 1000, abstract: 'good house good house good house good house good house good house', amount: '10'},
@@ -115,10 +119,10 @@ export default {
       this.zoomName = this.zooms[index].name
     },
     zhenZu () {
-      this.isZhenZu = true
+      this.rentType = 0
     },
     heZu () {
-      this.isZhenZu = false
+      this.rentType = 1
     },
     optionTapBottom (index) {
       this.priseBottom = index
@@ -193,13 +197,16 @@ export default {
   font-size:15px;
 }
 .prise {
-  display:block;
-  width: 90px;
+  display:inline-block;
+  color:brown;
+  margin-right: 10px;
+  font-size: 14px;
 }
 .profile {
   display: -webkit-box;
-  width: 90px;
-  height:30px;
+  font-size: 16px;
+  height:48px;
+  margin-bottom: 5px;
   word-break: break-all;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
@@ -208,7 +215,8 @@ export default {
 }
 .amount {
   display: inline-block;
-  width: 60%;
+  font-size: 13px;
+  color: gray
 }
 .confirm {
   width:30px;

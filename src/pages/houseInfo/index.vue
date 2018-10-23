@@ -59,9 +59,6 @@ export default {
       pictureList: ['../../static/images/plus2.png']
     }
   },
-  // onShow () {
-  //   this.$forceUpdate()
-  // },
   components: {
     tabBarSelect
   },
@@ -125,7 +122,6 @@ export default {
   mounted () {
     this.scrollHeight = wx.getSystemInfoSync().windowHeight - 60
     this.rentType = globalStore.state.rentType
-    // console.log('mounted:' + this.rentType)
   }
 }
 </script>
