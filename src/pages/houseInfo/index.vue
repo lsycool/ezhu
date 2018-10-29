@@ -18,9 +18,11 @@
           <view style="width:95%; height:140px; border:1px solid gray; margin:0 auto;">
             <view>
               <view v-for='(item, index) of pictureList' v-if="index != 8" :key='index' :data-index='index' style="width:23%; margin: 2px 3px; font-size:10px; display: inline-block;">
-                <image mode='aspectFill' style="width: 60px; height: 60px; display:block; margin:0 auto;" :src="item" :data-src="item" @click="previewImage"/>
-                <view v-if="item != '../../static/images/plus2.png'" style="width: 60px;" class="delete" @click='deleteImage' :data-index="index">
-                  <image mode='aspectFill' style="display:block; margin:0 auto;" src="../../static/images/delete.png" />
+                <view :style="{'border-color':(item != '../../static/images/plus2.png'? '#f5222d':'#d9d9d9')}" style="width:65px; height:65px; margin:auto; box-sizing:border-box; border-radius:8rpx; border:2rpx solid #d9d9d9;">
+                  <image mode='aspectFill' style="width: 60px; height: 60px; display:block; margin:auto; box-sizing:border-box; margin-top:1px; border-radius:8rpx;" :src="item" :data-src="item" @click="previewImage"/>
+                  <view v-if="item != '../../static/images/plus2.png'" style="width: 60px; border-radius:8rpx;" class="delete" @click='deleteImage' :data-index="index">
+                    <image mode='aspectFill' style="display:block; margin:0 auto;" src="../../static/images/delete.png" />
+                  </view>
                 </view>
               </view>
             </view>
@@ -137,7 +139,7 @@ export default {
 }
 /*删除按钮*/
 .delete {
-  margin-top:-18px;
+  margin-top:-38rpx;
   margin-left: auto;
   margin-right: auto;
   height: 20px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @click.stop="hidePopBox">
+  <div class="container">
     <view class="head" style="display: block;">
       <view class="zoom" style="display: inline-block; width: 60%;">
         <text class="zoomName" style="padding-left:20rpx;">{{zoomName}}</text>
@@ -12,33 +12,18 @@
         <img class="avatar" :src="userInfo.avatarUrl"/>
       </view>
     </view>
-    <view class="filter" style="margin-top:20px; margin-left:20rpx">
-      <view class="rentType" style="display: flex; flex-direction:row;">
-        <text :class="{clicked:rentType == 0}" style="font-weight:bold;" @click="zhenZu">整租</text>
-        <text :class="{clicked:rentType == 1}" style="margin-left: 60rpx; font-weight:bold;" @click="heZu">合租</text>
-      </view>
-      <view class="priseAndType" style="display: inline-block; margin-top:15px; z-index:999;">
-        <view class="priseRange" style="vertical-align:middle; display:inline-block;">
-          <text class="infoTitle">价格</text>
-          <comboxList ref="comb1" :zooms="priseRange" :fontSize="12" :isShow="showPopBox" :imageStyle="imageStyle" :styleObject="comboxStyle" @getSelectIndex="optionTapBottom"></comboxList>
-          <text class="infoTitle">到</text>
-          <comboxList ref="comb2" :zooms="priseRange" :fontSize="12" :imageStyle="imageStyle" :styleObject="comboxStyle" @getSelectIndex="optionTapTop"></comboxList>
-        </view>
-        <view class="houseType" style="vertical-align:middle; display:inline-block; margin-left: 20px; visible:hidden;">
-          <text class="infoTitle">户型</text>
-          <comboxList ref="comb3" :zooms="houseType" :fontSize="12" :imageStyle="imageStyle" :styleObject="houseTypeComboxStyle" @getSelectIndex="optionTapBottom" ></comboxList>
-        </view>
-      </view>
-    </view>
+    <headBar :navList="headNavList" :list1_data="listData1" :list2_data="listData2" :list3_data="listData3" @getSelectIndex="optionTap"></headBar>
     <view class="houseDetail">
-      <scroll-view scroll-y="true" :style="{height: scrollHeight + 'px', padding:'10px'}">
-        <view v-for='(item, index) of houseList' :key='item.id' :data-index='index' style="font-size:10px; width:95%; display: flex; margin-bottom:15px;">
-            <img style="height: 70px; margin-right: 5px; flex: 1;" src="../../../static/images/slide.png" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg" @click="previewImage"/>
-            <view style="flex:3;" @click="preOrder">
-              <text class="profile">{{item.abstract}}</text>
-              <view>
-                <text class="prise">{{item.prise + '元/月'}}</text>
-                <text v-if="rentType == 1" class="amount">{{item.amount + '人/合租'}}</text>
+      <scroll-view scroll-y="true" :style="{height: scrollHeight + 'px', 'padding-top': '10px;'}">
+        <view v-for='(item, index) of houseList' :key='item.id' :data-index='index' style="margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #d1d3d4;">
+            <view style="font-size:10px; width:95%; display: flex; margin-left:auto; margin-right:auto;">
+              <img style="height: 70px; margin-right: 5px; flex: 1;" src="../../../static/images/slide.png" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg" @click="previewImage"/>
+              <view style="flex:3;" @click="preOrder">
+                <text class="profile">{{item.abstract}}</text>
+                <view>
+                  <text class="prise">{{item.prise + '元/月'}}</text>
+                  <text v-if="rentType == 1" class="amount">{{item.amount + '人/合租'}}</text>
+                </view>
               </view>
             </view>
         </view>
@@ -51,7 +36,7 @@
 <script>
 import globalStore from '@/stores/global-store'
 import util from '@/utils/index'
-import comboxList from '@/components/combox'
+import headBar from '@/components/headbar'
 import tabBarSelect from '@/components/tabbar'
 
 export default {
@@ -60,16 +45,12 @@ export default {
       zooms: [],
       zoomName: '',
       zoomIndex: 0,
-      buttonTitle1: '切换',
       userInfo: {},
       rentType: 1,
-      priseBottom: 0,
-      priseTop: 10000,
-      priseRange: [{id: 0, name: '500￥'}, {id: 1, name: '1000￥'}, {id: 2, name: '3000￥'}, {id: 3, name: '5000￥'}],
-      houseType: [{id: 0, name: '一室一厅'}, {id: 0, name: '两室一厅'}, {id: 0, name: '三室一厅'}, {id: 0, name: '三室两厅'}],
-      comboxStyle: util.styles({width: '60px', height: '40px', margin: '0 20rpx', display: 'inline-block', 'vertical-align': 'middle'}),
-      houseTypeComboxStyle: util.styles({width: '80px', height: '40px', margin: '0 20rpx', display: 'inline-block', 'vertical-align': 'middle'}),
-      imageStyle: util.styles({display: 'none'}),
+      headNavList: ['整租', '价格', '户型'],
+      listData1: ['整租', '合租', '拼租'],
+      listData2: ['不限', '500以下', '500-1000', '1000-1500', '1500-2500', '2500-5000', '5000以上'],
+      listData3: ['一室一厅', '两室一厅', '三室一厅', '三室两厅'],
       houseList: [{id: 0, prise: 1000, abstract: 'good house', amount: '10'},
         {id: 0, prise: 1000, abstract: 'good house good house good house good house good house good house', amount: '10'},
         {id: 0, prise: 1000, abstract: '这是一个大大大大哒哒哒哒哒哒哒哒哒哒的好房子', amount: '10'},
@@ -90,13 +71,10 @@ export default {
     }
   },
   components: {
-    comboxList,
-    tabBarSelect
+    tabBarSelect,
+    headBar
   },
   computed: {
-  },
-  onLoad () {
-    // util.editTabBar() // 添加tabBar数据
   },
   onShow () {
     wx.hideTabBar({
@@ -109,8 +87,8 @@ export default {
     this.userInfo = globalStore.state.userInfo
     this.getScollHeight()
     console.log(this.$root.$mp)
-    console.log(this.$root.$mp.query)
-    console.log(this.$root.$mp.appOptions)
+    // console.log(this.$root.$mp.query)
+    // console.log(this.$root.$mp.appOptions)
   },
   methods: {
     reChoose (e) {
@@ -124,29 +102,17 @@ export default {
     heZu () {
       this.rentType = 1
     },
-    optionTapBottom (index) {
-      this.priseBottom = index
-    },
-    optionTapTop (index) {
-      this.priseTop = index
-    },
-    hidePopBox () {
-      this.$nextTick(() => {
-        this.$refs.comb1.hidePopBox()
-        this.$refs.comb2.hidePopBox()
-        this.$refs.comb3.hidePopBox()
-      })
-    },
     getScollHeight () {
       util.getWindowRect('.houseDetail').then((res) => {
         return res.top
       }).then((head) => {
         var windowHeight = wx.getSystemInfoSync().windowHeight
-        this.scrollHeight = windowHeight - head + 45
+        return windowHeight - head
+      }).then((head) => {
+        util.getWindowRect('.tabBar-box').then((res) => {
+          this.scrollHeight = head - res.height + 45
+        })
       })
-    },
-    clickIndexNav () {
-
     },
     preOrder () {
       wx.navigateTo({
@@ -159,6 +125,15 @@ export default {
         current: current,
         urls: [current]
       })
+    },
+    optionTap (index) {
+      let i = parseInt(index / 10)
+      let j = parseInt(index % 10)
+      if (i === 1) {
+      } else if (i === 2) {
+      } else if (i === 3) {
+      }
+      console.log(j)
     }
   }
 }

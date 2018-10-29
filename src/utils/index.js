@@ -34,7 +34,7 @@ function getZoomNameById (zooms, id) {
 function classes (obj) {
   let classesStr = ''
   for (let className in obj) {
-    if (obj.hasOwnProperty(className) && !!obj[className]) classesStr += className
+    if (obj.hasOwnProperty(className) && !!obj[className]) classesStr += (className + ' ')
   }
   return classesStr
 }

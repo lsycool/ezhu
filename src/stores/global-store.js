@@ -62,6 +62,24 @@ export default new Vuex.Store({
         selectedIconPath: '/static/images/ic_menu_book_pressed.png',
         text: '我的预定'
       }]
+    },
+    color: {
+      pingpaise: '#FF0077', // 品牌主色
+      kongjianse: '#FF5777', // 控件色
+      zhubiaose: '#333333', // 商品名、一级标题
+      cibiaose: '#666666', // tab栏文字色
+      antishise: '#999999', // 暗提示色，用于补充性文案
+      fengexianse: '#ECECEC', // 分割线色，用于补充性文案
+      biejinse: '#EFEFEF', // 背景色，用于补充性文案
+      tishidise: '#FFE8EE' // 提示底色，用于补充性文案
+    },
+    fontSize: {
+      priseBig: '36rpx',
+      prise: '32rpx',
+      title: '28rpx',
+      subtitle: '24rpx', // 副标题，形容性文案，正文
+      supplement: '22rpx', // 销售量，关注人数，参与人数等补充
+      tagContent: '20rpx' // 标签中文字
     }
   },
   mutations: {

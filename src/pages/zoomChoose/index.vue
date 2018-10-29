@@ -18,6 +18,11 @@ export default {
       zooms: [{id: 0, name: '天申综合小区'}, {id: 1, name: '天申综合小区1'}, {id: 2, name: '天申综合小区2'}] // 从后台获取小区列表
     }
   },
+  onShow () {
+    wx.hideTabBar({
+      animation: false
+    })
+  },
   components: {
     comboxList
   },
