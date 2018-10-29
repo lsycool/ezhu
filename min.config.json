@@ -1,0 +1,8 @@
+{
+  "npm": {
+    "dest": "dist/components/minui"
+  },
+  "compilers": {
+    "babel": false
+  }
+}
