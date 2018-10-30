@@ -1,26 +1,26 @@
 <template>
   <view class="container">
-    <view class="title1" style="font-size:36rpx; color:#333333; font-weight:bold; margin-left:50rpx;">
+    <view class="title1" style="font-size:36rpx; color:#333333; font-weight:bold; margin-left:35rpx;">
       <text class="name">{{title1}}</text>
     </view>
-    <view class="button1" style="flex-direction:row; display: flex; margin-top:60rpx;">
-      <button  class="rentHouse" @click="rentHouse" type="primary">{{buttonTitle1}}</button>
-      <button  class="publishHouse" @click="publishHouse" type="primary">{{buttonTitle2}}</button>
+    <view class="button1" style="flex-direction:row; display: flex; margin-top:60rpx; text-align:center;">
+      <view style="flex:1;"><wxc-button type="beauty" size="large" @click="rentHouse" btnStyle="height: 300rpx; width: 300rpx; line-height: 280rpx;">{{buttonTitle1}}</wxc-button></view>
+      <view style="flex:1;"><wxc-button type="beauty" size="large" @click="publishHouse" btnStyle="height: 300rpx; width: 300rpx; line-height: 280rpx;">{{buttonTitle2}}</wxc-button></view>
     </view>
-    <view>
-      <view style="font-size:28rpx; color:#666666">
-        <text>生成我的邀请二维码</text>
+    <wux-white-space size="large" />
+    <wux-white-space size="large" />
+    <view style="padding:20rpx 10%;">
+      <view style="border:1px solid #ECECEC; padding:15rpx 15rpx;">
+        <view style="text-align:center;">
+          <view style="color:#333333; font-size:32rpx; text-align:center; display:inline-block;">生成我的邀请二维码</view>
+          <view style="display:inline-block; margin-left:5rpx;">      
+            <wux-popover placement="top" title="邀请须知" content="Content">
+              <wux-icon type="md-information-circle" size="16" color="#999999" />
+            </wux-popover></view>
+        </view>
+        <wux-white-space size="default" />
+        <view style="color:#999999; font-size:28rpx;text-align:center;">被邀请的人如果发生信用问题，如发布虚假房源，您可能受到影响</view>
       </view>
-      <view>
-        <wxc-elip line="2">这是一段 2 行截断的文字。这是一段 2 行截断的文字。这是一段 2 行截断的文字。这是一段 2 行截断的文字。这是一段 2 行截断的文字。这是一段 2 行截断的文字。</wxc-elip>
-        <text>
-          备注：被邀请的人如果发生信用问题，如发布虚假房源，您可能受到影响
-        </text>
-      </view>
-      <wux-upload list-type="picture-card" :show-upload-list="true" url="">
-          <image :src="imageUrl"/>
-          <text>Upload</text>
-      </wux-upload>
     </view>
   </view>
 </template>
@@ -124,7 +124,7 @@ export default {
 
 <style scoped>
 .container{
-    margin-top:100rpx;
+    margin-top:50rpx;
     height: auto;
     overflow: hidden;
     width: 100%;

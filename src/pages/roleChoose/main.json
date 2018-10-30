@@ -1,7 +1,12 @@
 {
   "navigationBarTitleText": "选择身份",
+  "enablePullDownRefresh": false,
+  "disableScroll": true,
   "usingComponents": {
-    "wxc-elip": "../../static/components/@minui/wxc-elip/index",
-    "wux-upload": "../../static/components/wux/upload/index"
+    "wxc-button": "../../static/components/minui/wxc-button/dist/index",
+    "wux-white-space": "../../static/components/wux/white-space/index",
+    "wxc-panel": "../../static/components/minui/wxc-panel/dist/index",
+    "wux-popover": "../../static/components/wux/popover/index",
+    "wux-icon": "../../static/components/wux/icon/index"
   }
 }
