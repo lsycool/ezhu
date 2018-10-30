@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <view class="title1" style="font-size:40rpx; font-weight:bold; margin-left:50rpx;">
+    <view class="title1" style="font-size:36rpx; color:#333333; font-weight:bold; margin-left:50rpx;">
       <text class="name">{{title1}}</text>
     </view>
     <view class="button1" style="flex-direction:row; display: flex; margin-top:60rpx;">
@@ -8,10 +8,11 @@
       <button  class="publishHouse" @click="publishHouse" type="primary">{{buttonTitle2}}</button>
     </view>
     <view>
-      <view>
+      <view style="font-size:28rpx; color:#666666">
         <text>生成我的邀请二维码</text>
       </view>
       <view>
+        <wxc-elip line="2">这是一段 2 行截断的文字。这是一段 2 行截断的文字。这是一段 2 行截断的文字。这是一段 2 行截断的文字。这是一段 2 行截断的文字。这是一段 2 行截断的文字。</wxc-elip>
         <text>
           备注：被邀请的人如果发生信用问题，如发布虚假房源，您可能受到影响
         </text>

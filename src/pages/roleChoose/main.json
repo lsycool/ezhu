@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "选择身份",
   "usingComponents": {
-    "wxc-elip": "../../static/components/wux/upload/index"
+    "wxc-elip": "../../static/components/@minui/wxc-elip/index",
+    "wux-upload": "../../static/components/wux/upload/index"
   }
 }

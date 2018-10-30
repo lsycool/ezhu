@@ -11,6 +11,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "@minui/wxc-button": "^1.0.2",
     "@minui/wxc-elip": "^1.0.5",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
