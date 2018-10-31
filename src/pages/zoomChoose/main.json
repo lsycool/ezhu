@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "选择小区",
+  "enablePullDownRefresh": false,
+  "disableScroll": true,
+  "usingComponents": {
+    "wux-cell-group": "../../static/components/wux/cell-group/index",
+    "wux-cell": "../../static/components/wux/cell/index",
+    "wux-cascader": "../../static/components/wux/cascader/index"
+  }
+}
