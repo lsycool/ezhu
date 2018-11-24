@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "选择身份",
+  "usingComponents": {
+    "i-index": "../../static/components/iview/index/index",
+    "i-index-item": "../../static/components/iview/index-item/index"
+  }
+}

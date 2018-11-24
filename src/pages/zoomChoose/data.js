@@ -6,7 +6,19 @@ export default [{
     'value': '110000',
     'children': [{
       'label': '东城区',
-      'value': '110101'
+      'value': '110101',
+      'children': [{
+        'label': '光大山湖城',
+        'value': '1101011'    
+      },
+      {
+        'label': '翠珑湾',
+        'value': '1101012'    
+      },
+      {
+        'label': '紫檀山',
+        'value': '1101013'    
+      }]
     },
     {
       'label': '西城区',

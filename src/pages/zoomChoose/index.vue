@@ -1,14 +1,29 @@
 <template>
   <view class="container">
-    <view class="title1" style="width:80%; padding-left:15px;">
-      <text class="name">请选择您要租住的小区</text>
-    </view>
     <wux-cascader :visible="cascaderVisible" title="所在地区" :options="cascaderOptions" @close="onCascaderClose" @change="onCascaderChange" />
-    <view>
-      <wux-cell-group title="请选择您要租住的小区">
-        <wux-cell thumb="http://pbqg2m54r.bkt.clouddn.com/logo.png" :extra="city" is-link title="地址" @click="onCascaderOpen"></wux-cell>
-      </wux-cell-group>
-      <comboxList :zooms="zooms" @getSelectIndex="optionTap"></comboxList>
+    <picker v-if="zoomVisible" @change="reChoose" @cancel="zoomVisible" :value="zoomIndex" :range="zooms" range-key="name" style="width:150rpx; display:inline-block;">
+      <text>选择小区</text>
+    </picker>
+    <view class="list-item">
+      <wxc-list
+        class="item"
+        icon="address"
+        icon-color="#69A0DD"
+        title="请选择所在区域"
+        :desc="city"
+        dot="true"
+        @click="onCascaderOpen">
+      </wxc-list>
+      <wxc-list
+        class="item"
+        icon="address"
+        icon-color="#69A0DD"
+        title="请选择小区"
+        :desc="city"
+        dot="true"
+        @click="optionTap">
+      </wxc-list>
+      <!-- <comboxList :zooms="zooms" @getSelectIndex="optionTap"></comboxList> -->
     </view>
   </view>
 </template>
@@ -22,8 +37,10 @@ export default {
   data () {
     return {
       cascaderVisible: false,
-      city: '请选择您所在省市区',
-      // cascaderOptions: [{'label': '北京', 'value': '110000', 'children': [{'label': '北京市', 'value': '110000', 'children': [{'label': '东城区', 'value': '110101'}]}]}],
+      city: '',
+      zoomIndex: 0,
+      zoomName: '',
+      zoomVisible: false,
       cascaderOptions: data,
       zooms: [{id: 0, name: '天申综合小区'}, {id: 1, name: '天申综合小区1'}, {id: 2, name: '天申综合小区2'}] // 从后台获取小区列表
     }
@@ -42,7 +59,7 @@ export default {
   methods: {
     optionTap (index) {
       // console.log('index:' + index)
-      globalStore.commit('setCurrentZoom', this.zooms[index].id)
+      // globalStore.commit('setCurrentZoom', this.zooms[index].id)
       // globalStore.commit('setZooms', this.zooms)
       wx.switchTab({
         url: '/pages/tenant/main'
@@ -57,6 +74,15 @@ export default {
     onCascaderChange (e) {
       this.city = e.mp.detail.options.map((n) => n.label).join('/')
       console.log(e)
+    },
+    reChoose (e) {
+      let index = e.mp.detail.value
+      this.zoomIndex = index
+      console.log(index)
+      // this.zoomName = this.zooms[index].name
+    },
+    zoomVisible () {
+      this.zoomVisible = !this.zoomVisible
     }
   }
 }
@@ -68,5 +94,12 @@ export default {
     overflow: hidden;
     width: 100%;
     margin-top:50rpx;
+}
+.list-item {
+  background: #fff;
+  margin-bottom: 30rpx;
+}
+.item {
+  flex: 1;
 }
 </style>

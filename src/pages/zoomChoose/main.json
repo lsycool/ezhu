@@ -5,6 +5,9 @@
   "usingComponents": {
     "wux-cell-group": "../../static/components/wux/cell-group/index",
     "wux-cell": "../../static/components/wux/cell/index",
-    "wux-cascader": "../../static/components/wux/cascader/index"
+    "wux-cascader": "../../static/components/wux/cascader/index",
+    "wxc-list": "../../static/components/minui/wxc-list/dist/index",
+    "i-index": "../../static/components/iview/index/index",
+    "i-index-item": "../../static/components/iview/index-item/index"
   }
 }
