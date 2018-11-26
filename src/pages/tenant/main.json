@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "选择小区",
+  "enablePullDownRefresh": false,
+  "disableScroll": true,
+  "usingComponents": {
+    "wxc-list": "../../static/components/minui/wxc-list/dist/index",
+    "wux-cascader": "../../static/components/wux/cascader/index",
+    "van-tabbar-item": "../../static/components/vant/tabbar-item/index",
+    "van-tabbar": "../../static/components/vant/tabbar/index"
+  }
+}

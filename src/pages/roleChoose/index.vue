@@ -59,7 +59,7 @@ export default {
     },
     rentHouse () {
       wx.switchTab({
-        url: '../zoomChoose/main'
+        url: '/pages/tenant/main'
       })
     },
     publishHouse () {
