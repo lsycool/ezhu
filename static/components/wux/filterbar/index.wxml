@@ -28,7 +28,7 @@
                                     </block>
                                 </view>
                             </radio-group>
-                            <checkbox-group bindchange="onCheckboxChange" data-parent-index="{{ index }}" data-index="{{ pIndex }}" data-item="{{ p }}" wx:else="{{ p.type === 'checkbox' }}">
+                            <checkbox-group bindchange="onCheckboxChange" data-parent-index="{{ index }}" data-index="{{ pIndex }}" data-item="{{ p }}" wx:elif="{{ p.type === 'checkbox' }}">
                                 <view class="wux-filterbar__groups">
                                     <block wx:for="{{ p.children }}" wx:for-item="g" wx:key="">
                                         <view class="wux-filterbar__group">
@@ -38,6 +38,11 @@
                                     </block>
                                 </view>
                             </checkbox-group>
+                            <block wx:else="{{ p.type === 'slide' }}">
+                                <block wx:for="{{ p.children }}" wx:for-item="g" wx:for-index="pcIndex" wx:key="">
+                                    <wux-slider defaultValue="{{ [10, 90] }}" showValue data-displayMin="{{ g.displayMin }}" displayMin="{{ g.displayMin }}" data-displayMax="{{ g.displayMax }}" displayMax="{{ g.displayMax }}" data-parent-index="{{ index }}" data-index="{{ pIndex }}" data-item="{{ p }}" bind:change="onSlideChange" bind:afterChange="onAfterSlideChange"/>
+                                </block>
+                            </block>
                         </view>
                     </view>
                 </block>

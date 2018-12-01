@@ -8,28 +8,36 @@
         </wxc-list>
       </view>
     </view>
-    <headBar :navList="headNavList" :list1_data="listData1" :list2_data="listData2" :list3_data="listData3" @getSelectIndex="optionTap"></headBar>
+    <view style="margin-top:5px;">
+      <wux-filterbar :items="headNavList" @change="onFilterbarChange" @open="onFilterbarOpen" @close="onFilterbarClose" />
+    </view>
     <view class="houseDetail">
       <scroll-view scroll-y="true" :style="{height: scrollHeight + 'px', 'padding-top': '10px;'}">
-        <view v-for='(item, index) of houseList' :key='item.id' :data-index='index' class='dataItem' style="margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #d1d3d4;">
-            <view style="font-size:10px; width:95%; display: flex; margin-left:auto; margin-right:auto;">
-              <img style="height: 70px; margin-right: 5px; flex: 1;" src="../../../static/images/slide.png" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg" @click="previewImage"/>
-              <view style="flex:3;" @click="preOrder">
-                <text class="profile">{{item.abstract}}</text>
-                <view>
-                  <text class="prise">{{item.prise + '元/月'}}</text>
-                  <text v-if="rentType == 1" class="amount">{{item.amount + '人/合租'}}</text>
-                </view>
+        <view v-for='(item, index) of houseList' :key='item.id' :data-index='index' class='dataItem' style="margin:20px 10px; padding-bottom:20px; border-bottom:2px solid #d1d3d4;">
+          <view style="font-size:10px; display: flex;">
+            <image  mode='aspectFill' style="height: 90px; margin-right: 10px; flex: 1;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338328&di=ae3adf8bee6fbdef4d578690cb7b5ec7&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F17%2F13%2F83658PICb4r_1024.jpg" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg" @click="previewImage"/>
+            <view style="flex:3;" @click="preOrder">
+              <view class="profile">
+                <wxc-elip line="2">{{item.abstract}}</wxc-elip>
+              </view>
+              <view>
+                <wxc-label class="label" type="fill" type-color="#747bb1" text-color="#ff5577">xxx楼</wxc-label>
+                <wxc-label class="label" type="fill">180平</wxc-label>
+                <wxc-label class="label" type="fill" type-color="gray"  >电梯房</wxc-label>
+              </view>
+              <view>
+                <text class="prise weui-media-box__info__meta">{{item.prise + '元/月'}}</text>
+                <text v-if="rentType == 1" class="amount">{{item.amount + '人/合租'}}</text>
               </view>
             </view>
+          </view>
         </view>
       </scroll-view>
     </view>
     <van-tabbar :active="active" @change="onChange" class="tabBar">
-      <van-tabbar-item icon="shop">标签</van-tabbar-item>
-      <van-tabbar-item icon="chat" dot>标签</van-tabbar-item>
-      <van-tabbar-item icon="records" info="5">标签</van-tabbar-item>
-      <van-tabbar-item icon="gold-coin" info="20">标签</van-tabbar-item>
+      <van-tabbar-item icon="wap-home">返回主菜单</van-tabbar-item>
+      <van-tabbar-item icon="cart" info="5">我的预定</van-tabbar-item>
+      <van-tabbar-item icon="arrow-left">返回上一级</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -37,49 +45,179 @@
 <script>
 import globalStore from '@/stores/global-store'
 import util from '@/utils/index'
-import headBar from '@/components/headbar'
-import tabBarSelect from '@/components/tabbar'
 import data from './data'
 
 export default {
   data () {
     return {
-      zooms: [],
-      zoomName: '',
       city: '',
-      zoomIndex: 0,
-      userInfo: {},
       rentType: 1,
       active: 0,
-      headNavList: ['整租', '价格', '户型'],
-      listData1: ['整租', '合租', '拼租'],
-      listData2: ['不限', '500以下', '500-1000', '1000-1500', '1500-2500', '2500-5000', '5000以上'],
-      listData3: ['一室一厅', '两室一厅', '三室一厅', '三室两厅'],
+      headNavList: [
+        {
+          type: 'radio',
+          label: '整租',
+          value: 'rentType',
+          children: [{
+                  label: '整租',
+                  value: '1'
+              },
+              {
+                  label: '合租',
+                  value: '2'
+              },
+              {
+                  label: '拼租',
+                  value: '3'
+              }
+          ],
+          groups: ['001']
+        },
+        {
+          type: 'radio',
+          label: '价格',
+          value: 'rentPrise',
+          children: [{
+                  label: '不限',
+                  value: '1'
+              },
+              {
+                  label: '500-1000',
+                  value: '2'
+              },
+              {
+                  label: '1000-1500',
+                  value: '3'
+              },
+              {
+                  label: '1500-3000',
+                  value: '3'
+              },
+              {
+                  label: '3000以上',
+                  value: '4'
+              }
+          ],
+          groups: ['002']
+        },
+        {
+          type: 'sort',
+          label: '排序',
+          value: 'sort',
+          groups: ['005'],
+        },
+        {
+          type: 'filter',
+          label: '筛选',
+          value: 'filter',
+          children: [{
+              type: 'radio',
+              label: '朝向',
+              value: 'face',
+              children: [{
+                      label: '东',
+                      value: 'east',
+                  },
+                  {
+                      label: '南',
+                      value: 'south',
+                  },
+                  {
+                      label: '西',
+                      value: 'west',
+                  },
+                  {
+                      label: '北',
+                      value: 'north',
+                  },
+              ],
+          },
+          {
+              type: 'checkbox',
+              label: '房源亮点',
+              value: 'face',
+              children: [{
+                      label: '地铁旁',
+                      value: 'subway',
+                  },
+                  {
+                      label: '精装修',
+                      value: 'decoration',
+                  },
+                  {
+                      label: '免中介费',
+                      value: 'freeZJF',
+                  },
+                  {
+                      label: '免押金',
+                      value: 'freeYJ',
+                  },
+                  {
+                      label: '随时看房',
+                      value: 'freeKF',
+                  },
+              ],
+          },        
+          {
+            type: 'radio',
+            label: '户型',
+            value: 'rentPrise',
+            children: [{
+                    label: '一室一厅',
+                    value: '1'
+                },
+                {
+                    label: '两室一厅',
+                    value: '2'
+                },
+                {
+                    label: '三室一厅',
+                    value: '3'
+                },
+                {
+                    label: '三室两厅',
+                    value: '4'
+                },
+                {
+                    label: '其他',
+                    value: '5'
+                }
+              ]
+          },
+          {
+            type: 'slide',
+            label: '价格区间',
+            value: 'priseRent',
+            children: [{
+                    label: '一室一厅',
+                    value: [2000, 5000],
+                    displayMin: 0,
+                    displayMax: 20000
+                }
+              ]
+          }],
+          groups: ['004']
+        }
+      ],
       houseList: [{id: 0, prise: 1000, abstract: 'good house', amount: '10'},
-        {id: 1, prise: 1000, abstract: 'good house good house good house good house good house good house', amount: '10'},
-        {id: 2, prise: 1000, abstract: '这是一个大大大大哒哒哒哒哒哒哒哒哒哒的好房子', amount: '10'},
-        {id: 3, prise: 1000, abstract: 'good house', amount: '10'},
-        {id: 4, prise: 1000, abstract: 'good house', amount: '10'},
-        {id: 5, prise: 1000, abstract: 'good house', amount: '10'},
-        {id: 6, prise: 1000, abstract: 'good house', amount: '10'},
-        {id: 7, prise: 1000, abstract: 'good house', amount: '10'},
-        {id: 8, prise: 1000, abstract: 'good house', amount: '10'},
-        {id: 9, prise: 1000, abstract: 'good house', amount: '10'},
-        {id: 10, prise: 1000, abstract: 'good house', amount: '10'},
-        {id: 11, prise: 1000, abstract: 'good house', amount: '10'},
-        {id: 12, prise: 1000, abstract: 'good house', amount: '10'},
-        {id: 13, prise: 1000, abstract: 'good house', amount: '10'},
-        {id: 14, prise: 1000, abstract: 'good house', amount: '10'}],
+        {id: 1, prise: 1001, abstract: 'good house good house good house good house good house good house  good house good house', amount: '10'},
+        {id: 2, prise: 1002, abstract: '这是一个大大大大哒哒哒哒哒哒哒对方水电费水电费水电费哒哒哒的好房子', amount: '10'},
+        {id: 3, prise: 1003, abstract: 'good house', amount: '10'},
+        {id: 4, prise: 1004, abstract: 'good house', amount: '10'},
+        {id: 5, prise: 1005, abstract: 'good house', amount: '10'},
+        {id: 6, prise: 1006, abstract: 'good house', amount: '10'},
+        {id: 7, prise: 1007, abstract: 'good house', amount: '10'},
+        {id: 8, prise: 1008, abstract: 'good house', amount: '10'},
+        {id: 9, prise: 1009, abstract: 'good house', amount: '10'},
+        {id: 10, prise: 1010, abstract: 'good house', amount: '10'},
+        {id: 11, prise: 1011, abstract: 'good house', amount: '10'},
+        {id: 12, prise: 1012, abstract: 'good house', amount: '10'},
+        {id: 13, prise: 1013, abstract: 'good house', amount: '10'},
+        {id: 14, prise: 1014, abstract: 'good house', amount: '10'}],
       scrollHeight: 0,
-      scrollTop: 0,
-      navList: globalStore.state.tabBarList.navList,
       cascaderOptions: data,
       cascaderVisible: false
     }
-  },
-  components: {
-    tabBarSelect,
-    headBar
   },
   computed: {
   },
@@ -89,28 +227,13 @@ export default {
     })
   },
   mounted () {
-    this.zooms = globalStore.state.zooms
-    this.zoomName = util.getZoomNameById(this.zooms, globalStore.state.currentZoom)
-    this.userInfo = globalStore.state.userInfo
     this.getScollHeight()
     console.log(this.$root.$mp)
     // console.log(this.$root.$mp.query)
     // console.log(this.$root.$mp.appOptions)
   },
   methods: {
-    reChoose (e) {
-      let index = e.mp.detail.value
-      this.zoomIndex = index
-      this.zoomName = this.zooms[index].name
-    },
-    zhenZu () {
-      this.rentType = 0
-    },
-    heZu () {
-      this.rentType = 1
-    },
     getScollHeight () {
-      this.scrollHeight = 70 * this.houseList.length
       util.getWindowRect('.houseDetail').then((res) => {
         return res.top
       }).then((head) => {
@@ -134,15 +257,6 @@ export default {
         urls: [current]
       })
     },
-    optionTap (index) {
-      let i = parseInt(index / 10)
-      let j = parseInt(index % 10)
-      if (i === 1) {
-      } else if (i === 2) {
-      } else if (i === 3) {
-      }
-      console.log(j)
-    },
     onCascaderOpen () {
       this.cascaderVisible = true
     },
@@ -154,9 +268,6 @@ export default {
     },
     onChange(event) {
       console.log(event.detail);
-    },
-    onPageScroll(event){
-      this.scrollTop = event.scrollTop
     }
   }
 }
@@ -167,7 +278,7 @@ export default {
     height: auto;
     overflow: hidden;
     width: 100%;
-    margin-top:40rpx;
+    margin-top:20rpx;
 }
 .clicked {
   color:#336699
@@ -196,20 +307,19 @@ export default {
 }
 .prise {
   display:inline-block;
-  color:brown;
+  color:#D32F2F;
+  font-weight: bold;
+  margin-top: 5px;
   margin-right: 10px;
   font-size: 14px;
 }
 .profile {
-  display: -webkit-box;
-  font-size: 16px;
-  height:48px;
-  margin-bottom: 5px;
-  word-break: break-all;
-  text-overflow: ellipsis;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
+  /* font-family: 'SourceHanSansCN Heavy'; */
+  font-weight: bold;
+  color: #455A64;
+  font-size: 15px;
+  height:40px;
+  margin-bottom: 4px;
 }
 .amount {
   display: inline-block;
@@ -230,4 +340,11 @@ export default {
 .item {
   flex: 1;
 }
+.label {
+    margin-right: 20rpx;
+  }
+/* @font-face{
+    font-family: 'SourceHanSansCN Heavy';
+    src : url('./SourceHanSansCN-Heavy.otf');
+} */
 </style>

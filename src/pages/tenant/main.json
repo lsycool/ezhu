@@ -4,8 +4,12 @@
   "disableScroll": true,
   "usingComponents": {
     "wxc-list": "../../static/components/minui/wxc-list/dist/index",
+    "wxc-elip": "../../static/components/minui/wxc-elip/dist/index",
+    "wxc-label": "../../static/components/minui/wxc-label/dist/index",
     "wux-cascader": "../../static/components/wux/cascader/index",
     "van-tabbar-item": "../../static/components/vant/tabbar-item/index",
-    "van-tabbar": "../../static/components/vant/tabbar/index"
+    "van-tabbar": "../../static/components/vant/tabbar/index",
+    "wux-filterbar": "../../static/components/wux/filterbar/index",
+    "wux-slider": "../../static/components/wux/slider/index"
   }
 }

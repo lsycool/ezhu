@@ -93,6 +93,32 @@ Component({
                 [`items[${parentIndex}].children[${index}].children`]: children,
                 [`items[${parentIndex}].children[${index}].selected`]: selected,
             })
+            console.log(e)
+        },
+        /**
+         * 滑动栏出发change事件
+         * @param {object} e 
+         */
+        onSlideChange(e) {
+            const { value } = e.detail
+            const { displaymax, displaymin, index, item, parentIndex } = e.currentTarget.dataset
+            let left = parseInt((value[0] / 100) * (displaymax - displaymin))
+            let right = parseInt((value[1] / 100) * (displaymax - displaymin))
+            const selected = left + "-" + right + ' ￥'
+             
+            this.$$setData({
+                [`items[${parentIndex}].children[${index}].selected`]: selected,
+            })
+            console.log(e)
+            console.log(this.data.items)
+        },
+        /**
+         * 滑动栏完成出发change事件
+         * @param {object} e 
+         */
+        onAfterSlideChange(e) {
+            const { value } = e.detail
+            // console.log(e)
         },
         /**
          * 下拉框内单项选择触发 change 事件
