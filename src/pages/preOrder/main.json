@@ -1,0 +1,20 @@
+{
+    "navigationBarTitleText": "房屋详情",
+    "enablePullDownRefresh": false,
+    "disableScroll": true,
+    "usingComponents": {
+      "van-goods-action": "../../static/components/vant/goods-action/index",
+      "van-goods-action-icon": "../../static/components/vant/goods-action-icon/index",
+      "van-goods-action-button": "../../static/components/vant/goods-action-button/index",
+      "wxc-label": "../../static/components/minui/wxc-label/dist/index",
+      "wxc-elip": "../../static/components/minui/wxc-elip/dist/index",
+      "wxc-price": "../../static/components/minui/wxc-price/dist/index",
+      "wxc-flex": "../../static/components/minui/wxc-flex/dist/index",
+      "van-popup": "../../static/components/vant/popup/index",
+      "wux-icon": "../../static/components/wux/icon/index",
+      "wux-grids": "../../static/components/wux/grids/index",
+      "wux-grid": "../../static/components/wux/grid/index",
+      "wux-accordion-group": "../../static/components/wux/accordion-group/index",
+      "wux-accordion": "../../static/components/wux/accordion/index"
+    }
+  }
