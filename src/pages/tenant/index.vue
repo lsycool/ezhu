@@ -12,11 +12,11 @@
       <wux-filterbar :items="headNavList" @change="onFilterbarChange" @open="onFilterbarOpen" @close="onFilterbarClose" />
     </view>
     <view class="houseDetail">
-      <scroll-view scroll-y="true" :style="{height: scrollHeight + 'px', 'padding-top': '10px;'}">
+      <scroll-view scroll-y="true" :style="{height: scrollHeight + 'px', 'padding-top': '10px;', overflow: auto}">
         <view v-for='(item, index) of houseList' :key='item.id' :data-index='index' class='dataItem' style="margin:20px 10px; padding-bottom:20px; border-bottom:2px solid #d1d3d4;">
           <view style="font-size:10px; display: flex;">
             <image  mode='aspectFill' style="height: 90px; margin-right: 10px; flex: 1;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338328&di=ae3adf8bee6fbdef4d578690cb7b5ec7&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F17%2F13%2F83658PICb4r_1024.jpg" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg" @click="previewImage"/>
-            <view style="flex:3;" @click="preOrder">
+            <view style="flex:3;" @click="preOrder" :data-key='item.id'>
               <view class="profile">
                 <wxc-elip line="2">{{item.abstract}}</wxc-elip>
               </view>
@@ -245,9 +245,9 @@ export default {
         })
       })
     },
-    preOrder () {
+    preOrder (e) {
       wx.navigateTo({
-        url: '../preOrder/main'
+        url: '../preOrder/main?id=' + e.currentTarget.dataset.key
       })
     },
     previewImage (e) {
@@ -266,8 +266,25 @@ export default {
     onCascaderChange (e) {
       this.city = e.mp.detail.options.map((n) => n.label).join('/')
     },
-    onChange(event) {
-      console.log(event.detail);
+    onChange(e) {
+      let index = e.mp.detail;
+      if (this.active == index) {
+        return;
+      }
+      if (index == 0) {
+        wx.switchTab({
+          url: '../tenant/main'
+        })
+      } else if(index == 1) {
+        wx.switchTab({
+          url: '../myBooked/main'
+        })
+      } else if (index == 2) {
+        wx.switchTab({
+          url: '../myBooked/main'
+        })        
+      }
+      console.log(e);
     }
   }
 }
@@ -343,8 +360,9 @@ export default {
 .label {
     margin-right: 20rpx;
   }
-/* @font-face{
-    font-family: 'SourceHanSansCN Heavy';
-    src : url('./SourceHanSansCN-Heavy.otf');
-} */
+.houseDetail ::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
 </style>

@@ -1,15 +1,7 @@
 <template>
+<scroll-view scroll-y="true" :style="{height: scrollHeight + 'px', overflow: auto}">
   <div class="container">
-    <view class="head" style="display: block;">
-      <view class="zoom" style="display: inline-block; width: 60%;">
-        <text class="zoomName" style="padding-left:20rpx;">{{zoomName}}</text>
-      </view>
-      <view class="userInfo" style="display: inline-block; text-align:right; width:40%">
-        <text class="userName">{{userInfo.nickName}}</text>
-        <image class="avatar" :src="userInfo.avatarUrl"/>
-      </view>
-    </view>
-    <view style="margin: 20px 50px;">
+    <view class="panel">
       <swiper class="swiper" indicator-dots="true" autoplay="true" interval="5000" duration="1000">
         <block v-for="(item, index) in movies" :key="item.id" :data-index='index'>     
           <swiper-item>
@@ -18,51 +10,161 @@
         </block>
       </swiper>
     </view>
-    <scroll-view class='scroll' scroll-y="true" :style="{height: scrollHeight + 'px', 'margin-top': '20px', 'margin-left': '20px'}">
-      <view style='overflow: hidden; width:500rpx; padding:10px 0;' v-for="(item, index) in roomsInfo" :key="item.id" :data-index='index'>
-        <text style="font-size:14px; font-weight:bold;">{{item.name}}</text>
-        <swiper class="room" indicator-dots="true" autoplay="true" interval="5000" duration="1000">
-          <block v-for="(url, index2) in item.images" :key="index2" :data-index='index2'>     
-            <swiper-item>
-              <image :src="url" :data-src="url" class="slide-image" mode="aspectFit" @click="previewImage"/>
-            </swiper-item>        
-          </block>
-        </swiper>
-        <button @click.stop="order" :disabled="item.state === '已预定'" class='confirm' :class="{ordered: item.state === '已预定'}">{{item.state}}</button>
+    <view class="panel" style="margin-bottom:10px;border-bottom:1px solid #ececec;padding-bottom:10px;">
+      <view class="panel-hd">张江高科-光大山湖城</view>
+      <wxc-flex>
+        <view style="flex-grow: 0;">
+          <wxc-price class="price-demo" icon="sub">100.02 元/月</wxc-price>
+          <wxc-label style="margin-left: 20rpx;">合租</wxc-label>
+        </view>
+        <view style="flex-grow: 1; text-align:right; line-height:50rpx;" class="price-demo" @click="onTogglePopup">费用详情</view>
+      </wxc-flex>
+      <van-popup :show="popupShow" @close="onTogglePopup" @click-overlay="onTogglePopup" custom-style="width: 80%;padding: 20px;text-align: center;box-sizing: border-box;padding:20px;border-radius:10px;">
+        <view style="text-align:left;">
+          <view style="color:#ff4422; font-size:15px; margin-bottom:10px;">押二付一</view>
+          <view style="font-size:12px;">押金:4000 水费:30元 电费:100元</view>
+        </view>
+      </van-popup>
+    </view>
+    <view class="panel">
+      <view style="display:inline-block; width:100%;">
+          <view class="labelGroup">
+            <view class="labelBlock">张江高科</view>
+          </view>
+          <view class="labelGroup">
+            <view class="labelBlock">光大山湖城</view>
+          </view>
+            <view class="labelGroup">
+          <view class="labelBlock">5室3厅2卫</view>
+          </view>
       </view>
-    </scroll-view>
-    <tabBarSelect :selectNavIndex='-1' :navList='navList'></tabBarSelect>
+      <view style="display:inline-block; width:100%;">
+          <view class="labelGroup">
+            <view class="labelBlock">面积150平米</view>
+          </view>
+          <view class="labelGroup">
+            <view class="labelBlock">13楼</view>
+          </view>
+            <view class="labelGroup">
+          <view class="labelBlock">电梯房</view>
+          </view>
+      </view>
+      <view style="display:inline-block; width:100%;">
+          <view class="labelGroup">
+            <view class="labelBlock">坐北朝南</view>
+          </view>
+      </view>
+    </view>
+    <view class="panel">
+      <view class="panel-hd">房间配置</view>
+      <view>
+        <wux-grids :bordered='false' col='5'>
+            <wux-grid>
+                <wux-icon addon="icon-chuang" title="床"/>
+            </wux-grid>
+            <wux-grid>
+                <wux-icon addon="icon-xiyiji" title="洗衣机"/>
+            </wux-grid>
+            <wux-grid>
+                <wux-icon addon="icon-kongtiao" title="空调"/>
+            </wux-grid>
+            <wux-grid>
+                <wux-icon addon="icon-yangtai" disable title="阳台" style=""/>
+            </wux-grid>
+            <wux-grid>
+               <wux-icon addon="icon-bingxiang" title="冰箱"/>
+            </wux-grid>
+            <wux-grid>
+               <wux-icon addon="icon-weishengjian" title="卫生间"/>
+            </wux-grid>
+            <wux-grid>
+               <wux-icon addon="icon-app_icons-" disable title="燃气"/>
+            </wux-grid>
+            <wux-grid>
+               <wux-icon addon="icon-television" title="电视机"/>
+            </wux-grid>
+            <wux-grid>
+               <wux-icon addon="icon-reshui" disable title="热水器"/>
+            </wux-grid>
+            <wux-grid>
+               <wux-icon addon="icon-WIFI" title="宽带"/>
+            </wux-grid>
+            <wux-grid>
+               <wux-icon addon="icon-shafa" title="沙发"/>
+            </wux-grid>      
+            <wux-grid>
+               <wux-icon addon="icon-nuanqi-" title="暖气"/>
+            </wux-grid>   
+            <wux-grid>
+               <wux-icon addon="icon-yigui" title="衣柜"/>
+            </wux-grid>         
+        </wux-grids>
+      </view>
+    </view>
+    <view class="panel">
+      <view class="panel-hd">简介</view>
+      <wxc-elip line="3">这是一个大大的好房子,赶快来抢购啊，先到先得，手慢无</wxc-elip>
+    </view>
+    <view class="panel according-title" style="padding-top:40rpx;">
+      <wux-accordion-group accordion :default-current="['0']">
+        <wux-accordion title="卧室详情" titleClass1>
+          <image mode='aspectFill' style="height: 90px; margin-right: 10px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338328&di=ae3adf8bee6fbdef4d578690cb7b5ec7&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F17%2F13%2F83658PICb4r_1024.jpg" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg"/>
+        </wux-accordion>
+      </wux-accordion-group>
+    </view>
+    <view class="panel">
+      <view class="panel-hd">周边解读</view>
+      <view>
+        <map id="map" longitude="113.324520" latitude="23.099994" scale="14"  :markers="markers" :polyline="polyline" show-location style="width: 100%; height: 200px;"></map>
+      </view>
+    </view>
+    <van-goods-action>
+      <van-goods-action-icon icon="wap-home" text="主菜单" @click="onHomePage"/>
+      <van-goods-action-icon icon="cart" text="我的预定" info="5" @click="onBooked"/>
+      <van-goods-action-button size="mini" text="收藏" type="warning" @click="onBooked"/>
+      <van-goods-action-button size="mini" text="立即预定" @click="onBooked"/>
+    </van-goods-action>
   </div>
+  </scroll-view>
 </template>
 
 <script>
 import util from '@/utils/index'
-import tabBarSelect from '@/components/tabbar'
 import globalStore from '@/stores/global-store'
 
 export default {
   data () {
     return {
       zoomName: '',
-      userInfo: {},
       scrollHeight: 300,
-      navList: globalStore.state.tabBarList.navList,
+      active: -1,
+      popupShow: false,
       movies: [
         {id: '1', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338328&di=ae3adf8bee6fbdef4d578690cb7b5ec7&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F17%2F13%2F83658PICb4r_1024.jpg'},
         {id: '2', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338327&di=d5a936ca7dee54b9dd7382fa685b39e3&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F17%2F44%2F77%2F38f58PICUNG_1024.jpg'},
         {id: '3', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=0206950cedda9935053ebed8a89f6914&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a39258eddb07a8012049ef53b617.jpg%401280w_1l_2o_100sh.jpg'},
         {id: '4', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=ba2f03b7c68c01d4904371ecd3c4814d&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F60%2F26%2F74bOOOPICb4_1024.jpg'}
       ],
-      roomsInfo: [
-        {id: '1', name: '卧室1', images: ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=fcf0d2435889f303f320161514d95952&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F14%2F34%2F62%2F39S58PIC9jV_1024.jpg', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=ba2f03b7c68c01d4904371ecd3c4814d&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F60%2F26%2F74bOOOPICb4_1024.jpg'], state: '预定'},
-        {id: '2', name: '卧室2', images: ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=fcf0d2435889f303f320161514d95952&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F14%2F34%2F62%2F39S58PIC9jV_1024.jpg'], state: '预定'},
-        {id: '3', name: '卧室3', images: ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=fcf0d2435889f303f320161514d95952&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F14%2F34%2F62%2F39S58PIC9jV_1024.jpg'], state: '已预定'}
-      ]
+      markers: [{
+        id: 0,
+        latitude: 23.099994,
+        longitude: 113.324520,
+        width: 50,
+        height: 50
+      }],
+      polyline: [{
+        points: [{
+          longitude: 113.3245211,
+          latitude: 23.10229
+        }, {
+          longitude: 113.324520,
+          latitude: 23.21229
+        }],
+        color:"#FF0000DD",
+        width: 2,
+        dottedLine: true
+      }],
     }
-  },
-
-  components: {
-    tabBarSelect
   },
 
   methods: {
@@ -70,13 +172,11 @@ export default {
       console.log('clickHandle:', msg, ev)
     },
     getScollHeight () {
-      util.getWindowRect('.scroll').then((res) => {
+      util.getWindowRect('.container').then((res) => {
         return res.top
       }).then((head) => {
         var windowHeight = wx.getSystemInfoSync().windowHeight
         this.scrollHeight = windowHeight - head - 60
-        // console.log(head)
-        // console.log(windowHeight)
       })
     },
     order () {
@@ -91,18 +191,30 @@ export default {
         current: current,
         urls: [current]
       })
+    },
+    onBooked() {
+      wx.switchTab({
+        url: '../myBooked/main'
+      })
+    },
+    onHomePage() {
+      wx.switchTab({
+        url: '../tenant/main'
+      })
+    },
+    onTogglePopup() {
+      this.popupShow = !this.popupShow;
     }
   },
 
   mounted () {
     this.zooms = globalStore.state.zooms
     this.zoomName = util.getZoomNameById(globalStore.state.zooms, globalStore.state.currentZoom)
-    this.userInfo = globalStore.state.userInfo
     this.getScollHeight()
   },
 
-  created () {
-
+  onLoad: function (options) {
+    console.log(options)
   }
 }
 </script>
@@ -111,8 +223,7 @@ export default {
 .container{
     height: auto;
     overflow: hidden;
-    width: 100%;
-    margin-top:20rpx;
+    margin:20rpx 40rpx;
 }
 .userName {
   font-size:30rpx;
@@ -154,5 +265,63 @@ export default {
 }
 .ordered {
     background-color:gray;
+}
+.labelBlock {
+  width:auto;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  word-wrap:normal;
+  height:45rpx;
+  display:block;
+  text-align:center;
+  line-height:45rpx;
+  background-color:#f0f2f5;
+  border-radius:10rpx;
+  border:2rpx solid #f0f2f5;
+  box-sizing:border-box;
+}
+.labelGroup {
+  font-size:15px;
+  width:auto;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  word-wrap:normal;
+  position:relative;
+  height:45rpx;
+  color:#232326;
+  margin-top:20rpx;
+  float:left;
+  box-sizing:border-box;
+  padding-left:10rpx;
+  padding-right:10rpx;
+}
+.panel-hd {
+  padding-top:40rpx;
+  padding-bottom:4rpx;
+  color:#1c2438;
+  font-size:35rpx;
+  overflow-x:hidden;
+  display:-webkit-box;
+  display:-webkit-flex;
+  display:flex;
+  -webkit-box-align:center;
+  -webkit-align-items:center;
+  align-items:center;
+  font-weight:bold;
+}
+.panel {
+  display: block;
+}
+.price-demo {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #ff4422;
+}
+::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+  color: transparent;
 }
 </style>

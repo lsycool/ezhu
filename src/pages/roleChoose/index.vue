@@ -14,7 +14,11 @@
         <view style="text-align:center;">
           <view style="color:#333333; font-size:32rpx; text-align:center; display:inline-block;">生成我的邀请二维码</view>
           <view style="display:inline-block; margin-left:5rpx;">      
-            <wux-popover placement="top" title="邀请须知" content="Content">
+            <wux-popover placement="topRight" title="邀请须知">
+              <view slot="content" style="width:200px; font-size:11px;">
+                <view>房东：分享给租客，租客可看到房东所有的房子</view>
+                <view>租客：分享给朋友助力，每位可帮砍1%，最高10%</view>
+              </view>
               <wux-icon type="md-information-circle" size="16" color="#999999" />
             </wux-popover></view>
         </view>
