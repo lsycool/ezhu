@@ -1,4 +1,4 @@
 <view class="cell">
-    <view class="wux-class ion {{ type ? 'ion-' + type : '' }} {{addon ? 'iconfont ' + addon:'' }}" style="font-size: {{ size }}px; {{ color ? 'color: ' + color : '' }}"></view>
-    <view class="title" style="{{ color ? 'color: ' + color : '' }}" wx:if="{{ title != '' }}">{{ title }}</view>
+    <view class="wux-class ion {{ type ? 'ion-' + type : '' }} {{addon ? 'iconfont ' + addon:'' }}" style="font-size: {{ size }}px; {{ color ? 'color: ' + color : '' }}; {{disable ? 'color:#BBBEC4;' : ''}}"></view>
+    <view class="title" style="{{ color ? 'color: ' + color : '' }}; {{disable ? 'text-decoration:line-through; color:#BBBEC4;' : ''}}" wx:if="{{ title != '' }}">{{ title }}</view>
 </view>

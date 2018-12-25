@@ -106,9 +106,30 @@
       <wxc-elip line="3">这是一个大大的好房子,赶快来抢购啊，先到先得，手慢无</wxc-elip>
     </view>
     <view class="panel according-title" style="padding-top:40rpx;">
-      <wux-accordion-group accordion :default-current="['0']">
+      <wux-accordion-group accordion>
         <wux-accordion title="卧室详情" titleClass1>
-          <image mode='aspectFill' style="height: 90px; margin-right: 10px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338328&di=ae3adf8bee6fbdef4d578690cb7b5ec7&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F17%2F13%2F83658PICb4r_1024.jpg" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg"/>
+            <wux-grids :bordered='false' col='3'>
+              <wux-grid>
+                <view>
+                  <view style="padding-right:5px; padding-left:5px;">
+                    <image mode='aspectFill' style="height: 90px; width:100px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338328&di=ae3adf8bee6fbdef4d578690cb7b5ec7&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F17%2F13%2F83658PICb4r_1024.jpg" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg"/>
+                  </view>
+                  <view>主卧</view>
+                </view>
+              </wux-grid>
+              <wux-grid>
+                <view style="padding-right:5px; padding-left:5px;">
+                  <image mode='aspectFill' style="height: 90px; width:100px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338328&di=ae3adf8bee6fbdef4d578690cb7b5ec7&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F17%2F13%2F83658PICb4r_1024.jpg" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg"/>
+                </view>
+                <view>次卧1</view>
+              </wux-grid>
+              <wux-grid>
+                <view style="padding-right:5px; padding-left:5px;">
+                  <image mode='aspectFill' style="height: 90px; width:100px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338328&di=ae3adf8bee6fbdef4d578690cb7b5ec7&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F17%2F13%2F83658PICb4r_1024.jpg" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg"/>
+                </view>
+                <view>次卧2</view>
+              </wux-grid>
+            </wux-grids>
         </wux-accordion>
       </wux-accordion-group>
     </view>
