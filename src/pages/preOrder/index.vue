@@ -69,7 +69,7 @@
                 <wux-icon addon="icon-kongtiao" title="空调"/>
             </wux-grid>
             <wux-grid>
-                <wux-icon addon="icon-yangtai" disable title="阳台" style=""/>
+                <wux-icon addon="icon-yangtai" disable title="阳台"/>
             </wux-grid>
             <wux-grid>
                <wux-icon addon="icon-bingxiang" title="冰箱"/>
@@ -110,7 +110,7 @@
         <wux-accordion title="卧室详情" titleClass1>
             <wux-grids :bordered='false' col='3'>
               <wux-grid>
-                <view>
+                <view @click="openRoomInfo">
                   <view style="padding-right:5px; padding-left:5px;">
                     <image mode='aspectFill' style="height: 90px; width:100px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338328&di=ae3adf8bee6fbdef4d578690cb7b5ec7&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F17%2F13%2F83658PICb4r_1024.jpg" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg"/>
                   </view>
@@ -225,6 +225,11 @@ export default {
     },
     onTogglePopup() {
       this.popupShow = !this.popupShow;
+    },
+    openRoomInfo() {
+      wx.navigateTo({
+        url: '../roomDetail/main'
+      })
     }
   },
 

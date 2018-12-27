@@ -1,0 +1,13 @@
+{
+    "navigationBarTitleText": "房屋详情",
+    "enablePullDownRefresh": false,
+    "disableScroll": true,
+    "usingComponents": {
+      "van-goods-action": "../../static/components/vant/goods-action/index",
+      "van-goods-action-icon": "../../static/components/vant/goods-action-icon/index",
+      "van-goods-action-button": "../../static/components/vant/goods-action-button/index",
+      "wxc-elip": "../../static/components/minui/wxc-elip/dist/index",
+      "wxc-price": "../../static/components/minui/wxc-price/dist/index",
+      "van-dialog": "../../static/components/vant/dialog/index"
+    }
+  }

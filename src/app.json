@@ -16,7 +16,9 @@
     "pages/bookResult/main",
     "pages/myBooked/main",
     "pages/landlordInfo/main",
-    "pages/zoomList/main"
+    "pages/zoomList/main",
+    "pages/roomDetail/main",
+    "pages/resultSuccess/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

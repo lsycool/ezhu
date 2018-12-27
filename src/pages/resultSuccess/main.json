@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "Result",
+    "usingComponents": {
+        "wux-result": "../../static/components/wux/result/index"
+    }
+}
