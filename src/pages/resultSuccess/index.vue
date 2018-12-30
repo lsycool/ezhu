@@ -7,7 +7,7 @@
             :buttons="resultPageButtons"
             extra="Copyright © 2018 ezu"
             fixed
-            @click="onClick1"
+            @bClick="onClick1"
         />
     </div>
 </template>
@@ -33,7 +33,6 @@ export default {
   methods: {
     onClick1(e) {
       let index  = e.mp.detail
-      console.log(e)
 
       index === 0 &&  wx.switchTab({
         url: this.options.url

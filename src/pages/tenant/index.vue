@@ -27,14 +27,16 @@
               </view>
               <view>
                 <text class="prise weui-media-box__info__meta">{{item.prise + '元/月'}}</text>
-                <text v-if="rentType == 1" class="amount">{{item.amount + '人/合租'}}</text>
+                <text v-if="searchParam.rentType == '0'" class="amount">{{headNavList[0].label}}</text>
+                <text v-if="searchParam.rentType == '1'" class="amount">{{item.amount}}人/{{headNavList[0].label}}</text>
+                <text v-if="searchParam.rentType == '2'" class="amount">{{headNavList[0].label}}</text>
               </view>
             </view>
           </view>
         </view>
       </scroll-view>
     </view>
-    <van-tabbar :active="active" @change="onChange" class="tabBar">
+    <van-tabbar :active="active" @change="onTabbarChange" class="tabBar">
       <van-tabbar-item icon="wap-home">返回主菜单</van-tabbar-item>
       <van-tabbar-item icon="cart" info="5">我的预定</van-tabbar-item>
       <van-tabbar-item icon="arrow-left">返回上一级</van-tabbar-item>
@@ -51,7 +53,6 @@ export default {
   data () {
     return {
       city: '',
-      rentType: 1,
       active: 0,
       headNavList: [
         {
@@ -60,15 +61,15 @@ export default {
           value: 'rentType',
           children: [{
                   label: '整租',
-                  value: '1'
+                  value: '0'
               },
               {
                   label: '合租',
-                  value: '2'
+                  value: '1'
               },
               {
-                  label: '拼租',
-                  value: '3'
+                  label: '懒人',
+                  value: '2'
               }
           ],
           groups: ['001']
@@ -135,7 +136,7 @@ export default {
           {
               type: 'checkbox',
               label: '房源亮点',
-              value: 'face',
+              value: 'edge',
               children: [{
                       label: '地铁旁',
                       value: 'subway',
@@ -161,7 +162,7 @@ export default {
           {
             type: 'radio',
             label: '户型',
-            value: 'rentPrise',
+            value: 'houseType',
             children: [{
                     label: '一室一厅',
                     value: '1'
@@ -187,9 +188,8 @@ export default {
           {
             type: 'slide',
             label: '价格区间',
-            value: 'priseRent',
+            value: 'priseRange',
             children: [{
-                    label: '一室一厅',
                     value: [2000, 5000],
                     displayMin: 0,
                     displayMax: 20000
@@ -216,7 +216,9 @@ export default {
         {id: 14, prise: 1014, abstract: 'good house', amount: '10'}],
       scrollHeight: 0,
       cascaderOptions: data,
-      cascaderVisible: false
+      cascaderVisible: false,
+      searchParam: {},
+      rentName: ''
     }
   },
   computed: {
@@ -228,7 +230,8 @@ export default {
   },
   mounted () {
     this.getScollHeight()
-    console.log(this.$root.$mp)
+    this.searchParam.rentType = '0'
+    // console.log(this.$root.$mp)
     // console.log(this.$root.$mp.query)
     // console.log(this.$root.$mp.appOptions)
   },
@@ -247,7 +250,7 @@ export default {
     },
     preOrder (e) {
       wx.navigateTo({
-        url: '../preOrder/main?id=' + e.currentTarget.dataset.key
+        url: '../preOrder/main?id=' + e.currentTarget.dataset.key + '&rentType=' + this.searchParam.rentType
       })
     },
     previewImage (e) {
@@ -266,7 +269,7 @@ export default {
     onCascaderChange (e) {
       this.city = e.mp.detail.options.map((n) => n.label).join('/')
     },
-    onChange(e) {
+    onTabbarChange(e) {
       let index = e.mp.detail;
       if (this.active == index) {
         return;
@@ -284,7 +287,53 @@ export default {
           url: '../myBooked/main'
         })        
       }
-      console.log(e);
+      // console.log(e);
+    },
+    onFilterbarChange(e) {
+      // console.log(e.mp.detail)
+      const { checkedItems, items } = e.mp.detail
+      checkedItems.forEach((n) => {
+        if (n.checked) {
+            if (n.value === 'rentType') {
+                const selected = n.children.filter((n) => n.checked).map((n) => n.value).join(' ')
+                this.searchParam.rentType = selected
+            } else if (n.value === 'rentPrise') {
+                this.searchParam.rentPrise =  n.children.filter((n) => n.checked).map((n) => n.value).join(' ')
+            } else if (n.value === 'sort') {
+                this.searchParam.sortType = n.sort
+            } else if (n.value === 'filter') {
+                n.children.filter((n) => n.selected).forEach((n) => {
+                    if (n.value === 'face') {
+                        const selected = n.children.filter((n) => n.checked).map((n) => n.value).join(' ')
+                        this.searchParam.face = selected
+                    } else if (n.value === 'edge') {
+                        const selected = n.children.filter((n) => n.checked).map((n) => n.value).join(' ')
+                        this.searchParam.edge = selected
+                    } else if (n.value === 'houseType') {
+                        const selected = n.children.filter((n) => n.checked).map((n) => n.value).join(' ')
+                        this.searchParam.houseType = selected
+                    } else if (n.value === 'priseRange') {
+                        const selected = n.children.map((n) => n.value).join(' ')
+                        this.searchParam.priseRange = selected
+                    }
+                })
+            }
+        }
+      })
+    },
+    onFilterbarOpen(e) {
+      // console.log(e)
+    },
+    onFilterbarClose(e) {
+      if ('0' == this.searchParam.rentType) {
+        this.headNavList[0].label = '整租'
+      } else if ('1' == this.searchParam.rentType) {
+        this.headNavList[0].label = '合租'
+      } else if ('2' == this.searchParam.rentType) {
+        this.headNavList[0].label = '懒人'
+      }
+      // console.log(this.searchParam)
+      // console.log(this.headNavList[0].label)
     }
   }
 }

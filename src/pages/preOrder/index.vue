@@ -105,9 +105,9 @@
       <view class="panel-hd">简介</view>
       <wxc-elip line="3">这是一个大大的好房子,赶快来抢购啊，先到先得，手慢无</wxc-elip>
     </view>
-    <view class="panel according-title" style="padding-top:40rpx;">
-      <wux-accordion-group accordion>
-        <wux-accordion title="卧室详情" titleClass1>
+    <view class="panel according-title" style="padding-top:40rpx;" v-if="'1' == rentType">
+      <wux-accordion-group accordion :default-current="['0']">
+        <wux-accordion title="选择卧室" titleClass1>
             <wux-grids :bordered='false' col='3'>
               <wux-grid>
                 <view @click="openRoomInfo">
@@ -139,7 +139,7 @@
         <map id="map" longitude="113.324520" latitude="23.099994" scale="14"  :markers="markers" :polyline="polyline" show-location style="width: 100%; height: 200px;"></map>
       </view>
     </view>
-    <van-goods-action>
+    <van-goods-action v-if="'0' == rentType">
       <van-goods-action-icon icon="wap-home" text="主菜单" @click="onHomePage"/>
       <van-goods-action-icon icon="cart" text="我的预定" info="5" @click="onBooked"/>
       <van-goods-action-button size="mini" text="收藏" type="warning" @click="onBooked"/>
@@ -160,6 +160,7 @@ export default {
       scrollHeight: 300,
       active: -1,
       popupShow: false,
+      rentType: '0',
       movies: [
         {id: '1', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338328&di=ae3adf8bee6fbdef4d578690cb7b5ec7&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F17%2F13%2F83658PICb4r_1024.jpg'},
         {id: '2', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338327&di=d5a936ca7dee54b9dd7382fa685b39e3&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F17%2F44%2F77%2F38f58PICUNG_1024.jpg'},
@@ -197,7 +198,10 @@ export default {
         return res.top
       }).then((head) => {
         var windowHeight = wx.getSystemInfoSync().windowHeight
-        this.scrollHeight = windowHeight - head - 60
+        this.scrollHeight = windowHeight - head
+        if ('0' == rentType) {
+          this.scrollHeight += (-60)
+        }
       })
     },
     order () {
@@ -241,6 +245,7 @@ export default {
 
   onLoad: function (options) {
     console.log(options)
+    this.rentType = options.rentType
   }
 }
 </script>

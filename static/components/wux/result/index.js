@@ -50,8 +50,8 @@ Component({
     },
     methods: {
         onClick(e) {
-            console.log(e.currentTarget.dataset.index)
-            this.triggerEvent('click', e.currentTarget.dataset.index)
+            const index = e.currentTarget.dataset.index
+            this.triggerEvent('bClick', index)
         },
         bindgetuserinfo(e) {
             this.triggerEvent('getuserinfo', { ...e.detail, ...e.currentTarget.dataset })

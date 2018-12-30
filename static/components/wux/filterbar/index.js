@@ -93,7 +93,7 @@ Component({
                 [`items[${parentIndex}].children[${index}].children`]: children,
                 [`items[${parentIndex}].children[${index}].selected`]: selected,
             })
-            console.log(e)
+            // console.log(e)
         },
         /**
          * 滑动栏出发change事件
@@ -109,8 +109,8 @@ Component({
             this.$$setData({
                 [`items[${parentIndex}].children[${index}].selected`]: selected,
             })
-            console.log(e)
-            console.log(this.data.items)
+            // console.log(e)
+            // console.log(this.data.items)
         },
         /**
          * 滑动栏完成出发change事件
