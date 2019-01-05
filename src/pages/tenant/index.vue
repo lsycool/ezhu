@@ -37,9 +37,9 @@
       </scroll-view>
     </view>
     <van-tabbar :active="active" @change="onTabbarChange" class="tabBar">
-      <van-tabbar-item icon="wap-home">返回主菜单</van-tabbar-item>
+      <van-tabbar-item icon="wap-home">主菜单</van-tabbar-item>
       <van-tabbar-item icon="cart" info="5">我的预定</van-tabbar-item>
-      <van-tabbar-item icon="arrow-left">返回上一级</van-tabbar-item>
+      <van-tabbar-item icon="contact">个人中心</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -66,10 +66,6 @@ export default {
               {
                   label: '合租',
                   value: '1'
-              },
-              {
-                  label: '懒人',
-                  value: '2'
               }
           ],
           groups: ['001']
@@ -282,10 +278,7 @@ export default {
         wx.switchTab({
           url: '../myBooked/main'
         })
-      } else if (index == 2) {
-        wx.switchTab({
-          url: '../myBooked/main'
-        })        
+      } else if (index == 2) {     
       }
       // console.log(e);
     },

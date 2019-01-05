@@ -1,5 +1,5 @@
 <template>
-<scroll-view scroll-y="true" :style="{height: scrollHeight + 'px', overflow: auto}">
+<scroll-view scroll-y="true" :style="{height: scrollHeight + 'px', overflow: 'auto'}">
   <div class="container">
     <view class="panel">
       <swiper class="swiper" indicator-dots="true" autoplay="true" interval="5000" duration="1000">
@@ -15,7 +15,7 @@
       <wxc-flex>
         <view style="flex-grow: 0;">
           <wxc-price class="price-demo" icon="sub">100.02 元/月</wxc-price>
-          <wxc-label style="margin-left: 20rpx;">合租</wxc-label>
+          <wxc-label style="margin-left: 20rpx;">{{rentName}}</wxc-label>
         </view>
         <view style="flex-grow: 1; text-align:right; line-height:50rpx;" class="price-demo" @click="onTogglePopup">费用详情</view>
       </wxc-flex>
@@ -161,6 +161,7 @@ export default {
       active: -1,
       popupShow: false,
       rentType: '0',
+      rentName: '',
       movies: [
         {id: '1', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338328&di=ae3adf8bee6fbdef4d578690cb7b5ec7&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F17%2F13%2F83658PICb4r_1024.jpg'},
         {id: '2', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338327&di=d5a936ca7dee54b9dd7382fa685b39e3&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F17%2F44%2F77%2F38f58PICUNG_1024.jpg'},
@@ -199,7 +200,7 @@ export default {
       }).then((head) => {
         var windowHeight = wx.getSystemInfoSync().windowHeight
         this.scrollHeight = windowHeight - head
-        if ('0' == rentType) {
+        if ('0' == this.rentType) {
           this.scrollHeight += (-60)
         }
       })
@@ -244,8 +245,14 @@ export default {
   },
 
   onLoad: function (options) {
-    console.log(options)
     this.rentType = options.rentType
+    if (0 == this.rentType) {
+      this.rentName = '整租'
+    } else if (1 == this.rentType) {
+      this.rentName = '合租'
+    } else if (2 == this.rentType) {
+      this.rentName = '懒人'
+    } 
   }
 }
 </script>

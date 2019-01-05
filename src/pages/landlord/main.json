@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "发布",
+  "enablePullDownRefresh": false,
+  "disableScroll": true,
+  "usingComponents": {
+    "van-field": "../../static/components/vant/field/index",
+    "van-cell": "../../static/components/vant/cell/index",
+    "van-icon": "../../static/components/vant/icon/index",
+    "van-button": "../../static/components/vant/button/index",
+    "wux-icon": "../../static/components/wux/icon/index"
+  }
+}

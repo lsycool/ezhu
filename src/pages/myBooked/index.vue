@@ -1,27 +1,12 @@
 <template>
   <div class="container">
-    <view class="head" style="display: block; padding-bottom:5px; margin-bottom:10px;">
-      <view class="userInfo" style="text-align:right;">
-          <view style="text-align:center; font-weight: bold; margin-right:30px;display:inline-block;">我的预定</view>
-          <text class="userName" style="font-size:30rpx;line-height:30rpx;margin-right:5px;">{{userInfo.nickName}}</text>
-          <image class="avatar" @click="modifyContactInfo" style="vertical-align:middle;width:70rpx;height:70rpx;margin-right:20rpx; border-radius:35rpx;" :src="userInfo.avatarUrl"/>
-      </view>
-    </view>
     <view>
       <scroll-view class='scroll' scroll-y="true" :style="{height: scrollHeight + 'px', 'margin-top': '20px', 'margin-left': '20px'}">
         <view v-for='(item, index) of books' :key='index' :data-index='index' style="font-size:10px; margin-bottom:10px;">
-          <view style="margin-bottom:10px;">
-            <text>{{item.name}}</text>
-          </view>
           <view v-for='(info, index2) of item.details' :key='index2' :data-index='index2'>
-            <view style="text-align:right; color:red; width:90%; margin-top:10px;">
-              <text>{{info.statue === '0'? '拼团成功，待看房':'还差' + info.statue + '人，待成团'}}</text>
-            </view>
-            <view style="display: flex; margin-bottom:5px;">
-              <view style="display: inline-block;">
-                <image :src="info.url" :data-src="info.url" class="slide-image" mode="aspectFill" @click="previewImage"/>
-              </view>
-              <view style="margin:0 10px; width:100%;">
+            <view style="display: flex; margin-bottom: 10px;">
+              <image :src="info.url" :data-src="info.url" class="slide-image" mode="aspectFill" @click="previewImage"/>
+              <view style="margin:0 10px; flex:3;">
                 <view style="height: 80%;">
                   <text>{{info.profile}}</text>
                 </view>
@@ -35,35 +20,11 @@
         </view>
       </scroll-view>
     </view>
-    <tabBarSelect :selectNavIndex='1' :navList='navList'></tabBarSelect>
-    <modal :hidden="hiddenContact" title="快去联系他们一起拼租吧" confirm-text="关闭" @confirm='close' no-cancel='true'>
-      <view>房东电话：{{loadNumber}}（{{loadName}}）</view>
-      <view>室友电话：{{mateNumber1}}（{{mateName1}}）</view>
-      <view>室友电话：{{mateNumber2}}（{{mateName2}}）</view>
-      <view>室友电话：{{mateNumber3}}（{{mateName3}}）</view>
-    </modal>
-    <modal :hidden="hiddenCommont" title="请您对此次服务进行评分" confirm-text="确认" cancel-text="关闭" @confirm='score' @cancel='close'>
-      <view style="margin-bottom:15px;">
-        <view style="margin-bottom:5px;">1、你对房东的服务满意吗？</view>
-        <radio-group class="radio-group" @change="satisfyLoad">
-          <label>
-            <radio value="0" style="margin-left:15px;"/>一般
-            <radio value="1" checked="true" style="margin-left:15px;"/>满意
-            <radio value="2" style="margin-left:15px;"/>不满意
-          </label>
-        </radio-group>
-      </view>
-      <view>
-        <view style="margin-bottom:5px;">2、你对房源满意吗？</view>
-        <radio-group class="radio-group" @change="satisfyHouse">
-          <radio value="0" checked="true" style="margin-left:15px;"/>真实房源
-          <radio value="1" style="margin-left:15px;"/>虚假房源
-        </radio-group>
-      </view>
-    </modal>
-    <modal :hidden="hiddenCancleOrder" confirm-text="确定" cancel-text="我再想一下" @confirm='cancleOrder' @cancel='close'>
-    <view>取消预约后，房源将不再为您保留，确认取消预约吗？</view>
-    </modal>
+    <van-tabbar :active="active" @change="onTabbarChange" class="tabBar">
+      <van-tabbar-item icon="wap-home">返回主菜单</van-tabbar-item>
+      <van-tabbar-item icon="cart" info="5">我的预定</van-tabbar-item>
+      <van-tabbar-item icon="arrow-left">返回上一级</van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
@@ -199,6 +160,7 @@ export default {
     overflow: hidden;
     width: 100%;
     margin-top:20rpx;
+    background: #EFEFEF
 }
 .userName {
   font-size:30rpx;
@@ -213,7 +175,7 @@ export default {
   border-radius:35rpx;
 }
 .slide-image {
-  width:150px;
-  height:100px;
+  height:90px;
+  flex: 1;
 }
 </style>
