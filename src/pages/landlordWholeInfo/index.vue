@@ -36,7 +36,7 @@
           </view>
         </view>
       </view>
-      <view class="panel" v-if="rentType == 0">
+      <view class="panel" style="margin-bottom:20px;" v-if="rentType == 0">
         <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房屋简介</view>
         <wux-cell-group>
           <wux-cell hover-class="none">
@@ -60,7 +60,7 @@ export default {
     return {
       infrastructure: [{id: 0, name: '床', checked: 0},
       {id: 1, name: '洗衣机', checked: 0},
-      {id: 2, name: '空调哦', checked: 0},
+      {id: 2, name: '空调', checked: 0},
       {id: 3, name: '阳台', checked: 0},
       {id: 4, name: '冰箱', checked: 0},
       {id: 5, name: '卫生间', checked: 0},
@@ -146,6 +146,10 @@ export default {
         }, 2000)
       }
     },
+    deleteImage (e) {
+      var index = e.currentTarget.dataset.index
+      this.picList.splice(index, 1)
+    }
   },
 
   mounted () {
