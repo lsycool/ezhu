@@ -325,8 +325,6 @@ export default {
       } else if ('2' == this.searchParam.rentType) {
         this.headNavList[0].label = '懒人'
       }
-      // console.log(this.searchParam)
-      // console.log(this.headNavList[0].label)
     }
   }
 }

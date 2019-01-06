@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "整租发布",
+  "enablePullDownRefresh": false,
+  "disableScroll": true,
+  "usingComponents": {
+    "wux-grids": "../../static/components/wux/grids/index",
+    "wux-grid": "../../static/components/wux/grid/index",
+    "wux-cell-group": "../../static/components/wux/cell-group/index",
+    "wux-cell": "../../static/components/wux/cell/index",
+    "wux-textarea": "../../static/components/wux/textarea/index"
+  }
+}

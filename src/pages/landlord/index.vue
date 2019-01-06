@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <view class="panel">
-      <view class="panel-hd">租赁类型</view>
+    <view class="panel rentType">
+      <view class="panel-hd" style="padding-top:0">租赁类型</view>
       <view class="wux-filterbar__panel">
         <view class="wux-filterbar__panel-bd">
           <radio-group @change="onRadioChange">
@@ -16,8 +16,9 @@
           </radio-group>
         </view>
       </view>
-      </view>
-      <view class="panel" style="margin-bottom:10px;">
+    </view>
+    <!-- <scroll-view class="rentInfo" scroll-y="true" :style="{height: scrollHeight + 'px', overflow: 'auto', 'margin-bottom':'5px'}"> -->
+      <view class="panel rentInfo" :style="{'height':scrollHeight, 'margin-bottom':'10px'}">
         <view class="panel-hd">房源详情</view>
         <view>
           <van-cell title="地理位置" label="您房源所在的小区" size="large" clickable>
@@ -32,34 +33,33 @@
           <van-cell title="房屋朝向" label="东/南/西/北" size="large" clickable>
             <wux-icon addon="icon-taiyang" color="#999999" size="20"/>
           </van-cell>
-          <van-field :value="rentPrise" clearable label="租金要求" placeholder="请输入金额" use-button-slot @click-icon="onClickIcon">
+          <van-field :value="rentPrise" clearable type='number' label="租金要求" placeholder="请输入金额" use-button-slot @click-icon="onClickIcon">
             <view slot="button" style="color:#999999">元/月</view>
           </van-field>
-          <van-field :value="floor" clearable label="楼  层" placeholder="请输入楼层" use-icon-slot @click-icon="onClickIcon">
+          <van-field :value="floor" clearable label="楼  层" type='number' placeholder="请输入楼层" use-icon-slot @click-icon="onClickIcon">
             <wux-icon slot="icon" addon="icon-louceng0" color="#999999" size="20"/>
           </van-field>
-          <van-field :value="floor" clearable label="面  积" placeholder="请输入面积" use-icon-slot @click-icon="onClickIcon">
+          <van-field :value="floor" clearable label="面  积" type='number' placeholder="请输入面积" use-icon-slot @click-icon="onClickIcon">
             <wux-icon slot="icon" addon="icon-fangwumianji" color="#999999" size="20"/>
           </van-field>
         </view>
       </view>
-      <view>
-        <van-button type="primary">下一页</van-button>
-        <van-button type="primary">主要按钮</van-button>
-      </view>
+    <!-- </scroll-view> -->
+    <div class="wux-filterbar__btns bottomButton">
+      <view class="wux-filterbar__btn wux-filterbar__btn--danger" @click="onConfirm">下一步</view>
+    </div>
   </div>
 </template>
 
 <script>
-import tabBarSelect from '@/components/tabbar'
-import globalStore from '@/stores/global-store'
+import util from '@/utils/index'
 
 export default {
   data () {
     return {
-      navList: globalStore.state.tabBarList.navList2,
-      rentType: [{id:0, name:'整租', checked: 0}, {id:1, name:'合租', checked: 0}],
-      selectType: ''
+      rentType: [{id:0, name:'整租', checked: 1}, {id:1, name:'合租', checked: 0}],
+      scrollHeight: 300,
+      selectType: 0
     }
   },
   onShow () {
@@ -67,16 +67,10 @@ export default {
       animation: false
     })
   },
-  components: {
-    tabBarSelect
+  mounted () {
+    this.getScollHeight()
   },
-
   methods: {
-    publish () {
-      wx.navigateTo({
-        url: '../landlordInfo/main'
-      })
-    },
     onRadioChange(e) {
       this.selectType = e.mp.detail.value
       for (let i = 0; i < this.rentType.length; i++) {
@@ -86,24 +80,44 @@ export default {
           this.rentType[i].checked = false;
         }
       }
+    },
+    getScollHeight () {
+      util.getWindowRect('.rentInfo').then((res) => {
+        return res.top
+      }).then((head) => {
+        var windowHeight = wx.getSystemInfoSync().windowHeight
+        return windowHeight - head
+      }).then((head) => {
+        util.getWindowRect('.bottomButton').then((res) => {
+          this.scrollHeight = head - res.height
+        })
+      })
+    },
+    onConfirm () {
+      let id = this.rentType.filter((n) => n.checked == 1).map((n) => n.id)
+      let url = ''
+      if (0 == id) {
+        url = '../landlordWholeInfo/main?rentType=' + this.selectType
+      } else if (1 == id){
+        url = '../houseInfo/main?rentType=' + this.selectType
+      }
+      wx.navigateTo({
+        url: url
+      })
     }
-  },
-
-  created () {
-
   }
 }
 </script>
 
 <style scoped>
 .container{
-    height: auto;
+    height: 100%;
     overflow: hidden;
     margin:20rpx 40rpx;
 }
 
 .panel-hd {
-  padding-top:40rpx;
+  padding-top:20rpx;
   padding-bottom:4rpx;
   color:#1c2438;
   font-size:35rpx;
@@ -202,6 +216,47 @@ export default {
 .wux-filterbar__btn--checked {
   background-color: #2d8cf0;
   color: #fff;
+}
+
+.wux-filterbar__btns {
+  height: 88rpx;
+  display: -webkit-box;
+  overflow: hidden;
+}
+.wux-filterbar__btns .wux-filterbar__btn {
+  background-color: #fff;
+  color: #252525;
+  font-size: 32rpx;
+  position: relative;
+  display: -webkit-box;
+  -webkit-box-flex: 1;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  border: none;
+  border-radius: 0;
+  height: 88rpx;
+  line-height: 88rpx;
+}
+.wux-filterbar__btns .wux-filterbar__btn:before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 2rpx;
+  border-top: 2rpx solid #D9D9D9;
+  color: #D9D9D9;
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+          transform: scaleY(0.5);
+}
+.wux-filterbar__btns .wux-filterbar__btn--danger {
+  background-color: #f23030;
+  color: #fff;
+}
+.wux-filterbar__btns .wux-filterbar__btn--danger:before {
+  display: none;
 }
 .wux-filterbar__btns {
   height: 88rpx;

@@ -15,7 +15,8 @@
     "pages/houseInfo/main",
     "pages/bookResult/main",
     "pages/myBooked/main",
-    "pages/landlordInfo/main",
+    "pages/landlordWholeInfo/main",
+    "pages/landlordSharingInfo/main",
     "pages/zoomList/main",
     "pages/roomDetail/main",
     "pages/resultSuccess/main"
@@ -43,12 +44,6 @@
         "iconPath": "static/images/ic_menu_book_nor.png",
         "selectedIconPath": "/static/images/ic_menu_book_pressed.png",
         "text": "我的预定"
-      },
-      {
-        "pagePath": "pages/landlord/main",
-        "iconPath": "static/images/ic_menu_publish_nor.png",
-        "selectedIconPath": "static/images/ic_menu_publish_pressed.png",
-        "text": "我要发布房源"
       },
       {
         "pagePath": "pages/zoomChoose/main",
