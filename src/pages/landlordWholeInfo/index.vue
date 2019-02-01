@@ -1,54 +1,53 @@
 <template>
   <div class="container">
-      <view class="panel" style="margin:0">
-        <view class="panel-hd" style="padding-top:0">房屋公共设施</view>
-        <view class="wux-filterbar__panel">
-          <view class="wux-filterbar__panel-bd">
-            <checkbox-group @change="onCheckboxChange">
-              <view class="wux-filterbar__groups">
-                <block v-for="(item, index) of infrastructure" :key="item.id" :data-index='index'>
-                  <view class="wux-filterbar__group">
-                    <checkbox class="wux-filterbar__check" :value="item.id"/>
-                    <view class="wux-filterbar__btn" :class="item.checked ? 'wux-filterbar__btn--checked' : ''">{{ item.name }}</view>
-                  </view>
-                </block>
-              </view>
-            </checkbox-group>
-          </view>
+    <view class="panel" style="margin:0">
+      <view class="panel-hd" style="padding-top:0">房屋公共设施</view>
+      <view class="wux-filterbar__panel">
+        <view class="wux-filterbar__panel-bd">
+          <checkbox-group @change="onCheckboxChange">
+            <view class="wux-filterbar__groups">
+              <block v-for="(item, index) of infrastructure" :key="item.id" :data-index='index'>
+                <view class="wux-filterbar__group">
+                  <checkbox class="wux-filterbar__check" :value="item.id"/>
+                  <view class="wux-filterbar__btn" :class="item.checked ? 'wux-filterbar__btn--checked' : ''">{{ item.name }}</view>
+                </view>
+              </block>
+            </view>
+          </checkbox-group>
         </view>
       </view>
-      <view class="panel" v-if="rentType == 0">
-        <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房屋照片</view>
-          <!-- <view v-for='(item, index) of picList' :key='index' :data-index='index' class="picList">
-            <image style="width: 100%; height: 100%; display:block;" :src="item" :data-src="item" :data-index="index" @click="previewImage"/>
-            <view v-if="index != picList.length-1" style="width: 100%;" class="delete" @click='deleteImage' :data-index="index">
+    </view>
+    <view class="panel" v-if="rentType == 0">
+      <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房屋照片</view>
+        <!-- <view v-for='(item, index) of picList' :key='index' :data-index='index' class="picList">
+          <image style="width: 100%; height: 100%; display:block;" :src="item" :data-src="item" :data-index="index" @click="previewImage"/>
+          <view v-if="index != picList.length-1" style="width: 100%;" class="delete" @click='deleteImage' :data-index="index">
+            <image mode='aspectFill' style="display:block; margin:0 auto;" src="../../static/images/delete.png" />
+          </view>
+      </view> -->
+      <view style="width:100%; height:300px; margin:0 auto;">
+        <view v-for='(item, index) of picList' :key='index' :data-index='index' style="width:30%; margin: 2px 3px; font-size:10px; display: inline-block;">
+          <view v-if="index != 9" :style="{'border-color':(item != '../../static/images/plus2.png'? '#f5222d':'#d9d9d9')}" style="width:90px; height:90px; margin:auto; box-sizing:border-box; border-radius:8rpx; border:2rpx solid #d9d9d9;">
+            <image mode='aspectFill' style="width: 85px; height: 85px; display:block; margin:auto; box-sizing:border-box; margin-top:1px; border-radius:8rpx;" :src="item" :data-src="item" @click="previewImage"/>
+            <view v-if="item != '../../static/images/plus2.png'" style="width: 90px; border-radius:8rpx;" class="delete" @click='deleteImage' :data-index="index">
               <image mode='aspectFill' style="display:block; margin:0 auto;" src="../../static/images/delete.png" />
             </view>
-        </view> -->
-        <view style="width:100%; height:300px; margin:0 auto;">
-          <view v-for='(item, index) of picList' :key='index' :data-index='index' style="width:30%; margin: 2px 3px; font-size:10px; display: inline-block;">
-            <view v-if="index != 9" :style="{'border-color':(item != '../../static/images/plus2.png'? '#f5222d':'#d9d9d9')}" style="width:90px; height:90px; margin:auto; box-sizing:border-box; border-radius:8rpx; border:2rpx solid #d9d9d9;">
-              <image mode='aspectFill' style="width: 85px; height: 85px; display:block; margin:auto; box-sizing:border-box; margin-top:1px; border-radius:8rpx;" :src="item" :data-src="item" @click="previewImage"/>
-              <view v-if="item != '../../static/images/plus2.png'" style="width: 90px; border-radius:8rpx;" class="delete" @click='deleteImage' :data-index="index">
-                <image mode='aspectFill' style="display:block; margin:0 auto;" src="../../static/images/delete.png" />
-              </view>
-            </view>
           </view>
         </view>
       </view>
-      <view class="panel" style="margin-bottom:20px;" v-if="rentType == 0">
-        <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房屋简介</view>
-        <wux-cell-group>
-          <wux-cell hover-class="none">
-            <wux-textarea hasCount rows="3" cursorSpacing="80" maxlength='50' placeholder="最多50个字符" :focus=false />
-          </wux-cell>
-        </wux-cell-group>
-      </view>
-      <div class="wux-filterbar__btns bottomButton">
-        <view class="wux-filterbar__btn wux-filterbar__btn" @click="onConfirm">上一步</view>
-        <view class="wux-filterbar__btn wux-filterbar__btn--danger" @click="onConfirm">下一步</view>
-      </div>
-    
+    </view>
+    <view class="panel" style="margin-bottom:20px;" v-if="rentType == 0">
+      <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房屋简介</view>
+      <wux-cell-group>
+        <wux-cell hover-class="none">
+          <wux-textarea hasCount rows="3" cursorSpacing="80" maxlength='50' placeholder="最多50个字符" :focus=false />
+        </wux-cell>
+      </wux-cell-group>
+    </view>
+    <div class="wux-filterbar__btns bottomButton">
+      <view class="wux-filterbar__btn wux-filterbar__btn" @click="onConfirm">上一步</view>
+      <view class="wux-filterbar__btn wux-filterbar__btn--danger" @click="onConfirm">下一步</view>
+    </div>
   </div>
 </template>
 
@@ -161,8 +160,8 @@ export default {
 <style scoped>
 .container{
     height: 100%;
-    overflow: hidden;
-    margin:20rpx 40rpx;
+    overflow: scroll;
+    margin: 20rpx 40rpx;
 }
 
 .panel-hd {
