@@ -21,16 +21,20 @@
       <view class="panel rentInfo" :style="{'height':scrollHeight, 'margin-bottom':'10px'}">
         <view class="panel-hd">房源详情</view>
         <view>
-          <van-cell title="地理位置" label="您房源所在的小区" size="large" clickable>
+          <van-cell title="地理位置" label="您房源所在的小区" size="large" clickable @click="selectLocation"> 
             <van-icon slot="right-icon" name="location" style="margin-left:5px;"></van-icon>
           </van-cell>
-          <van-cell title="房屋户型" label="两室两厅两卫" size="large" clickable>
-            <wux-icon addon="icon-icond" color="#999999" size="20"/>
-          </van-cell>
-          <van-cell title="租客性别" label="男/女" size="large" clickable>
-            <wux-icon addon="icon-xingbie1" color="#999999" size="20"/>
-          </van-cell>
-          <van-cell title="房屋朝向" label="东/南/西/北" size="large" clickable>
+          <picker mode="multiSelector" @change="selectHouseType" :value="houseTypeSelect" :range="houseType">
+            <van-cell title="房屋户型" label="两室一厅一卫" :value="houseTypeLabel" size="large" clickable >
+              <wux-icon addon="icon-icond" color="#999999" size="20"/>
+            </van-cell>
+          </picker>
+          <picker mode="selector" @change="selectSexType" :value="sexSelect" :range="sexType">
+            <van-cell title="租客性别" label="男/女/不限" :value="sexTypeLabel" size="large" clickable>
+              <wux-icon addon="icon-xingbie1" color="#999999" size="20"/>
+            </van-cell>
+          </picker>
+          <van-cell title="房屋朝向" label="东/南/西/北" size="large" clickable @click="selectFace">
             <wux-icon addon="icon-taiyang" color="#999999" size="20"/>
           </van-cell>
           <van-field :value="rentPrise" clearable type='number' label="租金要求" placeholder="请输入金额" use-button-slot @click-icon="onClickIcon">
@@ -57,7 +61,11 @@ import util from '@/utils/index'
 export default {
   data () {
     return {
-      rentType: [{id:0, name:'整租', checked: 1}, {id:1, name:'合租', checked: 0}],
+      rentType: [{id:0, name:'整租', checked: 1}, {id:1, name:'合租', checked: 0}, {id:2, name:'拼租', checked: 0}, {id:3, name:'懒人租房', checked: 0}],
+      houseType: [['', '一室', '二室', '三室', '四室', '五室'], ['', '一厅', '二厅', '三厅', '四厅', '五厅'], ['', '一卫', '二卫', '三卫', '四卫', '五卫']],
+      houseTypeSelect: [0, 0, 0],
+      sexType: ['', '男', '女', '不限'],
+      sexTypeSelect: [0],
       scrollHeight: 300,
       selectType: 0
     }
@@ -69,6 +77,18 @@ export default {
   },
   mounted () {
     this.getScollHeight()
+  },
+  computed: {
+    houseTypeLabel: function () {
+      let houseType = this.houseType
+      let houseTypeSelect = this.houseTypeSelect
+      return houseType[0][houseTypeSelect[0]] + houseType[1][houseTypeSelect[1]] + houseType[2][houseTypeSelect[2]];
+    },
+    sexTypeLabel: function () {
+      let sexType = this.sexType
+      let sexTypeSelect = this.sexTypeSelect
+      return sexType[sexTypeSelect[0]];
+    }
   },
   methods: {
     onRadioChange(e) {
@@ -104,13 +124,26 @@ export default {
       wx.navigateTo({
         url: url
       })
+    },
+    selectLocation () {
+      
+    },
+    selectHouseType (e) {
+      this.houseTypeSelect = e.mp.detail.value;
+    },
+    selectSexType (e) {
+      this.sexTypeSelect = e.mp.detail.value;
     }
   }
 }
 </script>
 
 <style scoped>
-.container{
+page {
+  height: 100%;
+}
+
+.container {
     height: 100%;
     overflow: hidden;
     margin:20rpx 40rpx;
@@ -133,6 +166,15 @@ export default {
 .panel {
   display: block;
 }
+
+.bottomButton {
+  position: fixed;
+  bottom: 5rpx;
+  margin:20rpx 40rpx;
+  width:90%;
+  left:0;
+}
+
 .wux-filterbar__panel {
   padding: 0 30rpx;
 }
