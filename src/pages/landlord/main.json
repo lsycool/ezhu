@@ -1,7 +1,7 @@
 {
   "navigationBarTitleText": "发布",
-  "enablePullDownRefresh": false,
-  "disableScroll": true,
+  "enablePullDownRefresh": true,
+  "disableScroll": false,
   "usingComponents": {
     "van-field": "../../static/components/vant/field/index",
     "van-cell": "../../static/components/vant/cell/index",

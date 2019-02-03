@@ -1,57 +1,140 @@
 <template>
   <div class="container">
-    <view class="head" style="display: block; border-bottom:2px solid gray; padding-bottom:5px; margin-bottom:10px;">
-      <view class="userInfo" style="text-align:right;">
-          <text class="userName" style="font-size:30rpx;line-height:30rpx;margin-right:5px;">{{userInfo.nickName}}</text>
-          <image class="avatar" style="  vertical-align:middle;width:70rpx;height:70rpx;margin-right:20rpx; border-radius:35rpx;" :src="userInfo.avatarUrl"/>
-      </view>
-      <view style="text-align:center; margin-top:10px; font-weight:bold;">
-        <text>
-          个人信息
-        </text>
+    <view class="panel" style="margin:0">
+      <view class="panel-hd" style="padding-top:0">房屋公共设施</view>
+      <view class="wux-filterbar__panel">
+        <view class="wux-filterbar__panel-bd">
+          <checkbox-group @change="onCheckboxChange">
+            <view class="wux-filterbar__groups">
+              <block v-for="(item, index) of infrastructure" :key="item.id" :data-index='index'>
+                <view class="wux-filterbar__group">
+                  <checkbox class="wux-filterbar__check" :value="item.id"/>
+                  <view class="wux-filterbar__btn" :class="item.checked ? 'wux-filterbar__btn--checked' : ''">{{ item.name }}</view>
+                </view>
+              </block>
+            </view>
+          </checkbox-group>
+        </view>
       </view>
     </view>
-    <form @submit="formSubmit" @reset="formReset">
-      <view class="section">
-        <input name="name" :value='name' style="border-bottom:1px solid gray; border-top:1px solid gray; padding:0 10px; font-size:14px; height:40px; line-height:40px;" placeholder="怎么称呼您" />
-        <input name="address" :value='address' style="border-bottom:1px solid gray; padding:0 10px; font-size:14px; height:40px; line-height:40px;" placeholder="为了能够联系到您，请输入正确的联系方式" />
+    <view class="panel">
+      <view v-for='(item1, index1) in 3' :key='index1' :data-index='index1'>
+        <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房屋{{item1}}照片</view>
+        <view style="height: 220rpx; overflow: hidden; white-space: nowrap;">
+          <scroll-view scroll-x style="width: auto;overflow:hidden;">
+            <view v-for='(item, index) of picList' :key='index' :data-index='index' style="margin: 2px 3px; font-size:10px; display: inline-block;">
+              <view v-if="index != 9" :style="{'border-color':(item != '../../static/images/plus2.png'? '#f5222d':'#d9d9d9')}" style="width:90px; height:90px; margin:auto; box-sizing:border-box; border-radius:8rpx; border:2rpx solid #d9d9d9;">
+                <image mode='aspectFill' style="width: 85px; height: 85px; display:block; margin:auto; box-sizing:border-box; margin-top:1px; border-radius:8rpx;" :src="item" :data-src="item" @click="previewImage"/>
+                <view v-if="item != '../../static/images/plus2.png'" style="width: 90px; border-radius:8rpx;" class="delete" @click='deleteImage' :data-index="index">
+                  <image mode='aspectFill' style="display:block; margin:0 auto;" src="../../static/images/delete.png" />
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+        </view>
       </view>
-      <view class="btn-area">
-        <button class="button" formType="submit">下一步</button>
-        <button class="button" formType="reset" style="background-color:gray;">取消</button>
-      </view>
-    </form>
-    <tabBarSelect :selectNavIndex='0' :navList='navList'></tabBarSelect>
+    </view>
+    <view class="panel" style="margin-bottom:30rpx;">
+      <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房屋简介</view>
+      <wux-cell-group>
+        <wux-cell hover-class="none">
+          <wux-textarea hasCount rows="3" cursorSpacing="80" maxlength='50' placeholder="最多50个字符" :focus=false />
+        </wux-cell>
+      </wux-cell-group>
+    </view>
+    <div class="wux-filterbar__btns bottomButton">
+      <view class="wux-filterbar__btn wux-filterbar__btn" @click="onConfirmPre">上一步</view>
+      <view class="wux-filterbar__btn wux-filterbar__btn--danger" @click="onConfirmNext">确认发布</view>
+    </div>
   </div>
 </template>
 
 <script>
-import globalStore from '@/stores/global-store'
-import tabBarSelect from '@/components/tabbar'
+import util from '@/utils/index'
 
 export default {
   data () {
     return {
-      userInfo: {},
-      name: '',
-      address: '',
-      navList: globalStore.state.tabBarList.navList2
+      infrastructure: [{id: 0, name: '床', checked: 0},
+      {id: 1, name: '洗衣机', checked: 0},
+      {id: 2, name: '空调', checked: 0},
+      {id: 3, name: '阳台', checked: 0},
+      {id: 4, name: '冰箱', checked: 0},
+      {id: 5, name: '卫生间', checked: 0},
+      {id: 6, name: '燃气', checked: 0},
+      {id: 7, name: '电视机', checked: 0},
+      {id: 8, name: '热水器', checked: 0},
+      {id: 9, name: '宽带', checked: 0},
+      {id: 10, name: '沙发', checked: 0},
+      {id: 11, name: '暖气', checked: 0},
+      {id: 12, name: '衣柜', checked: 0}
+      ],
+      picList: ['../../static/images/plus2.png'],
+      rentType: 1,
+      rentNum: 2
     }
   },
-
-  components: {
-    tabBarSelect
+  onLoad(options) {
+    this.rentType = options.rentType
+    this.rentNum = options.rentNum
+    console.log(this.rentNum)
   },
-
   methods: {
-    formSubmit (e) {
-      console.log('form发生了submit事件，携带数据为：', e.mp.detail.value)
-      wx.navigateTo({
-        url: '../zoomInfo/main'
-      })
+    onCheckboxChange(e) {
+      this.selectType = e.mp.detail.value
+      this.infrastructure.map((n) => {n.checked = 0; n})
+      for (let i = 0; i < this.infrastructure.length; i++) {
+        for (let j = 0; j < this.selectType.length; j++) {
+          if (this.infrastructure[i].id == this.selectType[j]) {
+            this.infrastructure[i].checked = true;
+          }
+        }
+      }
     },
-    formReset () {
-      console.log('form发生了reset事件')
+    previewImage (e) {
+      let current = e.target.dataset.src
+      let index = e.target.dataset.index
+      if (current !== '../../static/images/plus2.png') {
+        wx.previewImage({
+          current: current,
+          urls: [current]
+        })
+      } else {
+        this.chooseImage(index)
+      }
+    },
+    chooseImage (index) {
+      let that = this
+      if (this.picList.length < 10) {
+        wx.chooseImage({
+          sizeType: ['compressed'],
+          sourceType: ['album', 'camera'],
+          success: function (res) {
+            let tempFilePaths = res.tempFilePaths
+            for (let p in tempFilePaths) {
+              if (that.picList.length < 10) {
+                that.picList.unshift(tempFilePaths[p])
+              }
+            }
+            that.$forceUpdate()
+          }
+        })
+      } else {
+        wx.showToast({
+          title: '最多只能上传9张图片',
+          icon: 'none',
+          duration: 10000
+        })
+        setTimeout(function () {
+          wx.hideToast()
+        }, 2000)
+      }
+    },
+    deleteImage (e) {
+      var index = e.currentTarget.dataset.index
+      this.picList.splice(index, 1)
+    },
+    onConfirmPre () {
       wx.navigateBack({
         delta: 1
       })
@@ -59,27 +142,222 @@ export default {
   },
 
   mounted () {
-    this.userInfo = globalStore.state.userInfo
-    // var options = util.getCurrentPageParam()
-    // console.log(options)
   }
 }
 </script>
 
 <style scoped>
 .container{
-    height: auto;
-    overflow: hidden;
-    width: 100%;
-    margin-top:20rpx;
+    height: 100%;
+    overflow: scroll;
+    margin: 20rpx 40rpx;
 }
-.btn-area {
+
+.panel-hd {
+  padding-top:20rpx;
+  padding-bottom:4rpx;
+  color:#1c2438;
+  font-size:35rpx;
+  overflow-x:hidden;
+  display:-webkit-box;
+  display:-webkit-flex;
   display:flex;
-  margin:100px 80px;
+  -webkit-box-align:center;
+  -webkit-align-items:center;
+  align-items:center;
+  font-weight:bold;
 }
-.button {
-  color:white;
-  background-color:red;
-  border-radius:10px;
+.panel {
+  display: block;
+}
+.picList {
+  width: 60px; 
+  height: 60px; 
+  margin-right: 3px; 
+  margin-bottom:5px; 
+  font-size:10px; 
+  display: inline-block; 
+  border: 1px solid gray;
+}
+.delete {
+  margin-top:-20px;
+  height: 20px;
+  bottom: 0;
+  width: 100%;
+  opacity: .6;
+  text-align:center;
+}
+.delete image {
+  width: 20px;
+  height: 20px;
+  opacity: .8;
+}
+
+.bottomButton {
+  height:120rpx !important;
+  /* position: fixed;
+  bottom: 0rpx; */
+  /* margin:0rpx 40rpx; */
+  width:100%;
+  background:white;
+  left:0;
+}
+.wux-filterbar__panel {
+  padding: 0 30rpx;
+}
+.wux-filterbar__panel:last-child {
+  padding-bottom: 40rpx;
+}
+.wux-filterbar__panel-hd {
+  padding-top: 40rpx;
+  padding-bottom: 4rpx;
+  color: #252525;
+  font-size: 30rpx;
+  overflow-x: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.wux-filterbar__panel-selected {
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  text-align: right;
+  font-size: 26rpx;
+  line-height: 48rpx;
+  color: #f23030;
+}
+.wux-filterbar__groups {
+  overflow: hidden;
+  font-size: 26rpx;
+  margin: 0 -10rpx;
+}
+.wux-filterbar__group {
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  position: relative;
+  height: 64rpx;
+  width: 20%;
+  color: #232326;
+  margin-top: 20rpx;
+  float: left;
+  box-sizing: border-box;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+}
+.wux-filterbar__radio,
+.wux-filterbar__check,
+.wux-filterbar__btn {
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  height: 64rpx;
+  display: block;
+  text-align: center;
+  line-height: 64rpx;
+  background-color: #f0f2f5;
+  border-radius: 10rpx;
+  border: 2rpx solid #f0f2f5;
+  box-sizing: border-box;
+}
+.wux-filterbar__radio,
+.wux-filterbar__check {
+  position: absolute;
+  left: 10rpx;
+  top: 0;
+  width: 100%;
+  width: calc(100% - 20rpx);
+  opacity: 0;
+}
+.wux-filterbar__btn--checked {
+  background-color: #2d8cf0;
+  color: #fff;
+}
+
+.wux-filterbar__btns {
+  height: 88rpx;
+  display: -webkit-box;
+  overflow: hidden;
+}
+.wux-filterbar__btns .wux-filterbar__btn {
+  background-color: #fff;
+  color: #252525;
+  font-size: 32rpx;
+  position: relative;
+  display: -webkit-box;
+  -webkit-box-flex: 1;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  border: none;
+  border-radius: 0;
+  height: 88rpx;
+  line-height: 88rpx;
+}
+.wux-filterbar__btns .wux-filterbar__btn:before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 2rpx;
+  border-top: 2rpx solid #D9D9D9;
+  color: #D9D9D9;
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+          transform: scaleY(0.5);
+}
+.wux-filterbar__btns {
+  height: 88rpx;
+  display: -webkit-box;
+  overflow: hidden;
+}
+.wux-filterbar__btns .wux-filterbar__btn {
+  background-color: #fff;
+  color: #252525;
+  font-size: 32rpx;
+  position: relative;
+  display: -webkit-box;
+  -webkit-box-flex: 1;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  border: none;
+  border-radius: 0;
+  height: 88rpx;
+  line-height: 88rpx;
+}
+.wux-filterbar__btns .wux-filterbar__btn:before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 2rpx;
+  border-top: 2rpx solid #D9D9D9;
+  color: #D9D9D9;
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+          transform: scaleY(0.5);
+}
+.wux-filterbar__btns .wux-filterbar__btn--danger {
+  background-color: #f23030;
+  color: #fff;
+}
+.wux-filterbar__btns .wux-filterbar__btn--danger:before {
+  display: none;
 }
 </style>

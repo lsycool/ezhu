@@ -37,8 +37,11 @@
           <van-cell title="房屋朝向" label="东/南/西/北" size="large" clickable @click="selectFace">
             <wux-icon addon="icon-taiyang" color="#999999" size="20"/>
           </van-cell>
-          <van-field :value="rentPrise" clearable type='number' label="租金要求" placeholder="请输入金额" use-button-slot @click-icon="onClickIcon">
+          <van-field v-if="selectType==0" :value="rentPrise" clearable type='number' label="租金要求" placeholder="请输入金额" use-button-slot @click-icon="onClickIcon">
             <view slot="button" style="color:#999999">元/月</view>
+          </van-field>
+          <van-field v-if="selectType==1" :value="rentNum" clearable type='number' label="合租人数" placeholder="请输入人数" use-button-slot @click-icon="onClickIcon">
+            <view slot="button" style="color:#999999">人</view>
           </van-field>
           <van-field :value="floor" clearable label="楼  层" type='number' placeholder="请输入楼层" use-icon-slot @click-icon="onClickIcon">
             <wux-icon slot="icon" addon="icon-louceng0" color="#999999" size="20"/>
@@ -67,7 +70,8 @@ export default {
       sexType: ['', '男', '女', '不限'],
       sexTypeSelect: [0],
       scrollHeight: 300,
-      selectType: 0
+      selectType: 0,
+      rentNum: ''
     }
   },
   onShow () {
@@ -119,7 +123,8 @@ export default {
       if (0 == id) {
         url = '../landlordWholeInfo/main?rentType=' + this.selectType
       } else if (1 == id){
-        url = '../houseInfo/main?rentType=' + this.selectType
+        url = '../landlordSharingInfo/main?rentType=' + this.selectType + '&rentNum=' + this.rentNum
+        console.log(this.rentNum)
       }
       wx.navigateTo({
         url: url
@@ -168,11 +173,13 @@ page {
 }
 
 .bottomButton {
-  position: fixed;
+  /* position: fixed; */
   bottom: 5rpx;
-  margin:20rpx 40rpx;
-  width:90%;
-  left:0;
+  margin:20rpx 0;
+  width:100%;
+  /* margin:20rpx 40rpx; */
+  /* width:90%; */
+  /* left:0; */
 }
 
 .wux-filterbar__panel {
