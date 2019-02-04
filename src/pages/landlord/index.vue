@@ -40,7 +40,7 @@
           <van-field v-if="selectType==0" :value="rentPrise" clearable type='number' label="租金要求" placeholder="请输入金额" use-button-slot @click-icon="onClickIcon">
             <view slot="button" style="color:#999999">元/月</view>
           </van-field>
-          <van-field v-if="selectType==1" :value="rentNum" clearable type='number' label="合租人数" placeholder="请输入人数" use-button-slot @click-icon="onClickIcon">
+          <van-field v-if="selectType==1" :value="rentNum" clearable type='number' label="合租人数" placeholder="请输入人数" use-button-slot @change="onRentNum">
             <view slot="button" style="color:#999999">人</view>
           </van-field>
           <van-field :value="floor" clearable label="楼  层" type='number' placeholder="请输入楼层" use-icon-slot @click-icon="onClickIcon">
@@ -124,7 +124,6 @@ export default {
         url = '../landlordWholeInfo/main?rentType=' + this.selectType
       } else if (1 == id){
         url = '../landlordSharingInfo/main?rentType=' + this.selectType + '&rentNum=' + this.rentNum
-        console.log(this.rentNum)
       }
       wx.navigateTo({
         url: url
@@ -138,6 +137,9 @@ export default {
     },
     selectSexType (e) {
       this.sexTypeSelect = e.mp.detail.value;
+    },
+    onRentNum (e) {
+      this.rentNum = e.mp.detail;
     }
   }
 }

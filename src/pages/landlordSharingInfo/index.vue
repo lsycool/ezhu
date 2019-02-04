@@ -18,16 +18,26 @@
       </view>
     </view>
     <view class="panel">
-      <view v-for='(item1, index1) in 3' :key='index1' :data-index='index1'>
-        <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房屋{{item1}}照片</view>
+      <view v-for='(item1, index1) of rentNum' :key='index1' :data-index='index1'>
+        <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房屋{{item1+1}}照片</view>
         <view style="height: 220rpx; overflow: hidden; white-space: nowrap;">
           <scroll-view scroll-x style="width: auto;overflow:hidden;">
-            <view v-for='(item, index) of picList' :key='index' :data-index='index' style="margin: 2px 3px; font-size:10px; display: inline-block;">
-              <view v-if="index != 9" :style="{'border-color':(item != '../../static/images/plus2.png'? '#f5222d':'#d9d9d9')}" style="width:90px; height:90px; margin:auto; box-sizing:border-box; border-radius:8rpx; border:2rpx solid #d9d9d9;">
-                <image mode='aspectFill' style="width: 85px; height: 85px; display:block; margin:auto; box-sizing:border-box; margin-top:1px; border-radius:8rpx;" :src="item" :data-src="item" @click="previewImage"/>
-                <view v-if="item != '../../static/images/plus2.png'" style="width: 90px; border-radius:8rpx;" class="delete" @click='deleteImage' :data-index="index">
-                  <image mode='aspectFill' style="display:block; margin:0 auto;" src="../../static/images/delete.png" />
-                </view>
+            <view v-for='(item, index) of picList[index1]' :key='index' :data-index='index' style="margin: 2px 3px; font-size:10px; display: inline-block;">
+              <view v-if="index < 9" :style="{'border-color':(item != 'plus'? '#f5222d':'#d9d9d9')}" style="width:90px; height:90px; margin:auto; box-sizing:border-box; border-radius:8rpx; border:2rpx solid #d9d9d9;">
+                <block v-if="item != 'plus'">
+                  <image mode='aspectFill' style="width: 85px; height: 85px; display:block; margin:auto; box-sizing:border-box; margin-top:1px; border-radius:8rpx;" :src="item" :data-parent-index="index1" :data-src="item" @click="previewImage"/>
+                  <view style="width: 90px; border-radius:8rpx;" class="delete" @click='deleteImage' :data-parent-index="index1" :data-index="index">
+                    <image mode='aspectFill' style="display:block; margin:0 auto;" src="../../static/images/delete.png" />
+                  </view>
+                </block>
+                <block v-else>
+                  <view :data-parent-index="index1" :data-src="item" @click="chooseImage" style="height: 45px; text-align:center; line-height:45px;">
+                    <wux-icon type="md-add" color="#999999" size="45"/>
+                  </view>
+                  <view style="text-align:center; margin: 2px 10px; color: #999999; height: 30px;">
+                    <text>上传照片\n最多9张</text>
+                  </view>
+                </block>
               </view>
             </view>
           </scroll-view>
@@ -69,14 +79,14 @@ export default {
       {id: 11, name: '暖气', checked: 0},
       {id: 12, name: '衣柜', checked: 0}
       ],
-      picList: ['../../static/images/plus2.png'],
+      picList: [],
       rentType: 1,
-      rentNum: 2
+      rentNum: 1,
     }
   },
   onLoad(options) {
-    this.rentType = options.rentType
-    this.rentNum = options.rentNum
+    this.rentType = parseInt(options.rentType)
+    this.rentNum = parseInt(options.rentNum)
     console.log(this.rentNum)
   },
   methods: {
@@ -92,28 +102,30 @@ export default {
       }
     },
     previewImage (e) {
+      console.log(e.target)
       let current = e.target.dataset.src
       let index = e.target.dataset.index
-      if (current !== '../../static/images/plus2.png') {
+      let parentIndex = e.target.dataset.parentIndex
+      if (current !== 'plus') {
         wx.previewImage({
           current: current,
           urls: [current]
         })
       } else {
-        this.chooseImage(index)
+        this.chooseImage(index, parentIndex)
       }
     },
-    chooseImage (index) {
+    chooseImage (index, parentIndex) {
       let that = this
-      if (this.picList.length < 10) {
+      if (this.picList[parentIndex].length < 10) {
         wx.chooseImage({
           sizeType: ['compressed'],
           sourceType: ['album', 'camera'],
           success: function (res) {
             let tempFilePaths = res.tempFilePaths
             for (let p in tempFilePaths) {
-              if (that.picList.length < 10) {
-                that.picList.unshift(tempFilePaths[p])
+              if (that.picList[parentIndex].length < 10) {
+                that.picList[parentIndex].unshift(tempFilePaths[p])
               }
             }
             that.$forceUpdate()
@@ -132,7 +144,8 @@ export default {
     },
     deleteImage (e) {
       var index = e.currentTarget.dataset.index
-      this.picList.splice(index, 1)
+      let parentIndex = e.target.dataset.parentIndex
+      this.picList[parentIndex].splice(index, 1)
     },
     onConfirmPre () {
       wx.navigateBack({
@@ -142,6 +155,11 @@ export default {
   },
 
   mounted () {
+    this.picList = new Array(this.rentNum);
+    for(var i = 0; i < this.rentNum; i++) {
+      this.picList[i] = new Array('plus');
+    } 
+    console.log(this.picList)
   }
 }
 </script>
