@@ -19,18 +19,28 @@
     </view>
     <view class="panel" v-if="rentType == 0">
       <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房屋照片</view>
-      <view style="height: 220rpx; overflow: hidden; white-space: nowrap;">
-        <scroll-view scroll-x style="width: auto;overflow:hidden;">
-          <view v-for='(item, index) of picList' :key='index' :data-index='index' style="margin: 2px 3px; font-size:10px; display: inline-block;">
-            <view v-if="index != 9" :style="{'border-color':(item != '../../static/images/plus2.png'? '#f5222d':'#d9d9d9')}" style="width:90px; height:90px; margin:auto; box-sizing:border-box; border-radius:8rpx; border:2rpx solid #d9d9d9;">
-              <image mode='aspectFill' style="width: 85px; height: 85px; display:block; margin:auto; box-sizing:border-box; margin-top:1px; border-radius:8rpx;" :src="item" :data-src="item" @click="previewImage"/>
-              <view v-if="item != '../../static/images/plus2.png'" style="width: 90px; border-radius:8rpx;" class="delete" @click='deleteImage' :data-index="index">
-                <image mode='aspectFill' style="display:block; margin:0 auto;" src="../../static/images/delete.png" />
+        <view style="height: 220rpx; overflow: hidden; white-space: nowrap;">
+          <scroll-view scroll-x style="width: auto;overflow:hidden;">
+            <view v-for='(item, index) of picList' :key='index' :data-index='index' style="margin: 2px 3px; font-size:10px; display: inline-block; overflow:hidden;">
+              <view v-if="index < 9" :style="{'border-color':(item != 'plus'? '#f5222d':'#d9d9d9')}" style="width:90px; height:90px; margin:auto; box-sizing:border-box; border-radius:8rpx; border:2rpx solid #d9d9d9;">
+                <view v-if="item != 'plus'">
+                  <image mode='aspectFill' style="width: 85px; height: 85px; display:block; margin:auto; box-sizing:border-box; margin-top:1px; border-radius:8rpx;" :src="item" :data-src="item" @click="previewImage"/>
+                  <view style="width: 90px; border-radius:8rpx;" class="delete" @click='deleteImage' :data-index="index">
+                    <image mode='aspectFill' style="display:block; margin:0 auto;" src="../../static/images/delete.png" />
+                  </view>
+                </view>
+                <view v-else @click="chooseImage">
+                  <view style="text-align:center;">
+                    <wux-icon type="md-add" color="#999999" size="45"/>
+                  </view>
+                  <view style="text-align:center; margin: 2px 10px; color: #999999; height: 30px;">
+                    <text>上传照片\n最多9张</text>
+                  </view>
+                </view>
               </view>
             </view>
-          </view>
-        </scroll-view>
-      </view>
+          </scroll-view>
+        </view>
     </view>
     <view class="panel" style="margin-bottom:20px;" v-if="rentType == 0">
       <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房屋简介</view>
@@ -67,7 +77,7 @@ export default {
       {id: 11, name: '暖气', checked: 0},
       {id: 12, name: '衣柜', checked: 0}
       ],
-      picList: ['../../static/images/plus2.png'],
+      picList: ['plus'],
       rentType: 0,
       scrollHeight: 300
     }
@@ -114,7 +124,7 @@ export default {
         this.chooseImage(index)
       }
     },
-    chooseImage (index) {
+    chooseImage () {
       let that = this
       if (this.picList.length < 10) {
         wx.chooseImage({

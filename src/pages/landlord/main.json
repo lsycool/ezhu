@@ -7,6 +7,7 @@
     "van-cell": "../../static/components/vant/cell/index",
     "van-icon": "../../static/components/vant/icon/index",
     "van-button": "../../static/components/vant/button/index",
-    "wux-icon": "../../static/components/wux/icon/index"
+    "wux-icon": "../../static/components/wux/icon/index",
+    "i-message": "../../static/components/iview/message/index"
   }
 }

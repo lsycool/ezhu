@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <i-message :content="alertContent" :visible="alertVisibility" :type="alertType"/>
     <view class="panel rentType">
       <view class="panel-hd" style="padding-top:0">租赁类型</view>
       <view class="wux-filterbar__panel">
@@ -34,19 +35,21 @@
               <wux-icon addon="icon-xingbie1" color="#999999" size="20"/>
             </van-cell>
           </picker>
-          <van-cell title="房屋朝向" label="东/南/西/北" size="large" clickable @click="selectFace">
-            <wux-icon addon="icon-taiyang" color="#999999" size="20"/>
-          </van-cell>
-          <van-field v-if="selectType==0" :value="rentPrise" clearable type='number' label="租金要求" placeholder="请输入金额" use-button-slot @click-icon="onClickIcon">
+          <picker mode="selector" @change="selectFaceType" :value="faceTypeSelect" :range="faceType">
+            <van-cell title="房屋朝向" label="东/南/西/北" size="large" :value="faceTypeLabel" clickable >
+              <wux-icon addon="icon-taiyang" color="#999999" size="20"/>
+            </van-cell>
+          </picker>
+          <van-field v-if="selectType==0" :value="rentPrise" clearable type='number' label="租金要求" placeholder="请输入金额" use-button-slot @change="onRentPrise">
             <view slot="button" style="color:#999999">元/月</view>
           </van-field>
           <van-field v-if="selectType==1" :value="rentNum" clearable type='number' label="合租人数" placeholder="请输入人数" use-button-slot @change="onRentNum">
             <view slot="button" style="color:#999999">人</view>
           </van-field>
-          <van-field :value="floor" clearable label="楼  层" type='number' placeholder="请输入楼层" use-icon-slot @click-icon="onClickIcon">
+          <van-field :value="floor" clearable label="楼  层" type='number' placeholder="请输入楼层" use-icon-slot @change="onFloor">
             <wux-icon slot="icon" addon="icon-louceng0" color="#999999" size="20"/>
           </van-field>
-          <van-field :value="floor" clearable label="面  积" type='number' placeholder="请输入面积" use-icon-slot @click-icon="onClickIcon">
+          <van-field :value="measure" clearable label="面  积" type='number' placeholder="请输入面积" use-icon-slot @change="onMeasure">
             <wux-icon slot="icon" addon="icon-fangwumianji" color="#999999" size="20"/>
           </van-field>
         </view>
@@ -60,18 +63,29 @@
 
 <script>
 import util from '@/utils/index'
+// import { $Message  } from '../../../static/components/vant/button/index'
+var amapFile = require('@/libs/amap-wx.js');//如：..­/..­/libs/amap-wx.js
 
 export default {
   data () {
     return {
-      rentType: [{id:0, name:'整租', checked: 1}, {id:1, name:'合租', checked: 0}, {id:2, name:'拼租', checked: 0}, {id:3, name:'懒人租房', checked: 0}],
+      rentType: [{id:0, name:'整租', checked: 1}, {id:1, name:'合租', checked: 0}, {id:2, name:'拼租', checked: 0}],
       houseType: [['', '一室', '二室', '三室', '四室', '五室'], ['', '一厅', '二厅', '三厅', '四厅', '五厅'], ['', '一卫', '二卫', '三卫', '四卫', '五卫']],
       houseTypeSelect: [0, 0, 0],
-      sexType: ['', '男', '女', '不限'],
+      sexType: ['不限', '男', '女'],
       sexTypeSelect: [0],
+      faceType: ['东', '南', '西', '北'],
+      faceTypeSelect: [0],
       scrollHeight: 300,
       selectType: 0,
-      rentNum: ''
+      rentNum: '',
+      rentPrise: "",
+      alertContent: "123",
+      alertVisibility: false,
+      alertType: 'default',
+      timmer: null,
+      floor: '',
+      messure: ''
     }
   },
   onShow () {
@@ -80,6 +94,9 @@ export default {
     })
   },
   mounted () {
+    var that = this;
+    var myAmapFun = new amapFile.AMapWX({key:'e9c77e7646c0c1bfd59361dae6d10ac6'});
+
     this.getScollHeight()
   },
   computed: {
@@ -92,6 +109,11 @@ export default {
       let sexType = this.sexType
       let sexTypeSelect = this.sexTypeSelect
       return sexType[sexTypeSelect[0]];
+    },
+    faceTypeLabel: function () {
+      let faceType = this.faceType
+      let faceTypeSelect = this.faceTypeSelect
+      return faceType[faceTypeSelect[0]];
     }
   },
   methods: {
@@ -118,6 +140,10 @@ export default {
       })
     },
     onConfirm () {
+      if (!this.checkInput()) {
+        return
+      }
+
       let id = this.rentType.filter((n) => n.checked == 1).map((n) => n.id)
       let url = ''
       if (0 == id) {
@@ -130,7 +156,9 @@ export default {
       })
     },
     selectLocation () {
-      
+      wx.navigateTo({
+        url: '../searchZoom/main'
+      })
     },
     selectHouseType (e) {
       this.houseTypeSelect = e.mp.detail.value;
@@ -138,18 +166,71 @@ export default {
     selectSexType (e) {
       this.sexTypeSelect = e.mp.detail.value;
     },
+    selectFaceType (e) {
+      this.faceTypeSelect = e.mp.detail.value;
+    },
     onRentNum (e) {
       this.rentNum = e.mp.detail;
+    },
+    onRentPrise (e) {
+      this.rentPrise =  e.mp.detail;
+    },
+    onRentNum (e) {
+      this.rentNum =  e.mp.detail;
+    },
+    onFloor (e) {
+      this.floor =  e.mp.detail;
+    },
+    onMeasure (e) {
+      this.messure =  e.mp.detail;
+    },
+    checkInput () {
+      if (this.selectType == 0  && this.rentPrise.trim() == "") {
+        this.handleShow({content:'请输入租金数额', type:'error'});
+        return false;
+      } else if (this.selectType == 1  && this.rentNum.trim() == "") {
+        this.handleShow({content:'合租人数', type:'error'});
+        return false;
+      } else if (this.houseTypeLabel == '') {
+        this.handleShow({content:'请输入房屋户型', type:'error'});
+        return false;
+      } else if (this.floor == '') {
+        this.handleShow({content:'请输入楼层', type:'error'});
+        return false;
+      } else if (this.messure == '') {
+        this.handleShow({content:'请输入面积', type:'error'});
+        return false;
+      } 
+      else {
+        return true;
+      }
+    },
+    handleShow (options) {
+        const { type = 'default', duration = 2, content = '' } = options;
+        this.alertContent = content
+        this.alertVisibility = true
+        this.alertType = type
+
+        const d = duration * 1000;
+
+        if (this.timmer) clearTimeout(this.timmer);
+        if (d !== 0) {
+            this.timmer = setTimeout(() => {
+                this.handleHide();
+                this.timmer = null;
+            }, d);
+        }
+    },
+    handleHide () {
+        this.alertContent = ''
+        this.alertVisibility = false
+        this.alertType = 'default'
     }
   }
 }
 </script>
 
 <style scoped>
-page {
-  height: 100%;
-}
-
 .container {
     height: 100%;
     overflow: hidden;

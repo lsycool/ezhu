@@ -7,6 +7,7 @@
     "wux-grid": "../../static/components/wux/grid/index",
     "wux-cell-group": "../../static/components/wux/cell-group/index",
     "wux-cell": "../../static/components/wux/cell/index",
+    "wux-icon": "../../static/components/wux/icon/index",
     "wux-textarea": "../../static/components/wux/textarea/index"
   }
 }

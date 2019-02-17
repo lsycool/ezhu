@@ -19,7 +19,16 @@
     </view>
     <view class="panel">
       <view v-for='(item1, index1) of rentNum' :key='index1' :data-index='index1'>
-        <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房屋{{item1+1}}照片</view>
+        <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房间{{item1+1}}详情</view>
+        <view style="margin: 2px 3px; font-size: 24rpx;">
+          <checkbox-group :data-index='index' @change="onRoomCheckboxChange" style="display:inline-block; overflow:hidden; margin-right:12rpx;">
+            <label class="checkbox" v-for="(item, index) of roomCofig" :key="index" :data-index='index' style="margin-right:8rpx;">
+              <checkbox :value="item.value" />
+              <view style="display:inline-block; margin-left:-9rpx;">{{item.name}}</view>  
+            </label>
+          </checkbox-group>
+          <input style="width:120rpx; display:inline-block; border-bottom:1rpx solid gray; text-align:center;" placeholder="期望租金" />
+        </view>
         <view style="height: 220rpx; overflow: hidden; white-space: nowrap;">
           <scroll-view scroll-x style="width: auto;overflow:hidden;">
             <view v-for='(item, index) of picList[index1]' :key='index' :data-index='index' style="margin: 2px 3px; font-size:10px; display: inline-block; overflow:hidden;">
@@ -82,12 +91,13 @@ export default {
       picList: [],
       rentType: 1,
       rentNum: 1,
+      roomCofig: [{name: '独卫', value: 0}, {name: '阳台', value: 1}, {name: '朝南', value: 2}, {name: '主卧', value: 3}]
     }
   },
   onLoad(options) {
     this.rentType = parseInt(options.rentType)
     this.rentNum = parseInt(options.rentNum)
-    console.log(this.rentNum)
+    this.rentNum = this.rentNum > 3? 3:this.rentNum
   },
   methods: {
     onCheckboxChange(e) {
@@ -149,6 +159,9 @@ export default {
       wx.navigateBack({
         delta: 1
       })
+    },
+    checkInput () {
+      
     }
   },
 
