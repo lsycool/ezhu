@@ -19,7 +19,9 @@
     "pages/landlordSharingInfo/main",
     "pages/zoomList/main",
     "pages/roomDetail/main",
-    "pages/resultSuccess/main"
+    "pages/resultSuccess/main",
+    "pages/searchZoom/main",
+    "pages/inputtips/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -62,6 +64,11 @@
   "networkTimeout": {
     "request": 10000,
     "downloadFile": 10000
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于设置小区坐标"
+    }
   },
   "debug": true
 }

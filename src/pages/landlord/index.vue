@@ -22,7 +22,7 @@
       <view class="panel rentInfo" :style="{'height':scrollHeight, 'margin-bottom':'10px'}">
         <view class="panel-hd">房源详情</view>
         <view>
-          <van-cell title="地理位置" label="您房源所在的小区" size="large" clickable @click="selectLocation"> 
+          <van-cell title="地理位置" label="您房源所在的小区" :value="location" size="large" clickable @click="selectLocation"> 
             <van-icon slot="right-icon" name="location" style="margin-left:5px;"></van-icon>
           </van-cell>
           <picker mode="multiSelector" @change="selectHouseType" :value="houseTypeSelect" :range="houseType">
@@ -64,7 +64,7 @@
 <script>
 import util from '@/utils/index'
 // import { $Message  } from '../../../static/components/vant/button/index'
-var amapFile = require('@/libs/amap-wx.js');//如：..­/..­/libs/amap-wx.js
+
 
 export default {
   data () {
@@ -85,8 +85,19 @@ export default {
       alertType: 'default',
       timmer: null,
       floor: '',
-      messure: ''
+      messure: '',
+      location: '',
+      latitude: '',
+      longitude: ''
     }
+  },
+  onLoad (e) {
+    if (e) {
+      this.location = e.keywords
+      this.latitude = e.latitude
+      this.longitude = e.longitude
+    }
+    console.log(e)
   },
   onShow () {
     wx.hideTabBar({
@@ -94,9 +105,6 @@ export default {
     })
   },
   mounted () {
-    var that = this;
-    var myAmapFun = new amapFile.AMapWX({key:'e9c77e7646c0c1bfd59361dae6d10ac6'});
-
     this.getScollHeight()
   },
   computed: {

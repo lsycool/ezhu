@@ -12,6 +12,7 @@
 	"compileType": "miniprogram",
 	"appid": "wx6c86c274e58dd3bf",
 	"projectname": "%E8%AF%9A%E4%BF%A1%E7%A7%9F",
+	"libVersion": "2.5.2",
 	"condition": {
 		"search": {
 			"current": -1,
