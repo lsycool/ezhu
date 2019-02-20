@@ -1,7 +1,7 @@
 {
     "navigationBarTitleText": "房屋详情",
     "enablePullDownRefresh": false,
-    "disableScroll": true,
+    "disableScroll": false,
     "usingComponents": {
       "van-goods-action": "../../static/components/vant/goods-action/index",
       "van-goods-action-icon": "../../static/components/vant/goods-action-icon/index",

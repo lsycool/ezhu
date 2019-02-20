@@ -38,7 +38,7 @@ export default {
     var myAmapFun = new amapFile.AMapWX({key: 'e9c77e7646c0c1bfd59361dae6d10ac6'});
     var params = {
       // iconPath: '../../static/images/marker.png',
-      success: function(data){
+      success: function(data) {
         that.markers[0].id = data[0].id
         that.markers[0].title = data[0].name
         that.markers[0].longitude = data[0].longitude
@@ -49,7 +49,7 @@ export default {
         that.showMarkerInfo(data[0]);
         // console.log(that.markers)
       },
-      fail: function(info){
+      fail: function(info) {
         // wx.showModal({title:info.errMsg})
       }
     }

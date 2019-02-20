@@ -64,6 +64,11 @@
     <modal :hidden="hiddenCancleOrder" confirm-text="确定" cancel-text="我再想一下" @confirm='cancleOrder' @cancel='close'>
     <view>取消预约后，房源将不再为您保留，确认取消预约吗？</view>
     </modal>
+    <van-tabbar :active="active" @change="onTabbarChange" class="tabBar">
+      <van-tabbar-item icon="wap-home">主菜单</van-tabbar-item>
+      <van-tabbar-item icon="cart" info="5">我的预定</van-tabbar-item>
+      <van-tabbar-item icon="contact">个人中心</van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
@@ -184,7 +189,11 @@ export default {
       this.close()
     }
   },
-
+  onShow () {
+    wx.hideTabBar({
+      animation: false
+    })
+  },
   mounted () {
     this.getScollHeight()
     this.zooms = globalStore.state.zooms

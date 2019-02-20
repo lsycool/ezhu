@@ -59,12 +59,12 @@ export default {
       })
     },
     onBooked() {
-      wx.switchTab({
+      wx.redirectTo({
         url: '../myBooked/main'
       })
     },
     onHomePage() {
-      wx.switchTab({
+      wx.redirectTo({
         url: '../tenant/main'
       })
     },
@@ -72,9 +72,13 @@ export default {
       this.popupShow = true
     },
     onConfirm() {
-     wx.redirectTo({
-        url: '../resultSuccess/main?title=' + '预定成功' + '&content=' + '请到我的预定页面查看预定详情' + '&url=../myBooked/main' 
+      this.popupShow = false
+      wx.redirectTo({
+          url: '../resultSuccess/main?title=' + '预定成功' + '&content=' + '请到我的预定页面查看预定详情' + '&url=../myBooked/main' 
       })
+    },
+    onCancel () {
+      this.popupShow = false
     }
   },
 

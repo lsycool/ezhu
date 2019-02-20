@@ -52,6 +52,11 @@
           <van-field :value="measure" clearable label="面  积" type='number' placeholder="请输入面积" use-icon-slot @change="onMeasure">
             <wux-icon slot="icon" addon="icon-fangwumianji" color="#999999" size="20"/>
           </van-field>
+          <picker v-if="selectType==1" mode="selector" @change="OnIsPinZu" :value="IsPinZu" :range="pingZuSelect">
+            <van-cell title="是否同意拼租" label="是/否" size="large" :value="pingZuLabel" clickable >
+              <wux-icon addon="icon-taiyang" color="#999999" size="20"/>
+            </van-cell>
+          </picker>
         </view>
       </view>
     <!-- </scroll-view> -->
@@ -69,13 +74,15 @@ import util from '@/utils/index'
 export default {
   data () {
     return {
-      rentType: [{id:0, name:'整租', checked: 1}, {id:1, name:'合租', checked: 0}, {id:2, name:'拼租', checked: 0}],
+      rentType: [{id:0, name:'整租', checked: 1}, {id:1, name:'合租', checked: 0}],
       houseType: [['', '一室', '二室', '三室', '四室', '五室'], ['', '一厅', '二厅', '三厅', '四厅', '五厅'], ['', '一卫', '二卫', '三卫', '四卫', '五卫']],
       houseTypeSelect: [0, 0, 0],
       sexType: ['不限', '男', '女'],
       sexTypeSelect: [0],
       faceType: ['东', '南', '西', '北'],
       faceTypeSelect: [0],
+      pingZuSelect: ['是', '否'],
+      IsPinZu: 0,
       scrollHeight: 300,
       selectType: 0,
       rentNum: '',
@@ -122,6 +129,11 @@ export default {
       let faceType = this.faceType
       let faceTypeSelect = this.faceTypeSelect
       return faceType[faceTypeSelect[0]];
+    },
+    pingZuLabel: function () {
+      let pingZuSelect = this.pingZuSelect
+      let IsPinZu = this.IsPinZu
+      return pingZuSelect[IsPinZu];
     }
   },
   methods: {
@@ -191,6 +203,9 @@ export default {
     },
     onMeasure (e) {
       this.messure =  e.mp.detail;
+    },
+    OnIsPinZu (e) {
+      this.IsPinZu = e.mp.detail.value;
     },
     checkInput () {
       if (this.selectType == 0  && this.rentPrise.trim() == "") {

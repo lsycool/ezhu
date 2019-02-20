@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "选择小区",
+  "enablePullDownRefresh": false,
+  "disableScroll": true,
+  "usingComponents": {
+    "van-tabbar-item": "../../static/components/vant/tabbar-item/index",
+    "van-tabbar": "../../static/components/vant/tabbar/index"
+  }
+}

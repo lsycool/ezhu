@@ -1,6 +1,5 @@
 <template>
-<scroll-view scroll-y="true" :style="{height: scrollHeight + 'px', overflow: 'auto'}">
-  <div class="container">
+  <div class="container" :style="{'margin-bottom':bottomHeight}">
     <view class="panel">
       <swiper class="swiper" indicator-dots="true" autoplay="true" interval="5000" duration="1000">
         <block v-for="(item, index) in movies" :key="item.id" :data-index='index'>     
@@ -136,17 +135,25 @@
     <view class="panel">
       <view class="panel-hd">周边解读</view>
       <view>
-        <map id="map" longitude="113.324520" latitude="23.099994" scale="14"  :markers="markers" :polyline="polyline" show-location style="width: 100%; height: 200px;"></map>
+        <map id="map" longitude="113.324520" latitude="23.099994" scale="14"  :markers="markers" show-location style="width: 100%; height: 200px;"></map>
       </view>
     </view>
+    <van-dialog
+      title='是否立即预定？'
+      async-close
+      :show="bookPopupShow"
+      show-cancel-button
+      show-confirm-button
+      @cancel="onCancel"
+      @confirm="onConfirm"
+    />
     <van-goods-action v-if="'0' == rentType">
       <van-goods-action-icon icon="wap-home" text="主菜单" @click="onHomePage"/>
       <van-goods-action-icon icon="cart" text="我的预定" info="5" @click="onBooked"/>
-      <van-goods-action-button size="mini" text="收藏" type="warning" @click="onBooked"/>
-      <van-goods-action-button size="mini" text="立即预定" @click="onBooked"/>
+      <van-goods-action-button size="mini" text="收藏" type="warning" @click="onFavorite"/>
+      <van-goods-action-button size="mini" text="立即预定" @click="onBooking"/>
     </van-goods-action>
   </div>
-  </scroll-view>
 </template>
 
 <script>
@@ -160,6 +167,7 @@ export default {
       scrollHeight: 300,
       active: -1,
       popupShow: false,
+      bookPopupShow: false,
       rentType: '0',
       rentName: '',
       movies: [
@@ -172,21 +180,15 @@ export default {
         id: 0,
         latitude: 23.099994,
         longitude: 113.324520,
-        width: 50,
-        height: 50
-      }],
-      polyline: [{
-        points: [{
-          longitude: 113.3245211,
-          latitude: 23.10229
-        }, {
-          longitude: 113.324520,
-          latitude: 23.21229
-        }],
-        color:"#FF0000DD",
-        width: 2,
-        dottedLine: true
-      }],
+        width: 16,
+        height: 23
+      }]
+    }
+  },
+
+  computed: {
+    bottomHeight: function () {
+      return this.rentType == '0'? '60px':'10px';
     }
   },
 
@@ -219,14 +221,26 @@ export default {
       })
     },
     onBooked() {
-      wx.switchTab({
+      wx.redirectTo({
         url: '../myBooked/main'
       })
     },
     onHomePage() {
-      wx.switchTab({
+      wx.redirectTo({
         url: '../tenant/main'
       })
+    },
+    onBooking() {
+      this.bookPopupShow = true
+    },
+    onConfirm() {
+      this.bookPopupShow = false
+      wx.redirectTo({
+          url: '../resultSuccess/main?title=' + '预定成功' + '&content=' + '请到我的预定页面查看预定详情' + '&url=../myBooked/main' 
+      })
+    },
+    onCancel () {
+      this.bookPopupShow = false
     },
     onTogglePopup() {
       this.popupShow = !this.popupShow;

@@ -62,7 +62,7 @@ export default {
       })
     },
     rentHouse () {
-      wx.switchTab({
+      wx.navigateTo({
         url: '/pages/tenant/main'
       })
     },

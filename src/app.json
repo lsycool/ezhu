@@ -35,12 +35,7 @@
     "borderStyle": "white",
     "selectedColor": "#b4282d",
     "color": "#666",
-    "list": [{
-        "pagePath": "pages/tenant/main",
-        "iconPath": "static/images/ic_menu_home_nor.png",
-        "selectedIconPath": "static/images/ic_menu_home_pressed.png",
-        "text": "租房主菜单"
-      },
+    "list": [
       {
         "pagePath": "pages/myBooked/main",
         "iconPath": "static/images/ic_menu_book_nor.png",
