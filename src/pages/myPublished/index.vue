@@ -191,7 +191,7 @@ export default {
   },
   onShow () {
     wx.hideTabBar({
-      animation: false
+      animation: true
     })
   },
   mounted () {

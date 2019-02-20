@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "选择小区",
+  "navigationBarTitleText": "我的发布",
   "enablePullDownRefresh": false,
   "disableScroll": true,
   "usingComponents": {
