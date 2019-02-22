@@ -24,7 +24,7 @@ var amapFile = require('@/libs/amap-wx.js');
 export default {
   data () {
     return {
-      markers: [{id:'001', title:'北京市', width:'', height:'', latitude:'39.909729', longitude:'116.398419', iconPath:'../../static/images/marker.png'}],
+      markers: [{id:'001', title:'北京市', width:'16', height:'23', latitude:'39.909729', longitude:'116.398419'}],
       latitude: '39.909729',
       longitude: '116.398419',
       textData: {name: '', desc: ''},

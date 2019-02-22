@@ -1,5 +1,6 @@
 <template>
   <div class="container" :style="{'margin-bottom':bottomHeight}">
+    <!-- <scroll-view scroll-y="true" :style="{height: scrollHeight + 'px', overflow: 'auto'}"> -->
     <view class="panel">
       <swiper class="swiper" indicator-dots="true" autoplay="true" interval="5000" duration="1000">
         <block v-for="(item, index) in movies" :key="item.id" :data-index='index'>     
@@ -135,7 +136,8 @@
     <view class="panel">
       <view class="panel-hd">周边解读</view>
       <view>
-        <map id="map" longitude="113.324520" latitude="23.099994" scale="14"  :markers="markers" show-location style="width: 100%; height: 200px;"></map>
+        <image mode='aspectFill' style="height: 200px; width:100%;" :src="mapImage"/>
+        <!-- <map id="map" longitude="113.324520" latitude="23.099994" scale="14"  :markers="markers" show-location style="width: 100%; height: 200px;"></map> -->
       </view>
     </view>
     <van-dialog
@@ -153,12 +155,14 @@
       <van-goods-action-button size="mini" text="收藏" type="warning" @click="onFavorite"/>
       <van-goods-action-button size="mini" text="立即预定" @click="onBooking"/>
     </van-goods-action>
+  <!-- </scroll-view> -->
   </div>
 </template>
 
 <script>
 import util from '@/utils/index'
 import globalStore from '@/stores/global-store'
+var amapFile = require('@/libs/amap-wx.js');
 
 export default {
   data () {
@@ -176,13 +180,9 @@ export default {
         {id: '3', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=0206950cedda9935053ebed8a89f6914&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a39258eddb07a8012049ef53b617.jpg%401280w_1l_2o_100sh.jpg'},
         {id: '4', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=ba2f03b7c68c01d4904371ecd3c4814d&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F60%2F26%2F74bOOOPICb4_1024.jpg'}
       ],
-      markers: [{
-        id: 0,
-        latitude: 23.099994,
-        longitude: 113.324520,
-        width: 16,
-        height: 23
-      }]
+      mapImage: '',
+      latitude: '23.099994',
+      longtitude: '113.324520'
     }
   },
 
@@ -266,7 +266,25 @@ export default {
       this.rentName = '合租'
     } else if (2 == this.rentType) {
       this.rentName = '懒人'
-    } 
+    }
+    if (options.latitude && options.longtitude) {
+      this.latitude = options.latitude
+      this.longtitude = options.longtitude
+    }
+    var that = this;
+    var myAmapFun = new amapFile.AMapWX({key: 'e9c77e7646c0c1bfd59361dae6d10ac6'});
+    myAmapFun.getStaticmap({
+      zoom: 16,
+      location: that.longtitude + ',' + that.latitude,
+      markers: "mid,0xFF0000,:" + that.longtitude + ',' + that.latitude,
+      success: function(data) {
+        that.mapImage = data.url
+        // console.log(that.mapImage + " " + that.longtitude + " " +  that.latitude)
+      },
+      fail: function(info){
+        console.log(info)
+      }
+    })
   }
 }
 </script>
