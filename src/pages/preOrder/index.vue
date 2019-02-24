@@ -276,7 +276,7 @@ export default {
     myAmapFun.getStaticmap({
       zoom: 16,
       location: that.longtitude + ',' + that.latitude,
-      markers: "mid,0xFF0000,:" + that.longtitude + ',' + that.latitude,
+      markers: "large,0xFF0000,:" + that.longtitude + ',' + that.latitude,
       success: function(data) {
         that.mapImage = data.url
         // console.log(that.mapImage + " " + that.longtitude + " " +  that.latitude)

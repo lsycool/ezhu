@@ -40,23 +40,33 @@
               <wux-icon addon="icon-taiyang" color="#999999" size="20"/>
             </van-cell>
           </picker>
-          <van-field v-if="selectType==0" :value="rentPrise" clearable type='number' label="租金要求" placeholder="请输入金额" use-button-slot @change="onRentPrise">
-            <view slot="button" style="color:#999999">元/月</view>
-          </van-field>
-          <van-field v-if="selectType==1" :value="rentNum" clearable type='number' label="合租人数" placeholder="请输入人数" use-button-slot @change="onRentNum">
-            <view slot="button" style="color:#999999">人</view>
-          </van-field>
-          <van-field :value="floor" clearable label="楼  层" type='number' placeholder="请输入楼层" use-icon-slot @change="onFloor">
+          <van-field :value="floor" clearable label="门牌号" type='number' placeholder="请输入门牌号" use-icon-slot @change="onFloor">
             <wux-icon slot="icon" addon="icon-louceng0" color="#999999" size="20"/>
           </van-field>
           <van-field :value="measure" clearable label="面  积" type='number' placeholder="请输入面积" use-icon-slot @change="onMeasure">
             <wux-icon slot="icon" addon="icon-fangwumianji" color="#999999" size="20"/>
           </van-field>
-          <picker v-if="selectType==1" mode="selector" @change="OnIsPinZu" :value="IsPinZu" :range="pingZuSelect">
-            <van-cell title="是否同意拼租" label="是/否" size="large" :value="pingZuLabel" clickable >
-              <wux-icon addon="icon-taiyang" color="#999999" size="20"/>
-            </van-cell>
-          </picker>
+          <van-field v-if="selectType==0" :value="rentPrise" clearable type='number' label="租金要求" placeholder="请输入金额" use-button-slot @change="onRentPrise">
+            <view slot="button" style="color:#999999">元/月</view>
+          </van-field>
+          <block v-else-if="selectType==1">
+            <van-field :value="rentNum" clearable type='number' label="合租人数" placeholder="请输入人数" use-button-slot @change="onRentNum">
+              <view slot="button" style="color:#999999">人</view>
+            </van-field>
+            <picker mode="selector" @change="OnIsPinZu" :value="IsPinZu" :range="pingZuSelect">
+              <van-cell title="是否拼租" label="是/否" size="large" :value="pingZuLabel" clickable >
+                <wux-icon addon="icon-taiyang" color="#999999" size="20"/>
+              </van-cell>
+            </picker>
+            <block v-if="IsPinZu==1">
+              <van-field :value="discount" clearable type='number' label="优惠金额" placeholder="50元为单位递增" use-button-slot @change="onDiscount">
+                <view slot="button" style="color:#999999">元/月</view>
+              </van-field>
+              <van-field :value="discountNum" clearable type='number' label="减免人数" placeholder="参与优惠人数" use-button-slot @change="onDiscountNum">
+                <view slot="button" style="color:#999999">人数</view>
+              </van-field>
+            </block>
+          </block>
         </view>
       </view>
     <!-- </scroll-view> -->
@@ -81,12 +91,14 @@ export default {
       sexTypeSelect: [0],
       faceType: ['东', '南', '西', '北'],
       faceTypeSelect: [0],
-      pingZuSelect: ['是', '否'],
+      pingZuSelect: ['否', '是'],
       IsPinZu: 0,
+      discount: '',
+      discountNum: '',
       scrollHeight: 300,
       selectType: 0,
       rentNum: '',
-      rentPrise: "",
+      rentPrise: '',
       alertContent: "123",
       alertVisibility: false,
       alertType: 'default',
@@ -139,6 +151,7 @@ export default {
   methods: {
     onRadioChange(e) {
       this.selectType = e.mp.detail.value
+      console.log(this.selectType)
       for (let i = 0; i < this.rentType.length; i++) {
         if (this.rentType[i].id == this.selectType) {
           this.rentType[i].checked = true;
@@ -207,23 +220,36 @@ export default {
     OnIsPinZu (e) {
       this.IsPinZu = e.mp.detail.value;
     },
+    onDiscount (e) {
+      this.discount = e.mp.detail;
+    },
+    onDiscountNum (e) {
+      this.discountNum = e.mp.detail;
+    },
     checkInput () {
-      if (this.selectType == 0  && this.rentPrise.trim() == "") {
+      console.log(isNaN(this.rentNum))
+      if (this.selectType == 0  && (this.rentPrise <= 0 || isNaN(this.rentPrise) )) {
         this.handleShow({content:'请输入租金数额', type:'error'});
         return false;
-      } else if (this.selectType == 1  && this.rentNum.trim() == "") {
-        this.handleShow({content:'合租人数', type:'error'});
+      } else if (this.selectType == 1  && (isNaN(this.rentNum) || this.rentNum <= 0)) {
+        this.handleShow({content:'请输入合租人数', type:'error'});
         return false;
       } else if (this.houseTypeLabel == '') {
         this.handleShow({content:'请输入房屋户型', type:'error'});
         return false;
       } else if (this.floor == '') {
-        this.handleShow({content:'请输入楼层', type:'error'});
+        this.handleShow({content:'请输门牌号', type:'error'});
         return false;
-      } else if (this.messure == '') {
+      } else if (isNaN(this.messure) || this.messure <= 0) {
         this.handleShow({content:'请输入面积', type:'error'});
         return false;
-      } 
+      } else if (this.discount % 50 != 0) {
+        this.handleShow({content:'优惠金额必须是金额的整数倍', type:'error'});
+        return false
+      } else if (isNaN(this.discountNum) || this.discountNum < 0) {
+        this.handleShow({content:'减免人数输入有误', type:'error'});
+        return false
+      }
       else {
         return true;
       }
