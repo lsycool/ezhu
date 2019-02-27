@@ -40,6 +40,10 @@ export default Component({
     mode: {
       type: String,
       value: 'normal' // 有边框和无边框 normal, none
+    },
+    height: {
+      type: String,
+      value: '' // 有边框和无边框 normal, none
     }
   },
   data: {},

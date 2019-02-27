@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <view class="head" style="display:flex; height:150rpx;">
+    <view class="head" style="display:flex; height:150rpx; margin-top:30rpx;">
       <view class="info" style="flex:3; padding-left:40rpx; padding-top:20rpx;">{{userInfo.nickName}}</view>
       <view class="avatar" style="flex:1; text-align:center;">
         <image style="vertical-align:middle;width:100rpx;height:100rpx;border-radius:35rpx;" :src="userInfo.avatarUrl"/>
@@ -12,31 +12,43 @@
         <wxc-list
               class="item"
               icon="share"
+              height="40"
+              @click="onMyPublish"
               title="我的发布">
         </wxc-list>
         <wxc-list
           class="item"
           icon="purse"
+          height="40"
+          @click="onMyOrder"
           title="我的预定">
         </wxc-list>
         <wxc-list
           class="item"
           icon="cart"
+          height="40"
+          @click="onMyFavorite"
           title="我的收藏">
         </wxc-list>
         <wxc-list
           class="item"
           icon="address"
+          height="40"
+          @click="onMyInfo"
           title="我的信息">
         </wxc-list>
         <wxc-list
           class="item"
           icon="feedback"
+          height="40"
+          @click="onFeedBack"
           title="反馈问题">
         </wxc-list>     
         <wxc-list
           class="item"
           icon="group"
+          height="40"
+          @click="onAboutUs"
           title="关于我们">
         </wxc-list>       
       </view>
@@ -65,6 +77,24 @@ export default {
     this.userInfo = globalStore.state.userInfo
   },
   methods: {
+    onMyPublish() {
+      wx.redirectTo({
+        url: '../myBooked/main'
+      })
+    },
+    onMyOrder() {
+      wx.redirectTo({
+        url: '../myBooked/main'
+      })
+    },
+    onMyFavorite() {
+    },
+    onMyInfo() {
+    },
+    onFeedBack() {
+    },
+    onAboutUs() {
+    }
   }
 }
 </script>

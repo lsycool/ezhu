@@ -234,7 +234,10 @@ export default {
         wx.redirectTo({
           url: '../myBooked/main'
         })
-      } else if (index == 2) {     
+      } else if (index == 2) {    
+        wx.redirectTo({
+          url: '../personalCenter/main'
+        }) 
       }
       // console.log(e);
     }
