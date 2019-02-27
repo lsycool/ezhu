@@ -1,10 +1,13 @@
 {
   "navigationBarTitleText": "我的预定",
   "enablePullDownRefresh": false,
-  "disableScroll": true,
+  "disableScroll": false,
   "usingComponents": {
     "wxc-list": "../../static/components/minui/wxc-list/dist/index",
     "van-tabbar-item": "../../static/components/vant/tabbar-item/index",
-    "van-tabbar": "../../static/components/vant/tabbar/index"
+    "van-tabbar": "../../static/components/vant/tabbar/index",
+    "wux-icon": "../../static/components/wux/icon/index",
+    "wxc-elip": "../../static/components/minui/wxc-elip/dist/index",
+    "wxc-button": "../../static/components/minui/wxc-button/dist/index"
   }
 }

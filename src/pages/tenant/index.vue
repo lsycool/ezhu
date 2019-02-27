@@ -271,14 +271,17 @@ export default {
         return;
       }
       if (index == 0) {
-        wx.switchTab({
+        wx.redirectTo({
           url: '../tenant/main'
         })
       } else if(index == 1) {
-        wx.switchTab({
+        wx.redirectTo({
           url: '../myBooked/main'
         })
-      } else if (index == 2) {     
+      } else if (index == 2) {    
+        wx.reLaunch({
+          url: '../personalCenter/main'
+        }) 
       }
       // console.log(e);
     },

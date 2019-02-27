@@ -1,0 +1,10 @@
+{
+    "navigationBarTitleText": "个人中心",
+    "enablePullDownRefresh": false,
+    "disableScroll": false,
+    "usingComponents": {
+      "van-tabbar-item": "../../static/components/vant/tabbar-item/index",
+      "van-tabbar": "../../static/components/vant/tabbar/index",
+      "wxc-list": "../../static/components/minui/wxc-list/dist/index"
+    }
+  }

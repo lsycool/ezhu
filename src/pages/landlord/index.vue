@@ -104,19 +104,19 @@ export default {
       alertType: 'default',
       timmer: null,
       floor: '',
-      messure: '',
+      measure: '',
       location: '',
       latitude: '',
       longitude: ''
     }
   },
   onLoad (e) {
-    if (e) {
+    if (JSON.stringify(e) != "{}") {
       this.location = e.keywords
       this.latitude = e.latitude
       this.longitude = e.longitude
+      console.log(e)
     }
-    console.log(e)
   },
   onShow () {
     wx.hideTabBar({
@@ -151,7 +151,6 @@ export default {
   methods: {
     onRadioChange(e) {
       this.selectType = e.mp.detail.value
-      console.log(this.selectType)
       for (let i = 0; i < this.rentType.length; i++) {
         if (this.rentType[i].id == this.selectType) {
           this.rentType[i].checked = true;
@@ -189,7 +188,7 @@ export default {
       })
     },
     selectLocation () {
-      wx.navigateTo({
+      wx.redirectTo({
         url: '../searchZoom/main'
       })
     },
@@ -215,7 +214,7 @@ export default {
       this.floor =  e.mp.detail;
     },
     onMeasure (e) {
-      this.messure =  e.mp.detail;
+      this.measure =  e.mp.detail;
     },
     OnIsPinZu (e) {
       this.IsPinZu = e.mp.detail.value;
@@ -227,7 +226,6 @@ export default {
       this.discountNum = e.mp.detail;
     },
     checkInput () {
-      console.log(isNaN(this.rentNum))
       if (this.selectType == 0  && (this.rentPrise <= 0 || isNaN(this.rentPrise) )) {
         this.handleShow({content:'请输入租金数额', type:'error'});
         return false;
@@ -240,7 +238,7 @@ export default {
       } else if (this.floor == '') {
         this.handleShow({content:'请输门牌号', type:'error'});
         return false;
-      } else if (isNaN(this.messure) || this.messure <= 0) {
+      } else if (isNaN(this.measure) || this.measure <= 0) {
         this.handleShow({content:'请输入面积', type:'error'});
         return false;
       } else if (this.discount % 50 != 0) {
