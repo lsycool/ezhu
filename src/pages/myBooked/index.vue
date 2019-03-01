@@ -228,7 +228,7 @@ export default {
       }
       if (index == 0) {
         wx.redirectTo({
-          url: '../tenant/main'
+          url: '../roleChoose/main'
         })
       } else if(index == 1) {
         wx.redirectTo({

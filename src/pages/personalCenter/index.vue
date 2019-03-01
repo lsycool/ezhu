@@ -67,7 +67,8 @@ import globalStore from '@/stores/global-store'
 export default {
   data () {
     return {
-      userInfo: {}
+      userInfo: {},
+      active: 2
     }
   },
   onShow () {
@@ -94,6 +95,26 @@ export default {
     onFeedBack() {
     },
     onAboutUs() {
+    },
+    onTabbarChange(e) {
+      let index = e.mp.detail;
+      if (this.active == index) {
+        return;
+      }
+      if (index == 0) {
+        wx.redirectTo({
+          url: '../roleChoose/main'
+        })
+      } else if(index == 1) {
+        wx.redirectTo({
+          url: '../myBooked/main'
+        })
+      } else if (index == 2) {    
+        wx.redirectTo({
+          url: '../personalCenter/main'
+        }) 
+      }
+      // console.log(e);
     }
   }
 }

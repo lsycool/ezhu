@@ -19,6 +19,7 @@ Component({
         width: '100%',
         bordered: true,
         square: true,
+		hover: false,
         index: 0,
     },
     methods: {

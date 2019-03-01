@@ -59,46 +59,19 @@
       <view class="panel-hd">房间配置</view>
       <view>
         <wux-grids :bordered='false' col='5'>
-            <wux-grid>
-                <wux-icon addon="icon-chuang" title="床"/>
+          <block v-for="(item, index) in Infrastructure" :key="item.icon" :data-index='index'>
+            <wux-grid v-if="index < 5">
+              <wux-icon :addon="item.icon" :title="item.title" :disable="item.isDisable"/>
             </wux-grid>
-            <wux-grid>
-                <wux-icon addon="icon-xiyiji" title="洗衣机"/>
+            <wux-grid v-else-if="showMore">
+              <wux-icon :addon="item.icon" :title="item.title" :disable="item.isDisable"/>
             </wux-grid>
-            <wux-grid>
-                <wux-icon addon="icon-kongtiao" title="空调"/>
-            </wux-grid>
-            <wux-grid>
-                <wux-icon addon="icon-yangtai" disable title="阳台"/>
-            </wux-grid>
-            <wux-grid>
-               <wux-icon addon="icon-bingxiang" title="冰箱"/>
-            </wux-grid>
-            <wux-grid>
-               <wux-icon addon="icon-weishengjian" title="卫生间"/>
-            </wux-grid>
-            <wux-grid>
-               <wux-icon addon="icon-app_icons-" disable title="燃气"/>
-            </wux-grid>
-            <wux-grid>
-               <wux-icon addon="icon-television" title="电视机"/>
-            </wux-grid>
-            <wux-grid>
-               <wux-icon addon="icon-reshui" disable title="热水器"/>
-            </wux-grid>
-            <wux-grid>
-               <wux-icon addon="icon-WIFI" title="宽带"/>
-            </wux-grid>
-            <wux-grid>
-               <wux-icon addon="icon-shafa" title="沙发"/>
-            </wux-grid>      
-            <wux-grid>
-               <wux-icon addon="icon-nuanqi-" title="暖气"/>
-            </wux-grid>   
-            <wux-grid>
-               <wux-icon addon="icon-yigui" title="衣柜"/>
-            </wux-grid>         
+          </block>
         </wux-grids>
+        <block v-if="Infrastructure.length > 5">
+          <view v-if="showMore" style="text-align:center; font-size:24rpx; color:#FF5777; background:#EFEFEF; padding:10rpx 0;" @click='listToggle'>收起</view>
+          <view wx:else style="text-align:center; font-size:24rpx; color:#FF5777; background:#EFEFEF; padding:10rpx 0;" @click='listToggle'>查看更多</view>
+        </block> 
       </view>
     </view>
     <view class="panel">
@@ -114,7 +87,7 @@
                   <view style="padding-right:5px; padding-left:5px;">
                     <image mode='aspectFill' style="height: 90px; width:100px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338328&di=ae3adf8bee6fbdef4d578690cb7b5ec7&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F17%2F13%2F83658PICb4r_1024.jpg" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg"/>
                   </view>
-                  <view>主卧</view>
+                  <view style="display:inline-block;">主卧</view><view style="display:inline-block; margin-left:8rpx; font-size:20rpx" class="price-demo">1000<wxc-price decimal="none" icon="sub"/>/月</view>
                 </view>
               </wux-grid>
               <wux-grid>
@@ -138,6 +111,23 @@
       <view>
         <image mode='aspectFill' style="height: 200px; width:100%;" :src="mapImage"/>
         <!-- <map id="map" longitude="113.324520" latitude="23.099994" scale="14"  :markers="markers" show-location style="width: 100%; height: 200px;"></map> -->
+      </view>
+    </view>
+    <view class="panel" style="margin-bottom:30px;">
+      <view class="panel-hd">租客要求</view>
+      <view style="overflow:hidden;">
+        <view class="labelGroup">
+          <view class="labelBlock">女性</view>
+        </view>
+        <view class="labelGroup">
+          <view class="labelBlock">不养宠物</view>
+        </view>
+        <view class="labelGroup">
+          <view class="labelBlock">不带小孩</view>
+        </view>
+        <view class="labelGroup">
+          <view class="labelBlock">爱干净</view>
+        </view>
       </view>
     </view>
     <van-dialog
@@ -180,6 +170,22 @@ export default {
         {id: '3', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=0206950cedda9935053ebed8a89f6914&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a39258eddb07a8012049ef53b617.jpg%401280w_1l_2o_100sh.jpg'},
         {id: '4', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=ba2f03b7c68c01d4904371ecd3c4814d&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F60%2F26%2F74bOOOPICb4_1024.jpg'}
       ],
+      Infrastructure:[
+        {icon:'icon-chuang', title:'床'},
+        {icon:'icon-xiyiji', title:'洗衣机'},
+        {icon:'icon-kongtiao', title:'空调'},
+        {icon:'icon-yangtai', title:'阳台'},
+        {icon:'icon-bingxiang', title:'冰箱'},
+        {icon:'icon-weishengjian', title:'卫生间'},
+        {icon:'icon-app_icons-', title:'燃气'},
+        {icon:'icon-television', title:'电视'},
+        {icon:'icon-reshui', title:'热水器', isDisable:true},
+        {icon:'icon-WIFI', title:'宽带'},
+        {icon:'icon-shafa', title:'沙发'},
+        {icon:'icon-nuanqi-', title:'暖气', isDisable:true},
+        {icon:'icon-yigui', title:'衣柜'},
+      ],
+      showMore: false,
       mapImage: '',
       latitude: '23.099994',
       longtitude: '113.324520'
@@ -249,6 +255,9 @@ export default {
       wx.navigateTo({
         url: '../roomDetail/main'
       })
+    },
+    listToggle: function () {
+      this.showMore = !this.showMore
     }
   },
 

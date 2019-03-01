@@ -108,28 +108,6 @@ export default {
           label: '筛选',
           value: 'filter',
           children: [{
-              type: 'radio',
-              label: '朝向',
-              value: 'face',
-              children: [{
-                      label: '东',
-                      value: 'east',
-                  },
-                  {
-                      label: '南',
-                      value: 'south',
-                  },
-                  {
-                      label: '西',
-                      value: 'west',
-                  },
-                  {
-                      label: '北',
-                      value: 'north',
-                  },
-              ],
-          },
-          {
               type: 'checkbox',
               label: '房源亮点',
               value: 'edge',
@@ -272,7 +250,7 @@ export default {
       }
       if (index == 0) {
         wx.redirectTo({
-          url: '../tenant/main'
+          url: '../roleChoose/main'
         })
       } else if(index == 1) {
         wx.redirectTo({
