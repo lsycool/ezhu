@@ -76,10 +76,11 @@ export default {
   },
   onShow () {
     var that = this
+    that.active = 2
     wx.hideTabBar({
       animation: false
     })
-    
+    console.log(this.active)
     if (that.userInfonickName != '' && that.userInfonickName != undefined){
       return
     }
@@ -124,15 +125,17 @@ export default {
         return;
       }
       if (index == 0) {
-        wx.redirectTo({
+        this.active = 0
+        wx.switchTab({
           url: '../tenant/main'
         })
       } else if(index == 1) {
+        this.active = 1
         wx.navigateTo({
           url: '../landlord/main'
         })
       } else if (index == 2) {    
-        wx.reLaunch({
+        wx.switchTab({
           url: '../personalCenter/main'
         }) 
       }

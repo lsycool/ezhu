@@ -190,6 +190,7 @@ export default {
     wx.hideTabBar({
       animation: false
     })
+    this.active = 0
   },
   mounted () {
     this.getScollHeight()
@@ -238,15 +239,17 @@ export default {
         return;
       }
       if (index == 0) {
-        wx.redirectTo({
-          url: '../roleChoose/main'
+        wx.switchTab({
+          url: '../tenant/main'
         })
       } else if(index == 1) {
+        this.active = 1
         wx.navigateTo({
           url: '../landlord/main'
         })
-      } else if (index == 2) {    
-        wx.reLaunch({
+      } else if (index == 2) {
+        this.active = 2
+        wx.switchTab({
           url: '../personalCenter/main'
         }) 
       }
