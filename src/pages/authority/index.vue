@@ -34,7 +34,7 @@ export default {
               console.log(globalStore.state.userInfo)
               // 跳转选择身份页面
               wx.redirectTo({
-                url: '../roleChoose/main'
+                url: '../personalCenter/main'
               })
             }
           })

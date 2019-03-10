@@ -38,7 +38,7 @@
     </view>
     <van-tabbar :active="active" @change="onTabbarChange" class="tabBar">
       <van-tabbar-item icon="wap-home">主菜单</van-tabbar-item>
-      <van-tabbar-item icon="cart" info="5">我的预定</van-tabbar-item>
+      <van-tabbar-item icon="cart">我要发布</van-tabbar-item>
       <van-tabbar-item icon="contact">个人中心</van-tabbar-item>
     </van-tabbar>
   </div>
@@ -158,17 +158,6 @@ export default {
                     value: '5'
                 }
               ]
-          },
-          {
-            type: 'slide',
-            label: '价格区间',
-            value: 'priseRange',
-            children: [{
-                    value: [2000, 5000],
-                    displayMin: 0,
-                    displayMax: 20000
-                }
-              ]
           }],
           groups: ['004']
         }
@@ -253,8 +242,8 @@ export default {
           url: '../roleChoose/main'
         })
       } else if(index == 1) {
-        wx.redirectTo({
-          url: '../myBooked/main'
+        wx.navigateTo({
+          url: '../landlord/main'
         })
       } else if (index == 2) {    
         wx.reLaunch({

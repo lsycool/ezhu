@@ -26,34 +26,12 @@
         </view>
       </van-popup>
     </view>
-    <view class="panel">
-      <view style="display:inline-block; width:100%;">
-          <view class="labelGroup">
-            <view class="labelBlock">张江高科</view>
+    <view class="panel" style="overflow:hidden; clear:both;">
+        <block v-for="(item, index) in labels" :key="index" :data-index='index'>
+          <view class="labelGroup" style="width:25%">
+            <view class="labelBlock">{{item}}</view>
           </view>
-          <view class="labelGroup">
-            <view class="labelBlock">光大山湖城</view>
-          </view>
-            <view class="labelGroup">
-          <view class="labelBlock">5室3厅2卫</view>
-          </view>
-      </view>
-      <view style="display:inline-block; width:100%;">
-          <view class="labelGroup">
-            <view class="labelBlock">面积150平米</view>
-          </view>
-          <view class="labelGroup">
-            <view class="labelBlock">13楼</view>
-          </view>
-            <view class="labelGroup">
-          <view class="labelBlock">电梯房</view>
-          </view>
-      </view>
-      <view style="display:inline-block; width:100%;">
-          <view class="labelGroup">
-            <view class="labelBlock">坐北朝南</view>
-          </view>
-      </view>
+        </block>
     </view>
     <view class="panel">
       <view class="panel-hd">房间配置</view>
@@ -106,14 +84,7 @@
         </wux-accordion>
       </wux-accordion-group>
     </view>
-    <view class="panel">
-      <view class="panel-hd">周边解读</view>
-      <view>
-        <image mode='aspectFill' style="height: 200px; width:100%;" :src="mapImage"/>
-        <!-- <map id="map" longitude="113.324520" latitude="23.099994" scale="14"  :markers="markers" show-location style="width: 100%; height: 200px;"></map> -->
-      </view>
-    </view>
-    <view class="panel" style="margin-bottom:30px;">
+    <view class="panel" style="">
       <view class="panel-hd">租客要求</view>
       <view style="overflow:hidden;">
         <view class="labelGroup">
@@ -130,15 +101,15 @@
         </view>
       </view>
     </view>
-    <van-dialog
-      title='是否立即预定？'
-      async-close
-      :show="bookPopupShow"
-      show-cancel-button
-      show-confirm-button
-      @cancel="onCancel"
-      @confirm="onConfirm"
-    />
+    <view class="panel">
+      <view class="panel-hd">周边解读</view>
+      <view>
+        <image mode='aspectFill' style="height: 200px; width:100%;" :src="mapImage"/>
+        <!-- <map id="map" longitude="113.324520" latitude="23.099994" scale="14"  :markers="markers" show-location style="width: 100%; height: 200px;"></map> -->
+      </view>
+    </view>
+    <view style="height: 50px" v-if="systemInfo.platform == 'ios'">
+    </view>
     <van-goods-action v-if="'0' == rentType">
       <van-goods-action-icon icon="wap-home" text="主菜单" @click="onHomePage"/>
       <van-goods-action-icon icon="cart" text="我的预定" info="5" @click="onBooked"/>
@@ -161,7 +132,6 @@ export default {
       scrollHeight: 300,
       active: -1,
       popupShow: false,
-      bookPopupShow: false,
       rentType: '0',
       rentName: '',
       movies: [
@@ -185,8 +155,10 @@ export default {
         {icon:'icon-nuanqi-', title:'暖气', isDisable:true},
         {icon:'icon-yigui', title:'衣柜'},
       ],
+      labels: ['张江高科', '光大山湖城', '5室3厅2卫', '面积150平米', '电梯房'],
       showMore: false,
       mapImage: '',
+      systemInfo:{},
       latitude: '23.099994',
       longtitude: '113.324520'
     }
@@ -237,16 +209,18 @@ export default {
       })
     },
     onBooking() {
-      this.bookPopupShow = true
-    },
-    onConfirm() {
-      this.bookPopupShow = false
-      wx.redirectTo({
-          url: '../resultSuccess/main?title=' + '预定成功' + '&content=' + '请到我的预定页面查看预定详情' + '&url=../myBooked/main' 
+      wx.showModal({
+        title: '',
+        content: '是否立即预定？',
+        success(res) {
+          if (res.confirm) {
+            wx.navigateTo({
+                url: '../resultSuccess/main?title=' + '预定成功' + '&content=' + '请到我的预定页面查看预定详情' + '&url=../myBooked/main' 
+            })
+          } else if (res.cancel) {
+          }
+        }
       })
-    },
-    onCancel () {
-      this.bookPopupShow = false
     },
     onTogglePopup() {
       this.popupShow = !this.popupShow;
@@ -265,6 +239,13 @@ export default {
     this.zooms = globalStore.state.zooms
     this.zoomName = util.getZoomNameById(globalStore.state.zooms, globalStore.state.currentZoom)
     this.getScollHeight()
+    var that = this
+
+    wx.getSystemInfo({
+      success:function(res){
+        that.systemInfo = res
+      }
+    })
   },
 
   onLoad: function (options) {

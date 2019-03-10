@@ -1,12 +1,11 @@
 {
-  "navigationBarTitleText": "我的发布",
+  "navigationBarTitleText": "我的收藏",
   "enablePullDownRefresh": false,
   "disableScroll": true,
   "usingComponents": {
     "wxc-list": "../../static/components/minui/wxc-list/dist/index",
     "wux-icon": "../../static/components/wux/icon/index",
     "wxc-elip": "../../static/components/minui/wxc-elip/dist/index",
-    "wxc-button": "../../static/components/minui/wxc-button/dist/index",
-    "van-dialog": "../../static/components/vant/dialog/index"
+    "wxc-button": "../../static/components/minui/wxc-button/dist/index"
   }
 }

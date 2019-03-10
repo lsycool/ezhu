@@ -50,8 +50,8 @@
             <view slot="button" style="color:#999999">元/月</view>
           </van-field>
           <block v-else-if="selectType==1">
-            <van-field :value="rentNum" clearable type='number' label="合租人数" placeholder="请输入人数" use-button-slot @change="onRentNum">
-              <view slot="button" style="color:#999999">人</view>
+            <van-field :value="rentNum" clearable type='number' label="空余房间" placeholder="请输入房间数" use-button-slot @change="onRentNum">
+              <view slot="button" style="color:#999999">个</view>
             </van-field>
             <picker mode="selector" @change="OnIsPinZu" :value="IsPinZu" :range="pingZuSelect">
               <van-cell title="是否拼租" label="是/否" size="large" :value="pingZuLabel" clickable >
@@ -218,6 +218,13 @@ export default {
     },
     OnIsPinZu (e) {
       this.IsPinZu = e.mp.detail.value;
+      if (1 == this.IsPinZu) {
+        wx.showModal({
+            title: '拼租说明',
+            content: '详情',
+            showCancel: false
+        })
+      }
     },
     onDiscount (e) {
       this.discount = e.mp.detail;

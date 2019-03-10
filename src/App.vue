@@ -13,8 +13,11 @@ export default {
     console.log('app created and cache logs by setStorageSync')
   },
   mounted () {
+    wx.reLaunch({
+      url: '/pages/tenant/main'
+    })
     // 一进来看看用户是否授权过
-    this.getSetting()
+    // this.getSetting()
     this.initialData()
   },
   onShow () {

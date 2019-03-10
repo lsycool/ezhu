@@ -9,74 +9,94 @@
         <view class="weui-navbar__slider" :style="{left: sliderLeft + 'px', transform: 'translateX(' + sliderOffset + 'px)', '-webkit-transform': 'translateX(' + sliderOffset + 'px)'}"></view>
     </view>
     <view>
-    <view class="weui-tab__panel">
-      <view class="weui-tab__content" :hidden="activeIndex !== 0">
-        <view v-for='(item, index) of books' :key='index' :data-index='index'>
-          <view style="height:20rpx; background:#EFEFEF"></view>
-          <view class="list-item">
-            <view class="bookTitle" style="font-weight:bold; color:#455A64; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; display:flex; border-bottom:1rpx solid #ECECEC;">
-              <view style="flex:2">
-                <wux-icon size="16" type="md-list-box" color='#666666' />
-                <text style="margin-left:10rpx">{{item.name}}</text>
+      <view class="weui-tab__panel">
+        <view class="weui-tab__content" :hidden="activeIndex !== 0">
+          <view v-for='(item, index) of books' :key='index' :data-index='index'>
+            <view style="height:20rpx; background:#EFEFEF"></view>
+            <view class="list-item">
+              <view class="bookTitle" style="font-weight:bold; color:#455A64; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; display:flex; border-bottom:1rpx solid #ECECEC;">
+                <view style="flex:2">
+                  <wux-icon size="16" type="md-list-box" color='#666666' />
+                  <text style="margin-left:10rpx; font-weight:bold">{{item.name}}</text>
+                </view>
+                <view style="flex:1; text-align:right; color:#EF0077; font-size:24rpx;">
+                  {{item.statue}}
+                </view>
               </view>
-              <view style="flex:1; text-align:right; color:#EF0077; font-size:24rpx;">
-                {{item.statue}}
+              <view @click="getDetailInfo" class="bookContent" style="display:flex; padding:36rpx 0; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
+                <image mode='aspectFill' style="flex:1; width:90rpx; height: 90rpx; display:block; margin-right: 15rpx;" :src="item.url" />
+                <view class="item-text" style="flex:4;margin-top:-5rpx">
+                  <wxc-elip line="3">{{item.info}}</wxc-elip>
+                </view>
+              </view>
+              <view class='bookTag' style="text-align:right; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
+                <view style="display:inline-block; margin-right:30rpx">门牌号：1416</view>
+              </view>
+              <view class='bookButton' style="margin: 25px 20px 20px 20px; font-size:24rpx; text-align:right">
+                <view style="display:inline-block; margin-right: 30rpx;"><wxc-button size="small" type="beauty" value="获取房东信息" @click="getContact"></wxc-button></view>
+                <view style="display:inline-block"><wxc-button size="small" type="success" value="去分享"></wxc-button></view>
               </view>
             </view>
-            <view class="bookContent" style="display:flex; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
-              <image mode='aspectFill' style="flex:1; width:90rpx; height: 90rpx; display:block; margin-right: 15rpx;" :src="item.url" />
-              <view class="item-text" style="flex:4;">
-                <wxc-elip line="3">{{item.info}}</wxc-elip>
-              </view>
-            </view>
-            <view class='bookTag' style="text-align:right; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
-              <view style="display:inline-block; margin-right:30rpx">门牌号：1416</view>
-            </view>
-            <view class='bookButton' style="margin: 20rpx 40rpx; font-size:24rpx; text-align:right">
-              <view style="display:inline-block; margin-right: 30rpx;"><wxc-button size="small" type="beauty" value="获取房东信息"></wxc-button></view>
-              <view style="display:inline-block"><wxc-button size="small" type="success" value="去分享"></wxc-button></view>
-            </view>
+            <view style="height:20rpx; background:#EFEFEF"></view>
           </view>
-          <view style="height:20rpx; background:#EFEFEF"></view>
         </view>
-      </view>
-      <view class="weui-tab__content" :hidden="activeIndex !== 1">
-        <view v-for='(item, index) of books' :key='index' :data-index='index'>
-          <view style="height:20rpx; background:#EFEFEF"></view>
-          <view class="list-item">
-            <view class="bookTitle" style="font-weight:bold; color:#455A64; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:30rpx; display:flex; border-bottom:1rpx solid #ECECEC;">
-              <view style="flex:2">
-                <wux-icon size="16" type="md-list-box" color='#666666' />
-                <text style="margin-left:10rpx">{{item.name}}</text>
+        <view class="weui-tab__content" :hidden="activeIndex !== 1">
+          <view v-for='(item, index) of books' :key='index' :data-index='index'>
+            <view style="height:20rpx; background:#EFEFEF"></view>
+            <view class="list-item">
+              <view class="bookTitle" style="font-weight:bold; color:#455A64; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; display:flex; border-bottom:1rpx solid #ECECEC;">
+                <view style="flex:2">
+                  <wux-icon size="16" type="md-list-box" color='#666666' />
+                  <text style="margin-left:10rpx">{{item.name}}</text>
+                </view>
+                <view style="flex:1; text-align:right; color:#EF0077; font-size:24rpx;">
+                  {{item.statue}}
+                </view>
               </view>
-              <view style="flex:1; text-align:right; color:#EF0077; font-size:24rpx;">
-                {{item.statue}}
+              <view @click="getDetailInfo" class="bookContent" style="display:flex; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
+                <image mode='aspectFill' style="flex:1; width:90rpx; height: 90rpx; display:block; margin-right: 15rpx;" :src="item.url" />
+                <view class="item-text" style="flex:4;margin-top:-5rpx">
+                  <wxc-elip line="3">{{item.info}}</wxc-elip>
+                </view>
+              </view>
+              <view class='bookTag' style="text-align:right; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
+                <view style="display:inline-block; margin-right:30rpx">门牌号：1416</view><view style="display:inline-block; margin-right:10rpx">还剩1间房</view>
+              </view>
+              <view class='bookButton' style="margin: 20rpx 40rpx; font-size:24rpx; text-align:right">
+                <view style="display:inline-block; margin-right: 30rpx;"><wxc-button size="small" type="beauty" value="获取房东信息" @click="getContact"></wxc-button></view>
+                <view style="display:inline-block"><wxc-button size="small" type="success" value="去分享"></wxc-button></view>
               </view>
             </view>
-            <view class="bookContent" style="display:flex; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
-              <image mode='aspectFill' style="flex:1; width:90rpx; height: 90rpx; display:block; margin-right: 15rpx;" :src="item.url" />
-              <view class="item-text" style="flex:4;">
-                <wxc-elip line="3">{{item.info}}</wxc-elip>
-              </view>
-            </view>
-            <view class='bookTag' style="text-align:right; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
-              <view style="display:inline-block; margin-right:30rpx">门牌号：1416</view><view style="display:inline-block; margin-right:10rpx">还剩1间房</view>
-            </view>
-            <view class='bookButton' style="margin: 20rpx 40rpx; font-size:24rpx; text-align:right">
-              <view style="display:inline-block; margin-right: 30rpx;"><wxc-button size="small" type="beauty" value="获取房东信息"></wxc-button></view>
-              <view style="display:inline-block"><wxc-button size="small" type="success" value="去分享"></wxc-button></view>
-            </view>
+            <view style="height:20rpx; background:#EFEFEF"></view>
           </view>
-          <view style="height:20rpx; background:#EFEFEF"></view>
         </view>
       </view>
     </view>
+    <view v-if="!hiddenContact">
+      <van-dialog
+        title='房东信息'
+        :show="!hiddenContact"
+        show-cancel-button
+        :show-confirm-button=false
+        use-slot
+        @cancel="close"
+      >
+        <view style="margin:40rpx 40rpx 40rpx 40rpx;">
+          <view style="margin-bottom:20rpx; margin-top:20rpx; border-bottom:1rpx solid #ECECEC; padding-bottom:20rpx">
+            <view style="display:inline-block;font-weight:bold;color:#ff5777; margin-right:30rpx">
+              <wux-icon color='#ff5777' size="16" type="md-person"/><text style="margin-left:10rpx">房东姓名：</text>
+            </view>
+            <text>{{loadName}}</text>
+          </view>
+          <view style="margin-bottom:20rpx; border-bottom:1rpx solid #ECECEC; padding-bottom:20rpx">
+            <view style="display:inline-block;font-weight:bold;color:#ff5777; margin-right:30rpx">
+              <wux-icon color='#ff5777' size="16" type="md-call"/><text style="margin-left:10rpx">房东电话：</text>
+            </view>
+            <text>{{loadNumber}}</text>
+          </view>
+        </view>
+      </van-dialog>
     </view>
-    <van-tabbar :active="active" @change="onTabbarChange" class="tabBar">
-      <van-tabbar-item icon="wap-home">主菜单</van-tabbar-item>
-      <van-tabbar-item icon="cart" info="5">我的预定</van-tabbar-item>
-      <van-tabbar-item icon="contact">个人中心</van-tabbar-item>
-    </van-tabbar>
   </div>
 </template>
 
@@ -98,8 +118,6 @@ export default {
       userInfo: {},
       scrollHeight: 300,
       hiddenContact: true,
-      hiddenCommont: true,
-      hiddenCancleOrder: true,
       books: [{
         name: '天申综合小区',
         id: '0', 
@@ -132,38 +150,15 @@ export default {
     wx.hideTabBar({
       animation: false
     })
-    let statueMap = new Map()
-    statueMap.set('0',"预定成功，待看房")
-    statueMap.set('1',"预定成功，待看房")
-    statueMap.set('2',"交易完成")
-    statueMap.set('3',"已取消")
-    console.log(statueMap)
+    this.hiddenContact = true
   },
 
   computed: {
     loadNumber: function () {
       return '1768899886'
     },
-    mateNumber1: function () {
-      return '1768899881'
-    },
-    mateNumber2: function () {
-      return '1768899881'
-    },
-    mateNumber3: function () {
-      return '1768899881'
-    },
     loadName: function () {
       return '刘先生'
-    },
-    mateName1: function () {
-      return '张先生'
-    },
-    mateName2: function () {
-      return '王先生'
-    },
-    mateName3: function () {
-      return '吴女士'
     }
   },
 
@@ -203,6 +198,7 @@ export default {
     },
     getContact (e) {
       this.hiddenContact = false
+      console.log("123")
     },
     close () {
       this.hiddenContact = true
@@ -221,25 +217,10 @@ export default {
     cancleOrder () {
       this.close()
     },
-    onTabbarChange(e) {
-      let index = e.mp.detail;
-      if (this.active == index) {
-        return;
-      }
-      if (index == 0) {
-        wx.redirectTo({
-          url: '../roleChoose/main'
-        })
-      } else if(index == 1) {
-        wx.redirectTo({
-          url: '../myBooked/main'
-        })
-      } else if (index == 2) {    
-        wx.redirectTo({
-          url: '../personalCenter/main'
-        }) 
-      }
-      // console.log(e);
+    getDetailInfo (e) {
+      wx.navigateTo({
+        url: '../preOrder/main?rentType=1&id=0'
+      })
     }
   },
 
@@ -314,7 +295,7 @@ export default {
 .weui-tab__content {
 	height: 100%;
 	padding-bottom: 0;
-  margin-bottom: 50px;
+  margin-bottom: 0px;
 }
 .list-item {
   width:100%;

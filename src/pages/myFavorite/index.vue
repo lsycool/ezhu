@@ -11,30 +11,18 @@
     <view>
       <view class="weui-tab__panel">
         <view class="weui-tab__content" :hidden="activeIndex !== 0">
-          <view v-for='(item, index) of books' :key='index' :data-index='index'>
+          <view v-for='(item, index) of books' :key='index' :data-index='index' @click="getDetailInfo">
             <view style="height:20rpx; background:#EFEFEF"></view>
             <view class="list-item">
-              <view class="bookTitle" style="font-weight:bold; color:#455A64; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; display:flex; border-bottom:1rpx solid #ECECEC;">
-                <view style="flex:2">
-                  <wux-icon size="16" type="md-list-box" color='#666666' />
-                  <text style="margin-left:10rpx; font-weight:bold">{{item.name}}</text>
-                </view>
-                <view style="flex:1; text-align:right; color:#EF0077; font-size:24rpx;">
-                  {{item.statue}}
-                </view>
-              </view>
-              <view @click="getDetailInfo" class="bookContent" style="display:flex; padding:36rpx 0; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
-                <image mode='aspectFill' style="flex:1; width:90rpx; height: 90rpx; display:block; margin-right: 15rpx;" :src="item.url" />
-                <view class="item-text" style="flex:4; margin-top:-5rpx">
-                  <wxc-elip line="3">{{item.info}}</wxc-elip>
+              <view class="bookContent" style="display:flex; padding:36rpx 0; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
+                <image mode='aspectFill' style="flex:1; width:90rpx; height: 129rpx; display:block; margin-right: 15rpx;" :src="item.url" />
+                <view class="item-text" style="flex:4;">
+                  <view style="font-weight:bold;font-size:28rpx;margin-top:-3px;padding-bottom:2rpx;">光大山湖城</view>
+                  <view style="color:#666666;"><wxc-elip line="3">{{item.info}}</wxc-elip></view>
                 </view>
               </view>
               <view class='bookTag' style="text-align:right; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
                 <view style="display:inline-block; margin-right:30rpx">门牌号：1416</view>
-              </view>
-              <view class='bookButton' style="margin: 25px 20px 20px 20px; font-size:24rpx; text-align:right">
-                <view style="display:inline-block; margin-right: 30rpx;"><wxc-button size="small" type="beauty" value="获取租客信息" @click="getContact"></wxc-button></view>
-                <view style="display:inline-block"><wxc-button size="small" type="success" value="去分享"></wxc-button></view>
               </view>
             </view>
             <view style="height:20rpx; background:#EFEFEF"></view>
@@ -53,45 +41,20 @@
                   {{item.statue}}
                 </view>
               </view>
-              <view @click="getDetailInfo" class="bookContent" style="display:flex; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
+              <view class="bookContent" style="display:flex; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
                 <image mode='aspectFill' style="flex:1; width:90rpx; height: 90rpx; display:block; margin-right: 15rpx;" :src="item.url" />
-                <view class="item-text" style="flex:4; margin-top:-5rpx">
+                <view class="item-text" style="flex:4;">
                   <wxc-elip line="3">{{item.info}}</wxc-elip>
                 </view>
               </view>
               <view class='bookTag' style="text-align:right; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
                 <view style="display:inline-block; margin-right:30rpx">门牌号：1416</view><view style="display:inline-block; margin-right:10rpx">还剩1间房</view>
               </view>
-              <view class='bookButton' style="margin: 20rpx 40rpx; font-size:24rpx; text-align:right">
-                <view style="display:inline-block; margin-right: 30rpx;"><wxc-button size="small" type="beauty" value="获取租客信息" @click="getContact"></wxc-button></view>
-                <view style="display:inline-block"><wxc-button size="small" type="success" value="去分享"></wxc-button></view>
-              </view>
             </view>
             <view style="height:20rpx; background:#EFEFEF"></view>
           </view>
         </view>
       </view>
-    </view>
-    <view v-if="!hiddenContact">
-      <van-dialog
-        title='租客信息'
-        :show="!hiddenContact"
-        show-cancel-button
-        :show-confirm-button=false
-        use-slot
-        @cancel="close"
-      >
-      <view style="margin:40rpx 40rpx;">
-        <block v-for='(item, index) of tenantInfo' :key='index' :data-index='index'>
-          <view style="margin-bottom:20rpx; margin-top:20rpx; border-bottom:1rpx solid #ECECEC; padding-bottom:20rpx">
-            <view style="display:inline-block; font-weight:bold;color:#ff5777; margin-right:15rpx">
-              <wux-icon color='#ff5777' size="16" type="md-person"/><text style="margin-left:10rpx">租客{{index+1}}：</text>
-            </view>
-            <text>{{item.name}} （{{item.phone}}）</text>
-          </view>
-        </block>
-      </view>
-      </van-dialog>
     </view>
   </div>
 </template>
@@ -149,21 +112,9 @@ export default {
     wx.hideTabBar({
       animation: false
     })
-    let statueMap = new Map()
-    statueMap.set('0',"预定成功，待看房")
-    statueMap.set('1',"预定成功，待看房")
-    statueMap.set('2',"交易完成")
-    statueMap.set('3',"已取消")
-    console.log(statueMap)
   },
 
   computed: {
-    loadNumber: function () {
-      return '1768899886'
-    },
-    loadName: function () {
-      return '刘先生'
-    }
   },
 
   methods: {
@@ -181,45 +132,6 @@ export default {
 
       this.sliderOffset = offsetLeft
       this.activeIndex = id
-    },
-    modifyContactInfo () {
-      wx.navigateTo({
-        url: '../contactInfo/main?type=1'
-      })
-    },
-    confirm (e) {
-      var statue = e.target.dataset.statue
-      var id = e.target.dataset.id // 获取订单id
-      if (statue === '0') {
-        // 评价页面
-        this.hiddenCommont = false
-        this.hiddenCancleOrder = true
-      } else {
-        this.hiddenCommont = true
-        this.hiddenCancleOrder = false
-      }
-      console.log(id)
-    },
-    getContact (e) {
-      this.hiddenContact = false
-      console.log("123")
-    },
-    close () {
-      this.hiddenContact = true
-      this.hiddenCommont = true
-      this.hiddenCancleOrder = true
-    },
-    satisfyLoad (e) {
-      console.log('radio发生change事件，携带value值为：', e.mp.detail.value)
-    },
-    satisfyHouse (e) {
-      console.log('radio发生change事件，携带value值为：', e.mp.detail.value)
-    },
-    score () {
-      this.close()
-    },
-    cancleOrder () {
-      this.close()
     },
     getDetailInfo (e) {
       wx.navigateTo({

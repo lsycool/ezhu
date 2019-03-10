@@ -34,12 +34,12 @@ export default {
     onClick1(e) {
       let index  = e.mp.detail
 
-      index === 0 &&  wx.switchTab({
+      index === 0 &&  wx.redirectTo({
         url: this.options.url
       })
 
       index === 1 && wx.navigateBack({
-        delta: 1
+        delta: 0
       })
     }
   },

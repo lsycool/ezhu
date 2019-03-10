@@ -1,9 +1,11 @@
 <template>
   <view class="container">
     <view class="head" style="display:flex; height:150rpx; margin-top:30rpx;">
-      <view class="info" style="flex:3; padding-left:40rpx; padding-top:20rpx;">{{userInfo.nickName}}</view>
+      <view class="info" style="flex:3; padding-left:40rpx;">
+        <button class="loginButton" open-type="getUserInfo" @getuserinfo="getSetting">{{userInfo.nickName!=undefine? userInfo.nickName:'点击登录/注册'}}</button>
+      </view>
       <view class="avatar" style="flex:1; text-align:center;">
-        <image style="vertical-align:middle;width:100rpx;height:100rpx;border-radius:35rpx;" :src="userInfo.avatarUrl"/>
+        <image style="vertical-align:middle;width:100rpx;height:100rpx;border-radius:35rpx;" :src="userInfo.avatarUrl!=undefine? userInfo.avatarUrl:defaultAvatar"/>
       </view>
     </view>
     <view style="height:30rpx; background:#EFEFEF"></view>
@@ -55,7 +57,7 @@
     </view>
     <van-tabbar :active="active" @change="onTabbarChange" class="tabBar">
       <van-tabbar-item icon="wap-home">主菜单</van-tabbar-item>
-      <van-tabbar-item icon="cart" info="5">我的预定</van-tabbar-item>
+      <van-tabbar-item icon="cart" >我要发布</van-tabbar-item>
       <van-tabbar-item icon="contact">个人中心</van-tabbar-item>
     </van-tabbar>
   </view>
@@ -68,27 +70,47 @@ export default {
   data () {
     return {
       userInfo: {},
-      active: 2
+      active: 2,
+      defaultAvatar: '../../static/images/user.png'
     }
   },
   onShow () {
+    var that = this
     wx.hideTabBar({
       animation: false
     })
-    this.userInfo = globalStore.state.userInfo
+    
+    if (that.userInfonickName != '' && that.userInfonickName != undefined){
+      return
+    }
+    wx.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+          wx.getUserInfo({
+            success: function (res) {
+              globalStore.commit('setUserInfo', res.userInfo)
+              that.userInfo = res.userInfo
+            }
+          })
+        }
+      }
+    })
   },
   methods: {
     onMyPublish() {
-      wx.redirectTo({
-        url: '../myBooked/main'
+      wx.navigateTo({
+        url: '../myPublished/main'
       })
     },
     onMyOrder() {
-      wx.redirectTo({
+      wx.navigateTo({
         url: '../myBooked/main'
       })
     },
     onMyFavorite() {
+      wx.navigateTo({
+        url: '../myFavorite/main'
+      })
     },
     onMyInfo() {
     },
@@ -103,18 +125,41 @@ export default {
       }
       if (index == 0) {
         wx.redirectTo({
-          url: '../roleChoose/main'
+          url: '../tenant/main'
         })
       } else if(index == 1) {
-        wx.redirectTo({
-          url: '../myBooked/main'
+        wx.navigateTo({
+          url: '../landlord/main'
         })
       } else if (index == 2) {    
-        wx.redirectTo({
+        wx.reLaunch({
           url: '../personalCenter/main'
         }) 
       }
       // console.log(e);
+    },
+    getSetting () {
+      var that = this
+      if (that.userInfonickName != '' && that.userInfonickName != undefined){
+        return
+      }
+      that.goLogin(that)
+    },
+    goLogin (that) {
+      // 调用登录接口
+      wx.login({
+        success: () => {
+          wx.getUserInfo({
+            success: (res) => {
+              globalStore.commit('setUserInfo', res.userInfo)
+              that.userInfo = res.userInfo
+            }
+          })
+        },
+        error: () => {
+          console.log('login failed.')
+        }
+      })
     }
   }
 }
@@ -136,5 +181,15 @@ export default {
 }
 .item {
     flex: 1;
-  }
+}
+.loginButton {
+  background:white;
+  border:0;
+  padding:0;
+  margin:0;
+  text-align:left;
+  font-size:46rpx; 
+  font-weight:bold
+}
+.loginButton::after{ border: none; }
 </style>
