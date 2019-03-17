@@ -1,7 +1,7 @@
 {
   "navigationBarTitleText": "我的发布",
   "enablePullDownRefresh": false,
-  "disableScroll": true,
+  "disableScroll": false,
   "usingComponents": {
     "wxc-list": "../../static/components/minui/wxc-list/dist/index",
     "wux-icon": "../../static/components/wux/icon/index",

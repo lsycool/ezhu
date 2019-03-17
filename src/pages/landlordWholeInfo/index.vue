@@ -4,7 +4,7 @@
       <view class="panel-hd" style="padding-top:0">房屋公共设施</view>
       <view class="wux-filterbar__panel">
         <view class="wux-filterbar__panel-bd">
-          <checkbox-group @change="onCheckboxChange">
+          <checkbox-group @change="onInfrastructureCheckboxChange">
             <view class="wux-filterbar__groups">
               <block v-for="(item, index) of infrastructure" :key="item.id" :data-index='index'>
                 <view class="wux-filterbar__group">
@@ -17,7 +17,24 @@
         </view>
       </view>
     </view>
-    <view class="panel" v-if="rentType == 0">
+    <view class="panel">
+      <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房源亮点</view>
+      <view class="wux-filterbar__panel">
+        <view class="wux-filterbar__panel-bd">
+          <checkbox-group @change="onBrightSpotCheckboxChange">
+            <view class="wux-filterbar__groups">
+              <block v-for="(item, index) of brightSpot" :key="item.id" :data-index='index'>
+                <view class="wux-filterbar__group" style="width:25%">
+                  <checkbox class="wux-filterbar__check" :value="item.id"/>
+                  <view class="wux-filterbar__btn" :class="item.checked ? 'wux-filterbar__btn--checked' : ''">{{ item.name }}</view>
+                </view>
+              </block>
+            </view>
+          </checkbox-group>
+        </view>
+      </view>
+    </view>
+    <view class="panel">
       <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房屋照片</view>
         <view style="height: 220rpx; overflow: hidden; white-space: nowrap;">
           <scroll-view scroll-x style="width: auto;overflow:hidden;">
@@ -42,16 +59,24 @@
           </scroll-view>
         </view>
     </view>
-    <view class="panel" style="margin-bottom:20px;" v-if="rentType == 0">
-      <view class="panel-hd" style="padding-top:0; padding-bottom:5px;">房屋简介</view>
-      <wux-cell-group>
-        <wux-cell hover-class="none">
-          <wux-textarea hasCount rows="3" cursorSpacing="80" maxlength='50' placeholder="最多50个字符" :focus=false />
-        </wux-cell>
-      </wux-cell-group>
+    <view class="panel according-title" style="padding-top:20rpx;margin-bottom:60px">
+      <wux-accordion-group :default-current="['1']"  @change="onAccordingChange">
+        <wux-accordion title="租客要求" titleClass1>
+          <van-field :value="claim1" clearable label="要求1" placeholder="请输入要求" />
+          <van-field :value="claim2" clearable label="要求2" placeholder="请输入要求" />
+          <van-field :value="claim3" clearable label="要求3" placeholder="请输入要求" />
+        </wux-accordion>
+        <wux-accordion title="房屋简介" titleClass1>
+          <wux-cell-group>
+            <wux-cell hover-class="none">
+              <wux-textarea hasCount rows="3" cursorSpacing="80" maxlength='50' placeholder="最多50个字符" :focus=false />
+            </wux-cell>
+          </wux-cell-group>
+        </wux-accordion>
+      </wux-accordion-group>
     </view>
     <div class="wux-filterbar__btns bottomButton">
-      <view class="wux-filterbar__btn wux-filterbar__btn" @click="onConfirmPre">上一步</view>
+      <view class="wux-filterbar__btn" style="background-color:#EFEFEF" @click="onConfirmPre">上一步</view>
       <view class="wux-filterbar__btn wux-filterbar__btn--danger" @click="onConfirmNext">确认发布</view>
     </div>
   </div>
@@ -77,6 +102,13 @@ export default {
       {id: 11, name: '暖气', checked: 0},
       {id: 12, name: '衣柜', checked: 0}
       ],
+      brightSpot: [{id: 0, name: '地铁房', checked: 0},
+      {id: 1, name: '精装修', checked: 0},
+      {id: 2, name: '免中介费', checked: 0},
+      {id: 3, name: '免押金', checked: 0},
+      {id: 4, name: '随时看房', checked: 0},
+      {id: 5, name: '电梯房', checked: 0}
+      ],
       picList: ['plus'],
       rentType: 0,
       scrollHeight: 300
@@ -86,7 +118,7 @@ export default {
     this.rentType = options.rentType
   },
   methods: {
-    onCheckboxChange(e) {
+    onInfrastructureCheckboxChange(e) {
       this.selectType = e.mp.detail.value
       this.infrastructure.map((n) => {n.checked = 0; n})
       for (let i = 0; i < this.infrastructure.length; i++) {
@@ -97,20 +129,16 @@ export default {
         }
       }
     },
-    getScollHeight () {
-      util.getWindowRect('.container').then((res) => {
-        return res.top
-      }).then((head) => {
-        let windowHeight = wx.getSystemInfoSync().windowHeight
-        console.log(head)
-        console.log(windowHeight)
-        return windowHeight - head
-      }).then((head) => {
-        util.getWindowRect('.bottomButton').then((res) => {
-          this.scrollHeight = head - res.height
-          console.log(res.height)
-        })
-      })
+    onBrightSpotCheckboxChange(e) {
+      this.selectType = e.mp.detail.value
+      this.brightSpot.map((n) => {n.checked = 0; n})
+      for (let i = 0; i < this.brightSpot.length; i++) {
+        for (let j = 0; j < this.selectType.length; j++) {
+          if (this.brightSpot[i].id == this.selectType[j]) {
+            this.brightSpot[i].checked = true;
+          }
+        }
+      }
     },
     previewImage (e) {
       let current = e.target.dataset.src
@@ -159,11 +187,27 @@ export default {
       wx.navigateBack({
         delta: 1
       })
+    },
+    onConfirmNext () {
+      wx.showModal({
+        title: '',
+        content: '是否立即发布？',
+        success(res) {
+          if (res.confirm) {
+            wx.navigateTo({
+                url: '../resultSuccess/main?title=' + '发布成功' + '&content=' + '请到我的发布页面查看预定详情' + '&url=../myPublished/main' 
+            })
+          } else if (res.cancel) {
+          }
+        }
+      })
+    },
+    onAccordingChange (e) {
+      console.log(e.mp.detail)
     }
   },
 
   mounted () {
-    this.getScollHeight()
   }
 }
 </script>
@@ -218,9 +262,10 @@ export default {
 .bottomButton {
   position: fixed;
   bottom: 5rpx;
-  margin:20rpx 40rpx;
+  padding:20rpx 40rpx;
   width:90%;
   left:0;
+  background:white;
 }
 .wux-filterbar__panel {
   padding: 0 30rpx;

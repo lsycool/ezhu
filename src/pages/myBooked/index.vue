@@ -30,7 +30,9 @@
                 </view>
               </view>
               <view class='bookTag' style="text-align:right; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
-                <view style="display:inline-block; margin-right:30rpx">门牌号：1416</view>
+                <view style="display:inline-block; margin-right:30rpx">
+                  <text>门牌号:1416</text>
+                </view>
               </view>
               <view class='bookButton' style="margin: 25px 20px 20px 20px; font-size:24rpx; text-align:right">
                 <view style="display:inline-block; margin-right: 30rpx;"><wxc-button size="small" type="beauty" value="获取房东信息" @click="getContact"></wxc-button></view>
@@ -60,7 +62,12 @@
                 </view>
               </view>
               <view class='bookTag' style="text-align:right; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
-                <view style="display:inline-block; margin-right:30rpx">门牌号：1416</view><view style="display:inline-block; margin-right:10rpx">还剩1间房</view>
+                <view style="display:inline-block; margin-right:30rpx">
+                  <view v-if="item.isPinZu" style="display:inline-block; margin-right:10rpx; border-bottom:1px solid #ECECEC; color:#ff5777; font-weight:bold;" @click="showPinZu">
+                    <wux-icon addon="icon-ziyuan" color="#999999" size="12" style="padding-right:10rpx;"/>拼租
+                  </view>
+                  <text>门牌号:1416</text>
+                </view>
               </view>
               <view class='bookButton' style="margin: 20rpx 40rpx; font-size:24rpx; text-align:right">
                 <view style="display:inline-block; margin-right: 30rpx;"><wxc-button size="small" type="beauty" value="获取房东信息" @click="getContact"></wxc-button></view>
@@ -121,6 +128,7 @@ export default {
       books: [{
         name: '天申综合小区',
         id: '0', 
+        isPinZu: true,
         url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338327&di=d5a936ca7dee54b9dd7382fa685b39e3&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F17%2F44%2F77%2F38f58PICUNG_1024.jpg', 
         statue: '预定成功，待看房', 
         info: '大大的好房子大大的好房子大大的好房子大大的好房子大大的好房子大大的好房子大大的好房子大大的好房子',
@@ -220,6 +228,13 @@ export default {
     getDetailInfo (e) {
       wx.navigateTo({
         url: '../preOrder/main?rentType=1&id=0'
+      })
+    },
+    showPinZu (e) {
+      wx.showModal({
+          title: '拼租说明',
+          content: '详情',
+          showCancel: false
       })
     }
   },

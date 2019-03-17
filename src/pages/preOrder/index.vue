@@ -16,6 +16,7 @@
         <view style="flex-grow: 0;">
           <wxc-price class="price-demo" icon="sub">100.02 元/月</wxc-price>
           <wxc-label style="margin-left: 20rpx;">{{rentName}}</wxc-label>
+          <wxc-label v-if="isPinZu" type="fill" style="margin-left: 20rpx;" @click="showPinZu">拼租</wxc-label>
         </view>
         <view style="flex-grow: 1; text-align:right; line-height:50rpx;" class="price-demo" @click="onTogglePopup">费用详情</view>
       </wxc-flex>
@@ -53,8 +54,8 @@
       </view>
     </view>
     <view class="panel">
-      <view class="panel-hd">简介</view>
-      <wxc-elip line="3">这是一个大大的好房子,赶快来抢购啊，先到先得，手慢无</wxc-elip>
+      <view class="panel-hd" style="padding-bottom:10px;">简介</view>
+      <wxc-elip line="3" style="font-size:30rpx;">这是一个大大的好房子,赶快来抢购啊，先到先得，手慢无</wxc-elip>
     </view>
     <view class="panel according-title" style="padding-top:40rpx;" v-if="'1' == rentType">
       <wux-accordion-group accordion :default-current="['0']">
@@ -103,9 +104,8 @@
     </view>
     <view class="panel">
       <view class="panel-hd">周边解读</view>
-      <view>
+      <view @click="onPOIAround">
         <image mode='aspectFill' style="height: 200px; width:100%;" :src="mapImage"/>
-        <!-- <map id="map" longitude="113.324520" latitude="23.099994" scale="14"  :markers="markers" show-location style="width: 100%; height: 200px;"></map> -->
       </view>
     </view>
     <view style="height: 50px" v-if="systemInfo.platform == 'ios'">
@@ -113,7 +113,7 @@
     <van-goods-action v-if="'0' == rentType">
       <van-goods-action-icon icon="wap-home" text="主菜单" @click="onHomePage"/>
       <van-goods-action-icon icon="cart" text="我的预定" info="5" @click="onBooked"/>
-      <van-goods-action-button size="mini" text="收藏" type="warning" @click="onFavorite"/>
+      <van-goods-action-button size="mini" :text="isFavorite? '已收藏':'收藏'" :type="isFavorite? 'primary':'warning'" @click="onFavorite"/>
       <van-goods-action-button size="mini" text="立即预定" @click="onBooking"/>
     </van-goods-action>
   <!-- </scroll-view> -->
@@ -134,6 +134,7 @@ export default {
       popupShow: false,
       rentType: '0',
       rentName: '',
+      isFavorite: false,
       movies: [
         {id: '1', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338328&di=ae3adf8bee6fbdef4d578690cb7b5ec7&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F17%2F13%2F83658PICb4r_1024.jpg'},
         {id: '2', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338327&di=d5a936ca7dee54b9dd7382fa685b39e3&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F17%2F44%2F77%2F38f58PICUNG_1024.jpg'},
@@ -155,6 +156,7 @@ export default {
         {icon:'icon-nuanqi-', title:'暖气', isDisable:true},
         {icon:'icon-yigui', title:'衣柜'},
       ],
+      isPinZu: false,
       labels: ['张江高科', '光大山湖城', '5室3厅2卫', '面积150平米', '电梯房'],
       showMore: false,
       mapImage: '',
@@ -199,12 +201,12 @@ export default {
       })
     },
     onBooked() {
-      wx.redirectTo({
+      wx.navigateTo({
         url: '../myBooked/main'
       })
     },
     onHomePage() {
-      wx.redirectTo({
+      wx.reLaunch({
         url: '../tenant/main'
       })
     },
@@ -222,6 +224,17 @@ export default {
         }
       })
     },
+    onFavorite () {
+      this.isFavorite = !this.isFavorite
+      let title = this.isFavorite? '收藏成功':'取消收藏成功'
+      wx.showToast({
+        title: title,
+        icon: 'none'
+      })
+      setTimeout(function () {
+        wx.hideToast()
+      }, 2000)
+    },
     onTogglePopup() {
       this.popupShow = !this.popupShow;
     },
@@ -232,6 +245,18 @@ export default {
     },
     listToggle: function () {
       this.showMore = !this.showMore
+    },
+    showPinZu (e) {
+      wx.showModal({
+          title: '拼租说明',
+          content: '详情',
+          showCancel: false
+      })
+    },
+    onPOIAround (e) {
+      wx.navigateTo({
+        url: '../poiAround/main'
+      })    
     }
   },
 
@@ -249,11 +274,13 @@ export default {
   },
 
   onLoad: function (options) {
+    this.popupShow = false;
     this.rentType = options.rentType
     if (0 == this.rentType) {
       this.rentName = '整租'
     } else if (1 == this.rentType) {
       this.rentName = '合租'
+      this.isPinZu = options.isPinZu
     } else if (2 == this.rentType) {
       this.rentName = '懒人'
     }
@@ -264,12 +291,12 @@ export default {
     var that = this;
     var myAmapFun = new amapFile.AMapWX({key: 'e9c77e7646c0c1bfd59361dae6d10ac6'});
     myAmapFun.getStaticmap({
-      zoom: 16,
+      zoom: 17,
       location: that.longtitude + ',' + that.latitude,
-      markers: "large,0xFF0000,:" + that.longtitude + ',' + that.latitude,
+      markers: "small,0xFF0000,:" + that.longtitude + ',' + that.latitude,
+      labels: "光大山湖城" + ",1,0,16,0xFFFFFF,0xFF5777:" + that.longtitude + ',' + that.latitude,
       success: function(data) {
         that.mapImage = data.url
-        // console.log(that.mapImage + " " + that.longtitude + " " +  that.latitude)
       },
       fail: function(info){
         console.log(info)

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "选择小区",
+  "enablePullDownRefresh": false,
+  "disableScroll": true,
+  "usingComponents": {
+    "wxc-button": "../../static/components/minui/wxc-button/dist/index",
+    "wux-icon": "../../static/components/wux/icon/index"
+  }
+}

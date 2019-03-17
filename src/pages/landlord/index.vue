@@ -18,58 +18,61 @@
         </view>
       </view>
     </view>
-    <!-- <scroll-view class="rentInfo" scroll-y="true" :style="{height: scrollHeight + 'px', overflow: 'auto', 'margin-bottom':'5px'}"> -->
-      <view class="panel rentInfo" :style="{'height':scrollHeight, 'margin-bottom':'10px'}">
-        <view class="panel-hd">房源详情</view>
-        <view>
-          <van-cell title="地理位置" label="您房源所在的小区" :value="location" size="large" clickable @click="selectLocation"> 
-            <van-icon slot="right-icon" name="location" style="margin-left:5px;"></van-icon>
+    <view class="panel rentInfo" :style="{'height':scrollHeight, 'margin-bottom':'10px'}">
+      <view class="panel-hd">房源详情</view>
+      <view>
+        <van-cell title="地理位置" label="房源所在小区名" :value="location" size="large" clickable @click="selectLocation"> 
+          <van-icon slot="right-icon" name="location" style="margin-left:5px;"></van-icon>
+        </van-cell>
+        <picker mode="multiSelector" @change="selectHouseType" :value="houseTypeSelect" :range="houseType">
+          <van-cell title="房屋户型" label="两室一厅一卫" :value="houseTypeLabel" size="large" clickable >
+            <wux-icon slot="right-icon" addon="icon-icond" color="#999999" size="20" style="margin-left:10px;"/>
           </van-cell>
-          <picker mode="multiSelector" @change="selectHouseType" :value="houseTypeSelect" :range="houseType">
-            <van-cell title="房屋户型" label="两室一厅一卫" :value="houseTypeLabel" size="large" clickable >
-              <wux-icon addon="icon-icond" color="#999999" size="20"/>
+        </picker>
+        <picker mode="selector" @change="selectSexType" :value="sexSelect" :range="sexType">
+          <van-cell title="租客性别" label="男/女/不限" :value="sexTypeLabel" size="large" clickable>
+            <wux-icon slot="right-icon" addon="icon-xingbie1" color="#999999" size="20" style="margin-left:10px;"/>
+          </van-cell>
+        </picker>
+        <picker mode="selector" @change="selectFaceType" :value="faceTypeSelect" :range="faceType">
+          <van-cell title="房屋朝向" label="东/南/西/北" size="large" :value="faceTypeLabel" clickable >
+            <wux-icon slot="right-icon" addon="icon-taiyang" color="#999999" size="20" style="margin-left:10px;"/>
+          </van-cell>
+        </picker>
+        <van-field :value="floor" clearable label="门牌号" type='number' placeholder="请输入门牌号" use-icon-slot @change="onFloor">
+          <wux-icon slot="icon" addon="icon-louceng0" color="#999999" size="20"/>
+        </van-field>
+        <van-field :value="measure" clearable label="面  积" type='number' placeholder="请输入面积" use-icon-slot @change="onMeasure">
+          <wux-icon slot="icon" addon="icon-fangwumianji" color="#999999" size="20"/>
+        </van-field>
+        <picker mode="selector" @change="selectElectricityWaterCostType" :value="electricityWaterCostSelect" :range="electricityWaterCostType">
+          <van-cell title="水电类型" label="民/商/包月" size="large" :value="electricityWaterCostLabel" clickable >
+            <wux-icon slot="right-icon" addon="icon-shuidianmei" color="#999999" size="20" style="margin-left:10px;"/>
+          </van-cell>
+        </picker>
+        <van-field v-if="selectType==0" :value="rentPrise" clearable type='number' label="租金要求" placeholder="请输入金额" use-button-slot @change="onRentPrise">
+          <view slot="button" style="color:#999999">元/月</view>
+        </van-field>
+        <block v-else-if="selectType==1">
+          <van-field :value="rentNum" clearable type='number' label="空余房间" placeholder="请输入房间数" use-button-slot @change="onRentNum">
+            <view slot="button" style="color:#999999">个</view>
+          </van-field>
+          <picker mode="selector" @change="OnIsPinZu" :value="IsPinZu" :range="pingZuSelect">
+            <van-cell title="是否拼租" label="是/否" size="large" :value="pingZuLabel" clickable >
+              <wux-icon slot="right-icon" addon="icon-ziyuan" color="#999999" size="16" style="margin-left:10px;"/>
             </van-cell>
           </picker>
-          <picker mode="selector" @change="selectSexType" :value="sexSelect" :range="sexType">
-            <van-cell title="租客性别" label="男/女/不限" :value="sexTypeLabel" size="large" clickable>
-              <wux-icon addon="icon-xingbie1" color="#999999" size="20"/>
-            </van-cell>
-          </picker>
-          <picker mode="selector" @change="selectFaceType" :value="faceTypeSelect" :range="faceType">
-            <van-cell title="房屋朝向" label="东/南/西/北" size="large" :value="faceTypeLabel" clickable >
-              <wux-icon addon="icon-taiyang" color="#999999" size="20"/>
-            </van-cell>
-          </picker>
-          <van-field :value="floor" clearable label="门牌号" type='number' placeholder="请输入门牌号" use-icon-slot @change="onFloor">
-            <wux-icon slot="icon" addon="icon-louceng0" color="#999999" size="20"/>
-          </van-field>
-          <van-field :value="measure" clearable label="面  积" type='number' placeholder="请输入面积" use-icon-slot @change="onMeasure">
-            <wux-icon slot="icon" addon="icon-fangwumianji" color="#999999" size="20"/>
-          </van-field>
-          <van-field v-if="selectType==0" :value="rentPrise" clearable type='number' label="租金要求" placeholder="请输入金额" use-button-slot @change="onRentPrise">
-            <view slot="button" style="color:#999999">元/月</view>
-          </van-field>
-          <block v-else-if="selectType==1">
-            <van-field :value="rentNum" clearable type='number' label="空余房间" placeholder="请输入房间数" use-button-slot @change="onRentNum">
-              <view slot="button" style="color:#999999">个</view>
+          <block v-if="IsPinZu==1">
+            <van-field :value="discount" clearable type='number' label="优惠金额" placeholder="50元为单位递增" use-button-slot @change="onDiscount">
+              <view slot="button" style="color:#999999">元/月</view>
             </van-field>
-            <picker mode="selector" @change="OnIsPinZu" :value="IsPinZu" :range="pingZuSelect">
-              <van-cell title="是否拼租" label="是/否" size="large" :value="pingZuLabel" clickable >
-                <wux-icon addon="icon-taiyang" color="#999999" size="20"/>
-              </van-cell>
-            </picker>
-            <block v-if="IsPinZu==1">
-              <van-field :value="discount" clearable type='number' label="优惠金额" placeholder="50元为单位递增" use-button-slot @change="onDiscount">
-                <view slot="button" style="color:#999999">元/月</view>
-              </van-field>
-              <van-field :value="discountNum" clearable type='number' label="减免人数" placeholder="参与优惠人数" use-button-slot @change="onDiscountNum">
-                <view slot="button" style="color:#999999">人数</view>
-              </van-field>
-            </block>
+            <van-field :value="discountNum" clearable type='number' label="减免人数" placeholder="参与优惠人数" use-button-slot @change="onDiscountNum">
+              <view slot="button" style="color:#999999">人数</view>
+            </van-field>
           </block>
-        </view>
+        </block>
       </view>
-    <!-- </scroll-view> -->
+    </view>
     <div class="wux-filterbar__btns bottomButton">
       <view class="wux-filterbar__btn wux-filterbar__btn--danger" @click="onConfirm">下一步</view>
     </div>
@@ -86,11 +89,13 @@ export default {
     return {
       rentType: [{id:0, name:'整租', checked: 1}, {id:1, name:'合租', checked: 0}],
       houseType: [['', '一室', '二室', '三室', '四室', '五室'], ['', '一厅', '二厅', '三厅', '四厅', '五厅'], ['', '一卫', '二卫', '三卫', '四卫', '五卫']],
-      houseTypeSelect: [0, 0, 0],
+      houseTypeSelect: [1, 1, 1],
       sexType: ['不限', '男', '女'],
       sexTypeSelect: [0],
       faceType: ['东', '南', '西', '北'],
       faceTypeSelect: [0],
+      electricityWaterCostType: ['', '包月', '民水民电', '商水商电'],
+      electricityWaterCostSelect: 0,
       pingZuSelect: ['否', '是'],
       IsPinZu: 0,
       discount: '',
@@ -146,6 +151,11 @@ export default {
       let pingZuSelect = this.pingZuSelect
       let IsPinZu = this.IsPinZu
       return pingZuSelect[IsPinZu];
+    },
+    electricityWaterCostLabel: function () {
+      let electricityWaterCostType = this.electricityWaterCostType
+      let electricityWaterCostSelect = this.electricityWaterCostSelect
+      return electricityWaterCostType[electricityWaterCostSelect];
     }
   },
   methods: {
@@ -175,7 +185,6 @@ export default {
       if (!this.checkInput()) {
         return
       }
-
       let id = this.rentType.filter((n) => n.checked == 1).map((n) => n.id)
       let url = ''
       if (0 == id) {
@@ -225,6 +234,9 @@ export default {
             showCancel: false
         })
       }
+    },
+    selectElectricityWaterCostType (e) {
+      this.electricityWaterCostSelect =  e.mp.detail.value;
     },
     onDiscount (e) {
       this.discount = e.mp.detail;

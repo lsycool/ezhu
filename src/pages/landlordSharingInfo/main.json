@@ -10,6 +10,9 @@
     "wux-icon": "../../static/components/wux/icon/index",
     "wux-textarea": "../../static/components/wux/textarea/index",
     "wux-checkbox": "../../static/components/wux/checkbox/index",
-    "wux-checkbox-group": "../../static/components/wux/checkbox-group/index"
+    "wux-checkbox-group": "../../static/components/wux/checkbox-group/index",
+    "van-field": "../../static/components/vant/field/index",
+    "wux-accordion-group": "../../static/components/wux/accordion-group/index",
+    "wux-accordion": "../../static/components/wux/accordion/index"  
   }
 }
