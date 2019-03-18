@@ -5,7 +5,7 @@
     </view>
     <view style="overflow: hidden; white-space: nowrap;" class="bottomButton">
       <scroll-view scroll-x style="width: auto; overflow:hidden; text-align:center;">
-        <view v-for="(item, index) in poiList" :key="item.icon" :data-index='index' style="display:inline-block; margin:0 10px;">
+        <view v-for="(item, index) in poiList" :key="item.icon" :data-index='index' hover-class="hover" style="display:inline-block; padding:0 15px;">
           <wux-icon :addon="item.icon" size="25" color="#F5F5F5" :title="item.title" :data-title="item.title" @click="onPoi"/>
         </view>
       </scroll-view>
@@ -95,5 +95,9 @@ export default {
   padding:10px 0;
   width: 100%;
   height:40px;
+}
+.hover {
+  background-color: #999999;
+  opacity:0.4;
 }
 </style>
