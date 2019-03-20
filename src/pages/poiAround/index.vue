@@ -5,8 +5,8 @@
     </view>
     <view style="overflow: hidden; white-space: nowrap;" class="bottomButton">
       <scroll-view scroll-x style="width: auto; overflow:hidden; text-align:center;">
-        <view v-for="(item, index) in poiList" :key="item.icon" :data-index='index' hover-class="hover" style="display:inline-block; padding:0 15px;">
-          <wux-icon :addon="item.icon" size="25" color="#F5F5F5" :title="item.title" :data-title="item.title" @click="onPoi"/>
+        <view v-for="(item, index) in poiList" :key="item.icon" :data-index='index' hover-class="hover" :data-title="item.title"  @click="onPoi" style="display:inline-block; padding:0 15px;">
+          <wux-icon :addon="item.icon" size="25" color="#F5F5F5" :title="item.title"/>
         </view>
       </scroll-view>
     </view>
@@ -52,11 +52,21 @@ export default {
   methods: {
     onPoi (e) {
       var that = this
-      console.log(e.mp.detail)
+      console.log(e)
       var params = {
         location: that.longitude + ',' + that.latitude,
-        querykeywords: e.mp.detail.value,
+        city: that.city,
+        citylimit: true,
+        querykeywords: e.currentTarget.dataset.title,
           success: function(data) {
+            let markers = []
+            for (let i = 0; i < data.markers.length; i++) {
+                let dis = (data.markers[i].latitude-that.latitude)*(data.markers[i].latitude-that.latitude) + (data.markers[i].longitude-that.longitude)*(data.markers[i].longitude-that.longitude)
+                // console.log(dis)
+                if (dis < 0.0001) {
+                  markers.unshift(data.markers[i])
+                }
+            }
             // that.markers[0].id = data[0].id
             // that.markers[0].title = data[0].name
             // that.markers[0].longitude = data[0].longitude
@@ -64,8 +74,8 @@ export default {
             // that.markers[0].iconPath = data[0].iconPath
             // that.markers[0].width = 16
             // that.markers[0].height = 23
-            that.markers = data.markers
-            console.log(that.markers)
+            that.markers = markers
+            // console.log(markers)
         },
         fail: function(info) {
         }
