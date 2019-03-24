@@ -204,6 +204,20 @@ export default {
     },
     checkInput () {
       
+    },
+    onConfirmNext () {
+      wx.showModal({
+        title: '',
+        content: '是否立即发布？',
+        success(res) {
+          if (res.confirm) {
+            wx.navigateTo({
+                url: '../resultSuccess/main?title=' + '发布成功' + '&content=' + '请到我的发布页面查看预定详情' + '&url=../myPublished/main' 
+            })
+          } else if (res.cancel) {
+          }
+        }
+      })
     }
   },
 

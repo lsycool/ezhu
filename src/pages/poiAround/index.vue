@@ -36,7 +36,8 @@ export default {
         {icon:'icon-gouwu', title:'购物'},
         {icon:'icon-jianshen', title:'健身'},
         {icon:'icon-meishi', title:'美食'}
-      ]
+      ],
+      icon: ['school.png', 'hospital.png', 'transportation.png', 'subway.png', 'bank.png', 'entertainment.png', 'shopping.png', 'exercise.png', 'restaurant.png']
     }
   },
 
@@ -52,18 +53,20 @@ export default {
   methods: {
     onPoi (e) {
       var that = this
-      console.log(e)
       var params = {
         location: that.longitude + ',' + that.latitude,
         city: that.city,
         citylimit: true,
         querykeywords: e.currentTarget.dataset.title,
           success: function(data) {
-            let markers = []
+            let markers = [{id:'001', title:'北京市', width:'16', height:'23', latitude:'39.909729', longitude:'116.398419'}]
             for (let i = 0; i < data.markers.length; i++) {
                 let dis = (data.markers[i].latitude-that.latitude)*(data.markers[i].latitude-that.latitude) + (data.markers[i].longitude-that.longitude)*(data.markers[i].longitude-that.longitude)
                 // console.log(dis)
                 if (dis < 0.0001) {
+                  data.markers[i].width = 22
+                  data.markers[i].height = 22
+                  data.markers[i].iconPath = '../../static/images/' + that.icon[e.currentTarget.dataset.index]
                   markers.unshift(data.markers[i])
                 }
             }
@@ -75,7 +78,7 @@ export default {
             // that.markers[0].width = 16
             // that.markers[0].height = 23
             that.markers = markers
-            // console.log(markers)
+            console.log(markers)
         },
         fail: function(info) {
         }

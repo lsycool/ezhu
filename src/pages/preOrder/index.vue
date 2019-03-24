@@ -23,13 +23,13 @@
       <van-popup :show="popupShow" @close="onTogglePopup" @click-overlay="onTogglePopup" custom-style="width: 80%;padding: 20px;text-align: center;box-sizing: border-box;padding:20px;border-radius:10px;">
         <view style="text-align:left;">
           <view style="color:#ff4422; font-size:15px; margin-bottom:10px;">押二付一</view>
-          <view style="font-size:12px;">押金:4000 水费:30元 电费:100元</view>
+          <view style="font-size:12px;">押金:4000 民水民电</view>
         </view>
       </van-popup>
     </view>
     <view class="panel" style="overflow:hidden; clear:both;">
         <block v-for="(item, index) in labels" :key="index" :data-index='index'>
-          <view class="labelGroup" style="width:25%">
+          <view class="labelGroup" style="width:33%">
             <view class="labelBlock">{{item}}</view>
           </view>
         </block>
@@ -66,7 +66,7 @@
                   <view style="padding-right:5px; padding-left:5px;">
                     <image mode='aspectFill' style="height: 90px; width:100px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338328&di=ae3adf8bee6fbdef4d578690cb7b5ec7&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F17%2F17%2F13%2F83658PICb4r_1024.jpg" data-src="http://outofmemory.cn/j/tutorial/bootstrap/wp-content/uploads/2014/07/carousalpluginsimple_demo.jpg"/>
                   </view>
-                  <view style="display:inline-block;">主卧</view><view style="display:inline-block; margin-left:8rpx; font-size:20rpx" class="price-demo">1000<wxc-price decimal="none" icon="sub"/>/月</view>
+                  <view style="display:inline-block;">主卧</view><view style="display:inline-block; margin-left:8rpx; font-size:22rpx" class="price-demo">1000<wxc-price decimal="none" icon="sub"/>/月</view>
                 </view>
               </wux-grid>
               <wux-grid>
@@ -157,7 +157,7 @@ export default {
         {icon:'icon-yigui', title:'衣柜'},
       ],
       isPinZu: false,
-      labels: ['张江高科', '光大山湖城', '5室3厅2卫', '面积150平米', '电梯房'],
+      labels: ['5室3厅2卫', '面积150平米', '15楼'],
       showMore: false,
       mapImage: '',
       systemInfo:{},

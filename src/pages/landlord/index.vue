@@ -39,7 +39,7 @@
             <wux-icon slot="right-icon" addon="icon-taiyang" color="#999999" size="20" style="margin-left:10px;"/>
           </van-cell>
         </picker>
-        <van-field :value="floor" clearable label="门牌号" type='number' placeholder="请输入门牌号" use-icon-slot @change="onFloor">
+        <van-field :value="floor" clearable label="楼层" type='number' placeholder="请输入楼层" use-icon-slot @change="onFloor">
           <wux-icon slot="icon" addon="icon-louceng0" color="#999999" size="20"/>
         </van-field>
         <van-field :value="measure" clearable label="面  积" type='number' placeholder="请输入面积" use-icon-slot @change="onMeasure">
@@ -71,6 +71,8 @@
             </van-field>
           </block>
         </block>
+        <van-field :value="shareCode" clearable type='text' label="分享码" placeholder="请输入分享码" @change="onShareCode">
+        </van-field>
       </view>
     </view>
     <div class="wux-filterbar__btns bottomButton">
@@ -102,6 +104,7 @@ export default {
       discountNum: '',
       scrollHeight: 300,
       selectType: 0,
+      shareCode: '',
       rentNum: '',
       rentPrise: '',
       alertContent: "123",
@@ -266,6 +269,9 @@ export default {
       } else if (isNaN(this.discountNum) || this.discountNum < 0) {
         this.handleShow({content:'减免人数输入有误', type:'error'});
         return false
+      } else if (this.shareCode == '') {
+        this.handleShow({content:'请输入分享码', type:'error'});
+        return false        
       }
       else {
         return true;
@@ -291,6 +297,9 @@ export default {
         this.alertContent = ''
         this.alertVisibility = false
         this.alertType = 'default'
+    },
+    onShareCode (e) {
+      this.shareCode = e.mp.detail;
     }
   }
 }

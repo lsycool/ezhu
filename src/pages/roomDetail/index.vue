@@ -10,8 +10,26 @@
       </swiper>
     </view>
     <view class="panel">
-      <view class="panel-hd">简介</view>
-      <wxc-elip line="3">这是一个大大的好房子,赶快来抢购啊，先到先得，手慢无</wxc-elip>
+      <view class="panel-hd" style="margin-bottom: 20px">张江高科-光大山湖城 主卧</view>
+      <view style="margin-left:-12px;">
+        <van-cell-group>
+          <van-field :value="detail.prise" readonly use-icon-slot label="价格">
+            <wxc-price slot="icon" decimal="none"/>
+          </van-field>
+          <van-field :value="detail.duwei" readonly use-icon-slot label="独卫">
+            <wux-icon addon="icon-weishengjian" slot="icon" color="#999999" size="20"/>
+          </van-field>
+          <van-field :value="detail.yangtai" readonly use-icon-slot label="阳台">
+            <wux-icon addon="icon-yangtai" slot="icon" color="#999999" size="20"/>
+          </van-field>
+          <van-field :value="detail.chaonan" readonly use-icon-slot label="朝南">
+            <wux-icon addon="icon-taiyang" slot="icon" color="#999999" size="20"/>
+          </van-field>
+          <van-field :value="detail.zhuwo" readonly use-icon-slot label="主卧">
+            <wux-icon addon="icon-icond" slot="icon" color="#999999" size="20"/>
+          </van-field>
+        </van-cell-group>
+      </view>
     </view>
     <van-dialog
       title='是否立即预定？'
@@ -45,7 +63,8 @@ export default {
         {id: '2', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338327&di=d5a936ca7dee54b9dd7382fa685b39e3&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F17%2F44%2F77%2F38f58PICUNG_1024.jpg'},
         {id: '3', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=0206950cedda9935053ebed8a89f6914&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a39258eddb07a8012049ef53b617.jpg%401280w_1l_2o_100sh.jpg'},
         {id: '4', url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538332338325&di=ba2f03b7c68c01d4904371ecd3c4814d&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F60%2F26%2F74bOOOPICb4_1024.jpg'}
-      ]
+      ],
+      detail:{prise:'1100', duwei:'有', yangtai:'有', chaonan:'是', zhuwo:'是'} 
     }
   },
 
