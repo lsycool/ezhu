@@ -63,10 +63,10 @@
               </view>
               <view class='bookTag' style="text-align:right; padding-bottom:15rpx; margin: 20rpx 40rpx; font-size:24rpx; border-bottom:1rpx solid #ECECEC;">
                 <view style="display:inline-block; margin-right:30rpx">
-                  <view v-if="item.isPinZu" style="display:inline-block; margin-right:10rpx; border-bottom:1px solid #ECECEC; color:#ff5777; font-weight:bold;" @click="showPinZu">
+                  <view v-if="item.isPinZu" style="display:inline-block; margin-right:20rpx; border-bottom:1px solid #ECECEC; color:#ff5777; font-weight:bold;" @click="showPinZu">
                     <wux-icon addon="icon-ziyuan" color="#999999" size="12" style="padding-right:10rpx;"/>拼租
                   </view>
-                  <text>门牌号:1416</text>
+                  <text>门牌号:1416</text><text style="margin-left:20rpx">主卧</text>
                 </view>
               </view>
               <view class='bookButton' style="margin: 20rpx 40rpx; font-size:24rpx; text-align:right">

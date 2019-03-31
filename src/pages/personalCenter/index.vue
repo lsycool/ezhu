@@ -2,7 +2,10 @@
   <view class="container">
     <view class="head" style="display:flex; height:150rpx; margin-top:30rpx;">
       <view class="info" style="flex:3; padding-left:40rpx;">
-        <button class="loginButton" open-type="getUserInfo" @getuserinfo="getSetting">{{userInfo.nickName!=undefine? userInfo.nickName:'点击登录/注册'}}</button>
+        <button class="loginButton" open-type="getUserInfo" @getuserinfo="getSetting">
+          <view style="height:40px;line-height:40px;">{{userInfo.nickName!=undefine? userInfo.nickName:'点击登录/注册'}}</view>
+          <view style="font-size:22rpx;margin-top:-5px;" v-if="userInfo.nickName!=undefine">17688986906</view>
+        </button>
       </view>
       <view class="avatar" style="flex:1; text-align:center;">
         <image style="vertical-align:middle;width:100rpx;height:100rpx;border-radius:35rpx;" :src="userInfo.avatarUrl!=undefine? userInfo.avatarUrl:defaultAvatar"/>
