@@ -39,7 +39,7 @@
             <wux-icon slot="right-icon" addon="icon-taiyang" color="#999999" size="20" style="margin-left:10px;"/>
           </van-cell>
         </picker>
-        <van-field :value="floor" clearable label="楼层" type='number' placeholder="请输入楼层" use-icon-slot @change="onFloor">
+        <van-field :value="floor" clearable label="楼层-门牌号" type='number' placeholder="请输入楼层-门牌号" use-icon-slot @change="onFloor">
           <wux-icon slot="icon" addon="icon-louceng0" color="#999999" size="20"/>
         </van-field>
         <van-field :value="measure" clearable label="面  积" type='number' placeholder="请输入面积" use-icon-slot @change="onMeasure">

@@ -8,6 +8,17 @@
         </block>
         <view class="weui-navbar__slider" :style="{left: sliderLeft + 'px', transform: 'translateX(' + sliderOffset + 'px)', '-webkit-transform': 'translateX(' + sliderOffset + 'px)'}"></view>
     </view>
+    <view style="padding-top:55px;background-color:white;padding-bottom:10px;border-bottom:1px solid #ECECEC;">
+      <view style="margin:0 5px;border-radius:8px;background-color:#ECECEC;text-align:center;display:flex;">
+        <view hover-class="hover" style="flex:1;">
+          <wux-icon type="md-briefcase" title="已预订" size="16"/>
+        </view>
+        <view hover-class="hover" style="flex:1">
+          <wux-icon type="md-archive" title="已成交" size="16"/>
+        </view>
+      </view>
+    </view>
+    <scroll-view scroll-y="true" :style="{height: scrollHeight + 'px', overflow: auto}">
     <view>
       <view class="weui-tab__panel">
         <view class="weui-tab__content" :hidden="activeIndex !== 0">
@@ -79,6 +90,7 @@
         </view>
       </view>
     </view>
+    </scroll-view>
     <view v-if="!hiddenContact">
       <van-dialog
         title='房东信息'
@@ -179,6 +191,10 @@ export default {
           }
       })
     },
+    getScollHeight () {
+      var windowHeight = wx.getSystemInfoSync().windowHeight
+      this.scrollHeight =  windowHeight - 100
+    },
     onTabClick(e) {
       const { offsetLeft, dataset } = e.currentTarget
       const { id } = dataset
@@ -243,6 +259,7 @@ export default {
     this.zooms = globalStore.state.zooms
     this.zoomName = util.getZoomNameById(globalStore.state.zooms, globalStore.state.currentZoom)
     this.userInfo = globalStore.state.userInfo
+    this.getScollHeight()
   }
 }
 </script>
@@ -303,7 +320,6 @@ export default {
 .weui-tab__panel {
   box-sizing: border-box;
   height: 100%;
-  padding-top: 50px;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -335,5 +351,10 @@ export default {
 .slide-image {
   height:90px;
   flex: 1;
+}
+.hover {
+  background-color: #999999;
+  opacity:0.4;
+  border-radius:8px;
 }
 </style>

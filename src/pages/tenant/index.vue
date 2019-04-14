@@ -98,9 +98,30 @@ export default {
           groups: ['002']
         },
         {
-          type: 'sort',
+          type: 'radio',
           label: '排序',
           value: 'sort',
+          children: [{
+                  label: '综合排序',
+                  value: '1'
+              },
+              {
+                  label: '价格（从高到低）',
+                  value: '2'
+              },
+              {
+                  label: '价格（从低到高）',
+                  value: '3'
+              },
+              {
+                  label: '面积（从小到大）',
+                  value: '4'
+              },
+              {
+                  label: '面积（从大到小）',
+                  value: '5'
+              }
+          ],
           groups: ['005'],
         },
         {

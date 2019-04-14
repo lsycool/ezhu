@@ -4,7 +4,7 @@
         <block wx:for="{{ items }}" wx:key="">
             <view class="wux-filterbar__item {{ item.checked ? 'wux-filterbar__item--checked' : '' }}" bindtap="onClick" data-index="{{ index }}">
                 <text class="wux-filterbar__text">{{ item.label }}</text>
-                <text class="wux-filterbar__icon {{ 'wux-filterbar__icon--' + item.type }} {{ item.sort === 1 ? 'wux-filterbar__icon--sort-asc' : item.sort === -1 ? 'wux-filterbar__icon--sort-desc' : '' }}" wx:if="{{ item.type === 'radio' || item.type === 'checkbox' || item.type === 'sort' || item.type === 'filter' }}"></text>
+                <text class="wux-filterbar__icon {{ 'wux-filterbar__icon--' + item.type }} {{ item.sort === 1 ? 'wux-filterbar__icon--sort-asc' : item.sort === -1 ? 'wux-filterbar__icon--sort-desc' : '' }}" wx:if="{{ item.type === 'radio' || item.type === 'checkbox' || item.type === 'sort' || item.type === 'filter' || item.type === 'sortMulti'}}"></text>
             </view>
         </block>
     </view>
@@ -18,7 +18,7 @@
                             <div class="wux-filterbar__panel-selected">{{ p.selected }}</div>
                         </view>
                         <view class="wux-filterbar__panel-bd">
-                            <radio-group bindchange="onRadioChange" data-parent-index="{{ index }}" data-index="{{ pIndex }}" data-item="{{ p }}" wx:if="{{ p.type === 'radio' }}">
+                            <radio-group bindchange="onRadioChange" data-parent-index="{{ index }}" data-index="{{ pIndex }}" data-item="{{ p }}" wx:if="{{ p.type === 'radio' || p.type === 'sortMulti'}}">
                                 <view class="wux-filterbar__groups">
                                     <block wx:for="{{ p.children }}" wx:for-item="g" wx:key="">
                                         <view class="wux-filterbar__group">
