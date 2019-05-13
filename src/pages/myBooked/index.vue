@@ -105,13 +105,13 @@
             <view style="display:inline-block;font-weight:bold;color:#ff5777; margin-right:30rpx">
               <wux-icon color='#ff5777' size="16" type="md-person"/><text style="margin-left:10rpx">房东姓名：</text>
             </view>
-            <text>{{loadName}}</text>
+            <text>{{landlordInfo.name}}</text>
           </view>
           <view style="margin-bottom:20rpx; border-bottom:1rpx solid #ECECEC; padding-bottom:20rpx">
             <view style="display:inline-block;font-weight:bold;color:#ff5777; margin-right:30rpx">
               <wux-icon color='#ff5777' size="16" type="md-call"/><text style="margin-left:10rpx">房东电话：</text>
             </view>
-            <text>{{loadNumber}}</text>
+            <text>{{landlordInfo.telephone}}</text>
           </view>
         </view>
       </van-dialog>
@@ -137,6 +137,7 @@ export default {
       userInfo: {},
       scrollHeight: 300,
       hiddenContact: true,
+      landlordInfo: {name:'', telephone:''},
       books: [{
         name: '天申综合小区',
         id: '0', 
@@ -174,12 +175,6 @@ export default {
   },
 
   computed: {
-    loadNumber: function () {
-      return '1768899886'
-    },
-    loadName: function () {
-      return '刘先生'
-    }
   },
 
   methods: {
@@ -222,7 +217,20 @@ export default {
     },
     getContact (e) {
       this.hiddenContact = false
-      console.log("123")
+      let that = this
+      wx.request({
+        url: 'http://xishiwuyu.com:8081/landLordInfo/showLandLordInfo',
+        data: {
+          bookId: '1',
+        },
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success(res) {
+          that.landlordInfo.name = res.data.name
+          that.landlordInfo.telephone = res.data.telephone
+        }
+      })
     },
     close () {
       this.hiddenContact = true

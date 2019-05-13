@@ -23,7 +23,9 @@
     "pages/searchZoom/main",
     "pages/personalCenter/main",
     "pages/inputtips/main",
-    "pages/poiAround/main"
+    "pages/poiAround/main",
+    "pages/myInfo/main",
+    "pages/modifyInfo/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

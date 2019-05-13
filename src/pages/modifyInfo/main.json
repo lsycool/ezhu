@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "修改",
+  "enablePullDownRefresh": false,
+  "disableScroll": true,
+  "usingComponents": {
+    "van-field": "../../static/components/vant/field/index",
+    "van-button": "../../static/components/vant/button/index"
+  }
+}

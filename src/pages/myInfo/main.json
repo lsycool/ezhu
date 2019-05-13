@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "我的信息",
+  "enablePullDownRefresh": false,
+  "disableScroll": true,
+  "usingComponents": {
+    "van-cell": "../../static/components/vant/cell/index",
+    "van-icon": "../../static/components/vant/icon/index"
+  }
+}

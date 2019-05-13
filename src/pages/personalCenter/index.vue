@@ -117,6 +117,9 @@ export default {
       })
     },
     onMyInfo() {
+      wx.navigateTo({
+        url: '../myInfo/main'
+      })
     },
     onFeedBack() {
     },
